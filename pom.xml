@@ -1,0 +1,36 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>au.com.dmg</groupId>
+    <artifactId>fusion</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Fusion</name>
+    <description>Object models for interacting with Datameshgroup's interfaces.</description>
+    <url>https://www.datameshgroup.com</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://svn.apache.org/viewvc/maven</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.squareup.moshi</groupId>
+            <artifactId>moshi</artifactId>
+            <version>1.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.14.2</version>
+        </dependency>
+    </dependencies>
+</project>
