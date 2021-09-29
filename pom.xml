@@ -1,13 +1,13 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>au.com.dmg</groupId>
-    <artifactId>fusion</artifactId>
+    <groupId>com.datameshgroup.fusion</groupId>
+    <artifactId>fusion-sdk</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>Fusion</name>
     <description>Object models for interacting with Datameshgroup's interfaces.</description>
-    <url>https://www.datameshgroup.com</url>
+    <url>https://github.com/datameshgroup/fusionsatellite-sdk-java</url>
 
     <licenses>
         <license>
@@ -18,7 +18,7 @@
     </licenses>
 
     <scm>
-        <url>https://svn.apache.org/viewvc/maven</url>
+        <url>https://github.com/datameshgroup/fusionsatellite-sdk-java</url>
     </scm>
 
     <dependencies>

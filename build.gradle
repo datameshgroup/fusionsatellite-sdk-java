@@ -4,7 +4,8 @@ plugins {
     id 'signing'
 }
 
-group 'au.com.dmg.fusion'
+group 'com.datameshgroup.fusion'
+
 version '1.0.0'
 
 repositories {
@@ -25,7 +26,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     api "com.squareup.moshi:moshi:1.12.0"
     api 'org.jsoup:jsoup:1.14.2'
-//    api 'com.squareup.moshi:moshi-adapters:1.12.0'
 }
 
 publishing {
@@ -43,12 +43,8 @@ publishing {
             }
             pom {
                 name = 'Fusion SDK for Satellite'
-                description = 'SDK to allow for sending requests to Datameshgroup terminals.'
+                description = 'Object models for interacting with Datameshgroup\'s interfaces.'
                 url = ''
-                properties = [
-                        myProp: "value",
-                        "prop.with.dots": "anotherValue"
-                ]
                 licenses {
                     license {
                         name = 'MIT License'
@@ -63,27 +59,34 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://example.com/my-library.git'
-                    developerConnection = 'scm:git:ssh://example.com/my-library.git'
-                    url = 'http://example.com/my-library/'
+                    connection = 'scm:git:git@github.com:datameshgroup/fusionsatellite-sdk-java.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:datameshgroup/fusionsatellite-sdk-java.git'
+                    url = 'https://github.com/datameshgroup/fusionsatellite-sdk-java'
                 }
             }
         }
     }
     repositories {
         maven {
-            // change URLs to point to your repos, e.g. http://my.org/repo
-            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
-            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            name = 'Sonatype'
+            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+            credentials {
+                username = findProperty('sonatype.username')
+                password = findProperty('sonatype.password')
+            }
         }
     }
 }
 
 signing {
-    sign publishing.publications.mavenJava
-}
+    if (project.hasProperty('signing.keyId') && project.hasProperty('signing.password') && project.hasProperty('signing.secretKeyRingFile')) {
+        sign configurations.archives
 
+        /* Uncomment this if you use shadow in your build process */
+        // sign configurations.shadow
+        sign publishing.publications.mavenJava
+    }
+}
 
 javadoc {
 }
