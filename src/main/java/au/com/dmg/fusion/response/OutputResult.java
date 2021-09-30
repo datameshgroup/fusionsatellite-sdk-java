@@ -23,14 +23,17 @@
 
 package au.com.dmg.fusion.response;
 
-import com.squareup.moshi.Json;
 import org.jetbrains.annotations.Nullable;
+
+import com.squareup.moshi.Json;
+
+import au.com.dmg.fusion.data.InfoQualify;
 
 public class OutputResult {
     @Json(name = "Device")
     private final String device;
     @Json(name = "InfoQualify")
-    private final String infoQualify;
+    private final InfoQualify infoQualify;
     @Json(name = "Result")
     private final String result;
     @Json(name = "ErrorCondition")
@@ -38,7 +41,7 @@ public class OutputResult {
     @Json(name = "AdditionalResponse")
     private final String additionalResponse;
 
-    public OutputResult(String device, String infoQualify, String result, String errorCondition, String additionalResponse) {
+    public OutputResult(String device, InfoQualify infoQualify, String result, String errorCondition, String additionalResponse) {
         if (device == null || infoQualify == null || result == null) {
             throw new NullPointerException("Error device, infoQualify and result cannot be null.");
         }
@@ -54,7 +57,7 @@ public class OutputResult {
         return device;
     }
 
-    public String getInfoQualify() {
+    public InfoQualify getInfoQualify() {
         return infoQualify;
     }
 
