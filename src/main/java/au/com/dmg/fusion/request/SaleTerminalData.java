@@ -23,25 +23,28 @@
 
 package au.com.dmg.fusion.request;
 
-import com.squareup.moshi.Json;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.squareup.moshi.Json;
+
+import au.com.dmg.fusion.data.SaleCapability;
+import au.com.dmg.fusion.data.TerminalEnvironment;
 
 public class SaleTerminalData {
 
     @Json(name = "TerminalEnvironment")
-    private final String terminalEnvironment;
+    private final TerminalEnvironment terminalEnvironment;
     @Json(name = "SaleCapabilities")
-    private final List<String> saleCapabilities;
+    private final List<SaleCapability> saleCapabilities;
     @Json(name = "TotalsGroupID")
     private final String totalsGroupID;
 
-    public String getTerminalEnvironment() {
+    public TerminalEnvironment getTerminalEnvironment() {
         return terminalEnvironment;
     }
 
-    public List<String> getSaleCapabilities() {
+    public List<SaleCapability> getSaleCapabilities() {
         return saleCapabilities;
     }
 
@@ -51,30 +54,30 @@ public class SaleTerminalData {
 
     public static class Builder {
 
-        private String terminalEnvironment;
-        private List<String> saleCapabilities = new ArrayList<>();
+        private TerminalEnvironment terminalEnvironment;
+        private List<SaleCapability> saleCapabilities = new ArrayList<>();
         private String totalsGroupID;
 
         public Builder() {
         }
 
-        Builder(String terminalEnvironment, List<String> saleCapabilities, String totalsGroupID) {
+        Builder(TerminalEnvironment terminalEnvironment, List<SaleCapability> saleCapabilities, String totalsGroupID) {
             this.terminalEnvironment = terminalEnvironment;
             this.saleCapabilities = saleCapabilities;
             this.totalsGroupID = totalsGroupID;
         }
 
-        public Builder terminalEnvironment(String terminalEnvironment) {
+        public Builder terminalEnvironment(TerminalEnvironment terminalEnvironment) {
             this.terminalEnvironment = terminalEnvironment;
             return Builder.this;
         }
 
-        public Builder saleCapabilities(List<String> saleCapabilities) {
+        public Builder saleCapabilities(List<SaleCapability> saleCapabilities) {
             this.saleCapabilities = saleCapabilities;
             return Builder.this;
         }
 
-        public Builder addSaleCapabilities(String saleCapabilities) {
+        public Builder addSaleCapabilities(SaleCapability saleCapabilities) {
             this.saleCapabilities.add(saleCapabilities);
             return Builder.this;
         }
@@ -100,7 +103,7 @@ public class SaleTerminalData {
 /*
 package au.com.dmg.fusionsatellite.PaymentRequest
 class SaleTerminalData
-String terminalEnvironment
-List<String> saleCapabilities
+TerminalEnvironment terminalEnvironment
+List<SaleCapability> saleCapabilities
 String totalsGroupID
 * */

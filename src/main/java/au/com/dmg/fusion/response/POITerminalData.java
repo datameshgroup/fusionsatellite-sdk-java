@@ -24,6 +24,8 @@
 package au.com.dmg.fusion.response;
 
 import au.com.dmg.fusion.data.POICapability;
+import au.com.dmg.fusion.data.TerminalEnvironment;
+
 import com.squareup.moshi.Json;
 
 import java.util.ArrayList;
@@ -32,15 +34,15 @@ import java.util.List;
 public class POITerminalData {
 
     @Json(name = "TerminalEnvironment")
-    private final String terminalEnvironment;
+    private final TerminalEnvironment terminalEnvironment;
     @Json(name = "POICapabilities")
     private final List<POICapability> poiCapabilities;
-    @Json(name = "GenericProfile")
-    private final String genericProfile;
+    @Json(name = "POIProfile")
+    private final POIProfile poiProfile;
     @Json(name = "POISerialNumber")
     private final String poiSerialNumber;
 
-    public String getTerminalEnvironment() {
+    public TerminalEnvironment getTerminalEnvironment() {
         return terminalEnvironment;
     }
 
@@ -48,8 +50,8 @@ public class POITerminalData {
         return poiCapabilities;
     }
 
-    public String getGenericProfile() {
-        return genericProfile;
+    public POIProfile getPoiProfile() {
+        return poiProfile;
     }
 
     public String getPoiSerialNumber() {
@@ -58,22 +60,22 @@ public class POITerminalData {
 
     public static class Builder {
 
-        private String terminalEnvironment;
+        private TerminalEnvironment terminalEnvironment;
         private List<POICapability> poiCapabilities = new ArrayList<POICapability>();
-        private String genericProfile;
+        private POIProfile poiProfile;
         private String poiSerialNumber;
 
         public Builder() {
         }
 
-        Builder(String terminalEnvironment, List<POICapability> poiCapabilities, String genericProfile, String poiSerialNumber) {
+        Builder(TerminalEnvironment terminalEnvironment, List<POICapability> poiCapabilities, POIProfile poiProfile, String poiSerialNumber) {
             this.terminalEnvironment = terminalEnvironment;
             this.poiCapabilities = poiCapabilities;
-            this.genericProfile = genericProfile;
+            this.poiProfile = poiProfile;
             this.poiSerialNumber = poiSerialNumber;
         }
 
-        public Builder terminalEnvironment(String terminalEnvironment) {
+        public Builder terminalEnvironment(TerminalEnvironment terminalEnvironment) {
             this.terminalEnvironment = terminalEnvironment;
             return Builder.this;
         }
@@ -88,8 +90,8 @@ public class POITerminalData {
             return Builder.this;
         }
 
-        public Builder genericProfile(String genericProfile) {
-            this.genericProfile = genericProfile;
+        public Builder poiProfile(POIProfile poiProfile) {
+            this.poiProfile = poiProfile;
             return Builder.this;
         }
 
@@ -102,22 +104,22 @@ public class POITerminalData {
             if (this.terminalEnvironment == null) {
                 throw new NullPointerException("The property \"terminalEnvironment\" is null. "
                         + "Please set the value by \"terminalEnvironment()\". "
-                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"genericProfile\" and \"poiSerialNumber\" are required.");
+                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"poiProfile\" and \"poiSerialNumber\" are required.");
             }
             if (this.poiCapabilities == null) {
                 throw new NullPointerException("The property \"poiCapabilities\" is null. "
                         + "Please set the value by \"poiCapabilities()\". "
-                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"genericProfile\" and \"poiSerialNumber\" are required.");
+                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"poiProfile\" and \"poiSerialNumber\" are required.");
             }
-            if (this.genericProfile == null) {
-                throw new NullPointerException("The property \"genericProfile\" is null. "
-                        + "Please set the value by \"genericProfile()\". "
-                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"genericProfile\" and \"poiSerialNumber\" are required.");
+            if (this.poiProfile == null) {
+                throw new NullPointerException("The property \"poiProfile\" is null. "
+                        + "Please set the value by \"poiProfile()\". "
+                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"poiProfile\" and \"poiSerialNumber\" are required.");
             }
             if (this.poiSerialNumber == null) {
                 throw new NullPointerException("The property \"poiSerialNumber\" is null. "
                         + "Please set the value by \"poiSerialNumber()\". "
-                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"genericProfile\" and \"poiSerialNumber\" are required.");
+                        + "The properties \"terminalEnvironment\", \"poiCapabilities\", \"poiProfile\" and \"poiSerialNumber\" are required.");
             }
 
             return new POITerminalData(this);
@@ -127,7 +129,7 @@ public class POITerminalData {
     private POITerminalData(Builder builder) {
         this.terminalEnvironment = builder.terminalEnvironment;
         this.poiCapabilities = builder.poiCapabilities;
-        this.genericProfile = builder.genericProfile;
+        this.poiProfile = builder.poiProfile;
         this.poiSerialNumber = builder.poiSerialNumber;
     }
 }
@@ -136,8 +138,8 @@ public class POITerminalData {
 /*
 package au.com.dmg.fusionsatellite.response
 class POITerminalData
-@Required String terminalEnvironment
+@Required TerminalEnvironment terminalEnvironment
 @Required List<POICapability> poiCapabilities
-@Required String genericProfile
+@Required POIProfile poiProfile
 @Required String poiSerialNumber
 * */

@@ -28,15 +28,15 @@ import com.squareup.moshi.Json;
 public class POIStatus {
     @Json(name = "GlobalStatus")
     private final String globalStatus;
-    @Json(name = "SecurityOkFlag")
+    @Json(name = "SecurityOKFlag")
     private final boolean securityOkFlag;
     @Json(name = "PEDOKFlag")
     private final boolean pedOkFlag;
-    @Json(name = "CardReaderOkFlag")
+    @Json(name = "CardReaderOKFlag")
     private final boolean cardReaderOkFlag;
     @Json(name = "PrinterStatus")
     private final String printerStatus;
-    @Json(name = "CommunicationOkFlag")
+    @Json(name = "CommunicationOKFlag")
     private final Boolean communicationOkFlag;
     @Json(name = "FraudPreventionFlag")
     private final Boolean fraudPreventionFlag;
