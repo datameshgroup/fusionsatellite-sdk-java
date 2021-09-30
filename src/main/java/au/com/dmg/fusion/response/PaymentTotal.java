@@ -23,47 +23,37 @@
 
 package au.com.dmg.fusion.response;
 
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
+import java.math.BigDecimal;
 
 import com.squareup.moshi.Json;
 
-public class ReconciliationResponse implements ResponseType {
+import au.com.dmg.fusion.data.TransactionType;
 
-	@Json(name = "Response")
-	private final Response response;
-	@Json(name = "ReconciliationType")
-	private final String reconciliationType;
-	@Json(name = "POIReconciliationID")
-	private final String poiReconciliationID;
-	@Json(name = "TransactionTotals")
-	private final List<TransactionTotal> transactionTotals;
+public class PaymentTotal {
 
-	public ReconciliationResponse(Response response, String reconciliationType, String poiReconciliationID,
-			List<TransactionTotal> transactionTotals) {
-		this.response = response;
-		this.reconciliationType = reconciliationType;
-		this.poiReconciliationID = poiReconciliationID;
-		this.transactionTotals = transactionTotals;
+	@Json(name = "TransactionType")
+	private final TransactionType transactionType;
+	@Json(name = "TransactionCount")
+	private final Integer transactionCount;
+	@Json(name = "TransactionAmount")
+	private final BigDecimal transactionAmount;
+
+	public PaymentTotal(TransactionType transactionType, Integer transactionCount, BigDecimal transactionAmount) {
+		this.transactionType = transactionType;
+		this.transactionCount = transactionCount;
+		this.transactionAmount = transactionAmount;
 	}
 
-	@NotNull
-	public Response getResponse() {
-		return response;
+	public TransactionType getTransactionType() {
+		return transactionType;
 	}
 
-	@NotNull
-	public String getReconciliationType() {
-		return reconciliationType;
+	public Integer getTransactionCount() {
+		return transactionCount;
 	}
 
-	public String getPoiReconciliationID() {
-		return poiReconciliationID;
-	}
-
-	public List<TransactionTotal> getTransactionTotals() {
-		return transactionTotals;
+	public BigDecimal getTransactionAmount() {
+		return transactionAmount;
 	}
 
 }
