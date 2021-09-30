@@ -23,30 +23,6 @@
 
 package au.com.dmg.fusion.response;
 
-import com.squareup.moshi.Json;
+public class ReversalResponse {
 
-import au.com.dmg.fusion.MessageHeader;
-
-public class RepeatedMessageResponse {
-    @Json(name = "MessageHeader")
-    private MessageHeader messageHeader;
-    @Json(name = "RepeatedResponseMessageBody")
-    private RepeatedResponseMessageBody repeatedResponseMessageBody;
-
-    public RepeatedMessageResponse(MessageHeader messageHeader, RepeatedResponseMessageBody repeatedResponseMessageBody) {
-        if (messageHeader == null || repeatedResponseMessageBody == null) {
-            throw new NullPointerException("Error both header and repeatedResponseMessageBody are required.");
-        }
-
-        this.messageHeader = messageHeader;
-        this.repeatedResponseMessageBody = repeatedResponseMessageBody;
-    }
-
-    public MessageHeader getMessageHeader() {
-        return messageHeader;
-    }
-
-    public RepeatedResponseMessageBody getRepeatedResponseMessageBody() {
-        return repeatedResponseMessageBody;
-    }
 }

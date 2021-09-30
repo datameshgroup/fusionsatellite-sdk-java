@@ -25,28 +25,26 @@ package au.com.dmg.fusion.response;
 
 import com.squareup.moshi.Json;
 
-import au.com.dmg.fusion.MessageHeader;
+import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
 
-public class RepeatedMessageResponse {
-    @Json(name = "MessageHeader")
-    private MessageHeader messageHeader;
-    @Json(name = "RepeatedResponseMessageBody")
-    private RepeatedResponseMessageBody repeatedResponseMessageBody;
+public class RepeatedResponseMessageBody {
 
-    public RepeatedMessageResponse(MessageHeader messageHeader, RepeatedResponseMessageBody repeatedResponseMessageBody) {
-        if (messageHeader == null || repeatedResponseMessageBody == null) {
-            throw new NullPointerException("Error both header and repeatedResponseMessageBody are required.");
-        }
+	@Json(name = "PaymentResponse")
+	private final PaymentResponse paymentResponse;
+	@Json(name = "ReversalResponse")
+	private final ReversalResponse reversalResponse;
+	
+	public RepeatedResponseMessageBody(PaymentResponse paymentResponse, ReversalResponse reversalResponse) {
+		this.paymentResponse = paymentResponse;
+		this.reversalResponse = reversalResponse;
+	}
 
-        this.messageHeader = messageHeader;
-        this.repeatedResponseMessageBody = repeatedResponseMessageBody;
-    }
+	public PaymentResponse getPaymentResponse() {
+		return paymentResponse;
+	}
 
-    public MessageHeader getMessageHeader() {
-        return messageHeader;
-    }
-
-    public RepeatedResponseMessageBody getRepeatedResponseMessageBody() {
-        return repeatedResponseMessageBody;
-    }
+	public ReversalResponse getReversalResponse() {
+		return reversalResponse;
+	}
+	
 }
