@@ -25,13 +25,15 @@ package au.com.dmg.fusion.request.displayrequest;
 
 import com.squareup.moshi.Json;
 
+import au.com.dmg.fusion.data.InfoQualify;
+
 public class DisplayOutput {
 	@Json(name = "ResponseRequiredFlag")
 	private final Boolean responseRequiredFlag;
 	@Json(name = "Device")
 	private final String device;
-	@Json(name = "InfoQuality")
-	private final String infoQuality;
+	@Json(name = "InfoQuality") // Request from server reads 'InfoQuality' instead of 'InfoQualify', probably a typo
+	private final InfoQualify infoQuality;
 	@Json(name = "OutputContent")
 	private final OutputContent outputContent;
 
@@ -39,13 +41,13 @@ public class DisplayOutput {
 
 		private Boolean responseRequiredFlag;
 		private String device;
-		private String infoQuality;
+		private InfoQualify infoQuality;
 		private OutputContent outputContent;
 
 		public Builder() {
 		}
 
-		Builder(Boolean responseRequiredFlag, String device, String infoQuality, OutputContent outputContent) {
+		Builder(Boolean responseRequiredFlag, String device, InfoQualify infoQuality, OutputContent outputContent) {
 			this.responseRequiredFlag = responseRequiredFlag;
 			this.device = device;
 			this.infoQuality = infoQuality;
@@ -62,7 +64,7 @@ public class DisplayOutput {
 			return Builder.this;
 		}
 
-		public Builder infoQuality(String infoQuality) {
+		public Builder infoQuality(InfoQualify infoQuality) {
 			this.infoQuality = infoQuality;
 			return Builder.this;
 		}
@@ -106,77 +108,11 @@ public class DisplayOutput {
 	}
 }
 
-class OutputContent {
-
-	@Json(name = "OutputFormat")
-	private String outputFormat;
-	@Json(name = "OutputText")
-	private OutputText outputText;
-
-	public OutputContent() {
-	}
-
-	public OutputContent(String outputFormat, OutputText outputText) {
-		this.outputFormat = outputFormat;
-		this.outputText = outputText;
-	}
-
-	public String getOutputFormat() {
-		return outputFormat;
-	}
-
-	public void setOutputFormat(String outputFormat) {
-		this.outputFormat = outputFormat;
-	}
-
-	public OutputText getOutputText() {
-		return outputText;
-	}
-
-	public void setOutputText(OutputText outputText) {
-		this.outputText = outputText;
-	}
-
-	@Override
-	public String toString() {
-		return "OutputContent [outputFormat=" + outputFormat + ", outputText=" + outputText + "]";
-	}
-
-}
-
-class OutputText {
-
-	@Json(name = "Text")
-	private String text;
-
-	public OutputText() {
-	}
-
-	public OutputText(String text) {
-		this.text = text;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	@Override
-	public String toString() {
-		return "OutputText [text=" + text + "]";
-	}
-
-}
-
 /*
 package au.com.dmg.fusionsatellite.request.loginrequest
 class DisplayOutput
 @Required Boolean responseRequiredFlag
 @Required String device
-@Required String infoQuality
-@Required String outputFormat
-@Required String text
+@Required InfoQualify infoQuality
+@Required OutputContent outputFormat
 * */
