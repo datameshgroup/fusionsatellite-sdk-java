@@ -41,8 +41,8 @@ public class AmountsReq {
     private final BigDecimal paidAmount;
     @Json(name = "MaximumCashBackAmount")
     private final BigDecimal maximumCashBackAmount;
-    @Json(name = "MinimumCashBackAmount")
-    private final BigDecimal minimumCashBackAmount;
+    @Json(name = "MinimumSplitAmount")
+    private final BigDecimal minimumSplitAmount;
 
     public String getCurrency() {
         return currency;
@@ -73,8 +73,8 @@ public class AmountsReq {
     }
 
     @Nullable
-    public BigDecimal getMinimumCashBackAmount() {
-        return minimumCashBackAmount;
+    public BigDecimal getMinimumSplitAmount() {
+        return minimumSplitAmount;
     }
 
     public static class Builder {
@@ -85,19 +85,19 @@ public class AmountsReq {
         private BigDecimal tipAmount;
         private BigDecimal paidAmount;
         private BigDecimal maximumCashBackAmount;
-        private BigDecimal minimumCashBackAmount;
+        private BigDecimal minimumSplitAmount;
 
         public Builder() {
         }
 
-        Builder(String currency, BigDecimal requestedAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal paidAmount, BigDecimal maximumCashBackAmount, BigDecimal minimumCashBackAmount) {
+        Builder(String currency, BigDecimal requestedAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal paidAmount, BigDecimal maximumCashBackAmount, BigDecimal minimumSplitAmount) {
             this.currency = currency;
             this.requestedAmount = requestedAmount;
             this.cashBackAmount = cashBackAmount;
             this.tipAmount = tipAmount;
             this.paidAmount = paidAmount;
             this.maximumCashBackAmount = maximumCashBackAmount;
-            this.minimumCashBackAmount = minimumCashBackAmount;
+            this.minimumSplitAmount = minimumSplitAmount;
         }
 
         public Builder currency(String currency) {
@@ -130,8 +130,8 @@ public class AmountsReq {
             return Builder.this;
         }
 
-        public Builder minimumCashBackAmount(BigDecimal minimumCashBackAmount) {
-            this.minimumCashBackAmount = minimumCashBackAmount;
+        public Builder minimumSplitAmount(BigDecimal minimumSplitAmount) {
+            this.minimumSplitAmount = minimumSplitAmount;
             return Builder.this;
         }
 
@@ -158,7 +158,7 @@ public class AmountsReq {
         this.tipAmount = builder.tipAmount;
         this.paidAmount = builder.paidAmount;
         this.maximumCashBackAmount = builder.maximumCashBackAmount;
-        this.minimumCashBackAmount = builder.minimumCashBackAmount;
+        this.minimumSplitAmount = builder.minimumSplitAmount;
     }
 }
 
@@ -173,5 +173,5 @@ BigDecimal cashBackAmount
 BigDecimal tipAmount
 BigDecimal paidAmount
 BigDecimal maximumCashBackAmount
-BigDecimal minimumCashBackAmount
+BigDecimal minimumSplitAmount
 * */

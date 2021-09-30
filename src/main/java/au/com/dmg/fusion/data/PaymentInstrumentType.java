@@ -25,6 +25,8 @@ package au.com.dmg.fusion.data;
 
 public enum PaymentInstrumentType {
     Card,
+    Check,
+    Cash,
     Mobile,
     Other
 }

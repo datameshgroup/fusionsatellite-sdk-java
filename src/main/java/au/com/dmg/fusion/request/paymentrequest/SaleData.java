@@ -23,125 +23,141 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
-import com.squareup.moshi.Json;
 import org.jetbrains.annotations.NotNull;
+
+import com.squareup.moshi.Json;
+
+import au.com.dmg.fusion.request.SaleTerminalData;
 
 public class SaleData {
 
-    @Json(name = "OperatorID")
-    private final String operatorID;
-    @Json(name = "OperatorLanguage")
-    private final String operatorLanguage;
-    @Json(name = "ShiftNumber")
-    private final String shiftNumber;
-    @Json(name = "SaleReferenceID")
-    private final String saleReferenceID;
-    @Json(name = "TokenRequestedType")
-    private final String tokenRequestedType;
-    @Json(name = "SaleTransactionID")
-    private SaleTransactionID saleTransactionID;
+	@Json(name = "OperatorID")
+	private final String operatorID;
+	@Json(name = "OperatorLanguage")
+	private final String operatorLanguage;
+	@Json(name = "ShiftNumber")
+	private final String shiftNumber;
+	@Json(name = "SaleReferenceID")
+	private final String saleReferenceID;
+	@Json(name = "SaleTerminalData")
+	private final SaleTerminalData saleTerminalData;
+	@Json(name = "TokenRequestedType")
+	private final String tokenRequestedType;
+	@Json(name = "SaleTransactionID")
+	private SaleTransactionID saleTransactionID;
 
-    public String getOperatorID() {
-        return operatorID;
-    }
+	public String getOperatorID() {
+		return operatorID;
+	}
 
-    public String getOperatorLanguage() {
-        return operatorLanguage;
-    }
+	public String getOperatorLanguage() {
+		return operatorLanguage;
+	}
 
-    public String getShiftNumber() {
-        return shiftNumber;
-    }
+	public String getShiftNumber() {
+		return shiftNumber;
+	}
 
-    public String getSaleReferenceID() {
-        return saleReferenceID;
-    }
+	public String getSaleReferenceID() {
+		return saleReferenceID;
+	}
 
-    public String getTokenRequestedType() {
-        return tokenRequestedType;
-    }
+	public SaleTerminalData getSaleTerminalData() {
+		return saleTerminalData;
+	}
 
-    @NotNull
-    public SaleTransactionID getSaleTransactionID() {
-        return saleTransactionID;
-    }
+	public String getTokenRequestedType() {
+		return tokenRequestedType;
+	}
 
-    public static class Builder {
+	@NotNull
+	public SaleTransactionID getSaleTransactionID() {
+		return saleTransactionID;
+	}
 
-        private String operatorID;
-        private String operatorLanguage;
-        private String shiftNumber;
-        private String saleReferenceID;
-        private String tokenRequestedType;
-        private SaleTransactionID saleTransactionID;
+	public static class Builder {
 
-        public Builder() {
-        }
+		private String operatorID;
+		private String operatorLanguage;
+		private String shiftNumber;
+		private String saleReferenceID;
+		private SaleTerminalData saleTerminalData;
+		private String tokenRequestedType;
+		private SaleTransactionID saleTransactionID;
 
-        Builder(String operatorID, String operatorLanguage, String shiftNumber, String saleReferenceID, String tokenRequestedType, SaleTransactionID saleTransactionID) {
-            this.operatorID = operatorID;
-            this.operatorLanguage = operatorLanguage;
-            this.shiftNumber = shiftNumber;
-            this.saleReferenceID = saleReferenceID;
-            this.tokenRequestedType = tokenRequestedType;
-            this.saleTransactionID = saleTransactionID;
-        }
+		public Builder() {
+		}
 
-        public Builder operatorID(String operatorID) {
-            this.operatorID = operatorID;
-            return Builder.this;
-        }
+		Builder(String operatorID, String operatorLanguage, String shiftNumber, String saleReferenceID, SaleTerminalData saleTerminalData,
+				String tokenRequestedType, SaleTransactionID saleTransactionID) {
+			this.operatorID = operatorID;
+			this.operatorLanguage = operatorLanguage;
+			this.shiftNumber = shiftNumber;
+			this.saleReferenceID = saleReferenceID;
+			this.saleTerminalData = saleTerminalData;
+			this.tokenRequestedType = tokenRequestedType;
+			this.saleTransactionID = saleTransactionID;
+		}
 
-        public Builder operatorLanguage(String operatorLanguage) {
-            this.operatorLanguage = operatorLanguage;
-            return Builder.this;
-        }
+		public Builder operatorID(String operatorID) {
+			this.operatorID = operatorID;
+			return Builder.this;
+		}
 
-        public Builder shiftNumber(String shiftNumber) {
-            this.shiftNumber = shiftNumber;
-            return Builder.this;
-        }
+		public Builder operatorLanguage(String operatorLanguage) {
+			this.operatorLanguage = operatorLanguage;
+			return Builder.this;
+		}
 
-        public Builder saleReferenceID(String saleReferenceID) {
-            this.saleReferenceID = saleReferenceID;
-            return Builder.this;
-        }
+		public Builder shiftNumber(String shiftNumber) {
+			this.shiftNumber = shiftNumber;
+			return Builder.this;
+		}
 
-        public Builder tokenRequestedType(String tokenRequestedType) {
-            this.tokenRequestedType = tokenRequestedType;
-            return Builder.this;
-        }
+		public Builder saleReferenceID(String saleReferenceID) {
+			this.saleReferenceID = saleReferenceID;
+			return Builder.this;
+		}
+		
+		public Builder saleTerminalData(SaleTerminalData saleTerminalData) {
+			this.saleTerminalData = saleTerminalData;
+			return Builder.this;
+		}
 
-        public Builder saleTransactionID(SaleTransactionID saleTransactionID) {
-            this.saleTransactionID = saleTransactionID;
-            return Builder.this;
-        }
+		public Builder tokenRequestedType(String tokenRequestedType) {
+			this.tokenRequestedType = tokenRequestedType;
+			return Builder.this;
+		}
 
-        public SaleData build() {
-            if (this.operatorLanguage == null) {
-                operatorLanguage = "en";
-            }
-            if (this.saleTransactionID == null) {
-                throw new NullPointerException("The property \"saleTransactionID\" is null. "
-                        + "Please set the value by \"saleTransactionID()\". "
-                        + "The property \"saleTransactionID\" is required.");
-            }
+		public Builder saleTransactionID(SaleTransactionID saleTransactionID) {
+			this.saleTransactionID = saleTransactionID;
+			return Builder.this;
+		}
 
+		public SaleData build() {
+			if (this.operatorLanguage == null) {
+				operatorLanguage = "en";
+			}
+			if (this.saleTransactionID == null) {
+				throw new NullPointerException("The property \"saleTransactionID\" is null. "
+						+ "Please set the value by \"saleTransactionID()\". "
+						+ "The property \"saleTransactionID\" is required.");
+			}
 
-            return new SaleData(this);
-        }
-    }
+			return new SaleData(this);
+		}
+	}
 
-    private SaleData(Builder builder) {
-        this.operatorID = builder.operatorID;
-        this.operatorLanguage = builder.operatorLanguage;
-        this.shiftNumber = builder.shiftNumber;
-        this.saleReferenceID = builder.saleReferenceID;
-        this.saleTransactionID = builder.saleTransactionID;
-        this.tokenRequestedType = builder.tokenRequestedType;
-    }
+	private SaleData(Builder builder) {
+		this.operatorID = builder.operatorID;
+		this.operatorLanguage = builder.operatorLanguage;
+		this.shiftNumber = builder.shiftNumber;
+		this.saleReferenceID = builder.saleReferenceID;
+		this.saleTerminalData = builder.saleTerminalData;
+		this.saleTransactionID = builder.saleTransactionID;
+		this.tokenRequestedType = builder.tokenRequestedType;
+	}
 }
-
 
 /*
 package au.com.dmg.fusionsatellite.PaymentRequest
@@ -150,6 +166,7 @@ String operatorID
 @Required String operatorLanguage
 String shiftNumber
 String saleReferenceID
+SaleTerminalData saleTerminalData
 String tokenRequestedType
 @Required SaleTransactionID saleTransactionID
 * */

@@ -23,15 +23,17 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
-import com.squareup.moshi.Json;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.squareup.moshi.Json;
+
+import au.com.dmg.fusion.data.PaymentBrand;
 
 public class TransactionConditions {
 
     @Json(name = "AllowedPaymentBrands")
-    private final List<String> allowedPaymentBrands;
+    private final List<PaymentBrand> allowedPaymentBrands;
     @Json(name = "AcquirerID")
     private final List<String> acquirerID;
     @Json(name = "DebitPreferredFlag")
@@ -41,7 +43,7 @@ public class TransactionConditions {
     @Json(name = "MerchantCategoryCode")
     private final String merchantCategoryCode;
 
-    public List<String> getAllowedPaymentBrands() {
+    public List<PaymentBrand> getAllowedPaymentBrands() {
         return allowedPaymentBrands;
     }
 
@@ -63,7 +65,7 @@ public class TransactionConditions {
 
     public static class Builder {
 
-        private List<String> allowedPaymentBrands = new ArrayList<>();
+        private List<PaymentBrand> allowedPaymentBrands = new ArrayList<>();
         private List<String> acquirerID = new ArrayList<>();
         private Boolean debitPreferredFlag;
         private Boolean forceOnlineFlag;
@@ -72,7 +74,7 @@ public class TransactionConditions {
         public Builder() {
         }
 
-        Builder(List<String> allowedPaymentBrands, List<String> acquirerID, Boolean debitPreferredFlag, Boolean forceOnlineFlag, String merchantCategoryCode) {
+        Builder(List<PaymentBrand> allowedPaymentBrands, List<String> acquirerID, Boolean debitPreferredFlag, Boolean forceOnlineFlag, String merchantCategoryCode) {
             this.allowedPaymentBrands = allowedPaymentBrands;
             this.acquirerID = acquirerID;
             this.debitPreferredFlag = debitPreferredFlag;
@@ -80,12 +82,12 @@ public class TransactionConditions {
             this.merchantCategoryCode = merchantCategoryCode;
         }
 
-        public Builder allowedPaymentBrands(List<String> allowedPaymentBrands) {
+        public Builder allowedPaymentBrands(List<PaymentBrand> allowedPaymentBrands) {
             this.allowedPaymentBrands = allowedPaymentBrands;
             return Builder.this;
         }
 
-        public Builder addAllowedPaymentBrands(String allowedPaymentBrands) {
+        public Builder addAllowedPaymentBrands(PaymentBrand allowedPaymentBrands) {
             this.allowedPaymentBrands.add(allowedPaymentBrands);
             return Builder.this;
         }

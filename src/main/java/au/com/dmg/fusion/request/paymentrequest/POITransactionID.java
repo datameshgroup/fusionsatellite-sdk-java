@@ -30,9 +30,9 @@ import java.time.Instant;
 public class POITransactionID {
 
     @Json(name = "TransactionID")
-    String transactionID;
+    private final String transactionID;
     @Json(name = "TimeStamp")
-    Instant timestamp;
+    private final Instant timestamp;
 
     public String getTransactionID() {
         return transactionID;

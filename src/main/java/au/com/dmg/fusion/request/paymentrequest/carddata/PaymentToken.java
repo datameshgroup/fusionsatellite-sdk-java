@@ -26,15 +26,15 @@ package au.com.dmg.fusion.request.paymentrequest.carddata;
 import com.squareup.moshi.Json;
 
 public class PaymentToken {
-    @Json(name = "TokenRequestType")
-    final private String tokenRequestType;
+    @Json(name = "TokenRequestedType")
+    final private String tokenRequestedType;
     @Json(name = "TokenValue")
     final private String tokenValue;
     @Json(name = "ExpiryDateTime")
     final private String expiryDataTime;
 
-    public String getTokenRequestType() {
-        return tokenRequestType;
+    public String getTokenRequestedType() {
+        return tokenRequestedType;
     }
 
     public String getTokenValue() {
@@ -45,8 +45,8 @@ public class PaymentToken {
         return expiryDataTime;
     }
 
-    public PaymentToken(String tokenRequestType, String tokenValue, String expiryDataTime) {
-        this.tokenRequestType = tokenRequestType;
+    public PaymentToken(String tokenRequestedType, String tokenValue, String expiryDataTime) {
+        this.tokenRequestedType = tokenRequestedType;
         this.tokenValue = tokenValue;
         this.expiryDataTime = expiryDataTime;
     }
