@@ -23,18 +23,21 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
-import au.com.dmg.fusion.util.BigDecimalAdapter;
-import au.com.dmg.fusion.data.PaymentType;
-import au.com.dmg.fusion.data.UnitOfMeasure;
-import au.com.dmg.fusion.util.InstantAdapter;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedList;
+
+import org.junit.Test;
+
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
+import au.com.dmg.fusion.data.PaymentBrand;
+import au.com.dmg.fusion.data.PaymentType;
+import au.com.dmg.fusion.data.UnitOfMeasure;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
 
 public class PaymentRequestTest {
 
@@ -65,7 +68,7 @@ public class PaymentRequestTest {
                                 .build()
                         )
                         .transactionConditions(new TransactionConditions.Builder()
-                                .allowedPaymentBrands(new LinkedList<String>())
+                                .allowedPaymentBrands(new LinkedList<PaymentBrand>())
                                 .build()
                         )
                         .addSaleItem(
