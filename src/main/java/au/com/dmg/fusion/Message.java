@@ -50,6 +50,10 @@ public class Message implements Serializable {
     @Transient
     private transient int version = VERSION_UNDEFINED;
 
+    public static String INTENT_EXTRA_MESSAGE = "SaleToPOIJson";
+    public static String INTENT_EXTRA_PARENT_ID = "ParentActivityId";
+    public static String INTENT_EXTRA_VERSION = "JsonVersion";
+
     public Message(SaleToPOIRequest request) {
         this.request = request;
     }
@@ -112,6 +116,6 @@ public class Message implements Serializable {
 
     private void writeObject(ObjectOutputStream aOutputStream) throws IOException {
         aOutputStream.writeUTF(this.toJson());
-        aOutputStream.writeInt(1);
+        aOutputStream.writeInt(2);
     }
 }
