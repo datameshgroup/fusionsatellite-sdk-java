@@ -23,10 +23,18 @@
 
 package au.com.dmg.fusion.response;
 
+import java.time.Instant;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.Test;
+
 import au.com.dmg.fusion.MessageHeader;
+import au.com.dmg.fusion.data.InfoQualify;
 import au.com.dmg.fusion.data.MessageCategory;
 import au.com.dmg.fusion.data.MessageClass;
 import au.com.dmg.fusion.data.MessageType;
+import au.com.dmg.fusion.data.TerminalEnvironment;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
@@ -35,11 +43,6 @@ import au.com.dmg.fusion.response.inputresponse.InputResult;
 import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponseSaleData;
-import org.junit.Test;
-
-import java.time.Instant;
-import java.util.LinkedList;
-import java.util.List;
 
 public class SaleToPOIResponseTest {
     @Test
@@ -62,10 +65,9 @@ public class SaleToPOIResponseTest {
                                 .dateTime("x")
                                 .tokenRequestStatus(true)
                                 .POITerminalData(new POITerminalData.Builder()
-                                        .genericProfile("provile")
                                         .poiCapabilities(new LinkedList<>())
-                                        .terminalEnvironment("env")
-                                        .genericProfile("profile")
+                                        .terminalEnvironment(TerminalEnvironment.Unknown)
+                                        .poiProfile(new POIProfile("profile"))
                                         .poiSerialNumber("x")
                                         .build())
                                 .poiStatus(new POIStatus("globalstatus", true, true, true, "status", true, true))
@@ -139,7 +141,7 @@ public class SaleToPOIResponseTest {
     @Test
     public void testDisplay() {
         List<OutputResult> output = new LinkedList<>();
-        output.add(new OutputResult("d", "", "", "", ""));
+        output.add(new OutputResult("d", InfoQualify.Input, "", "", ""));
         SaleToPOIResponse response = new SaleToPOIResponse.Builder()
                 .messageHeader(new MessageHeader.Builder()
                         .protocolVersion("3.1")

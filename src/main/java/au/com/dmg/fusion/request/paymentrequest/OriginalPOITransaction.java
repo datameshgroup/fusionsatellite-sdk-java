@@ -34,6 +34,10 @@ public class OriginalPOITransaction {
     private final POITransactionID POITransactionID;
     @Json(name = "ReuseCardDataFlag")
     private final Boolean reuseCardDataFlag;
+    @Json(name = "ApprovalCode")
+    private final String approvalCode;
+    @Json(name = "LastTransactionFlag")
+    private final boolean lastTransactionFlag;
 
     public String getSaleID() {
         return saleID;
@@ -55,8 +59,6 @@ public class OriginalPOITransaction {
         return approvalCode;
     }
 
-    @Json(name = "ApprovalCode")
-    private final String approvalCode;
 
 
     public static class Builder {
@@ -66,6 +68,7 @@ public class OriginalPOITransaction {
         private POITransactionID POITransactionID;
         private Boolean reuseCardDataFlag;
         private String approvalCode;
+        private boolean lastTransactionFlag;
 
         public Builder() {
         }
@@ -102,6 +105,11 @@ public class OriginalPOITransaction {
             this.approvalCode = approvalCode;
             return Builder.this;
         }
+        
+        public Builder approvalCode(boolean lastTransactionFlag) {
+            this.lastTransactionFlag = lastTransactionFlag;
+            return Builder.this;
+        }
 
         public OriginalPOITransaction build() {
             if (this.saleID == null) {
@@ -130,6 +138,7 @@ public class OriginalPOITransaction {
         this.POITransactionID = builder.POITransactionID;
         this.reuseCardDataFlag = builder.reuseCardDataFlag;
         this.approvalCode = builder.approvalCode;
+        this.lastTransactionFlag = builder.lastTransactionFlag;
     }
 }
 

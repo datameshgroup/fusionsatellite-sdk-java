@@ -21,43 +21,30 @@
  *
  */
 
-package au.com.dmg.fusion.request.displayrequest;
+package au.com.dmg.fusion.response;
 
-import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 
-import au.com.dmg.fusion.util.BigDecimalAdapter;
-import au.com.dmg.fusion.request.Request;
+import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
 
-public class DisplayRequest implements Request {
+public class RepeatedResponseMessageBody {
 
-	@Json(name = "DisplayOutput")
-	private DisplayOutput displayOutput;
+	@Json(name = "PaymentResponse")
+	private final PaymentResponse paymentResponse;
+	@Json(name = "ReversalResponse")
+	private final ReversalResponse reversalResponse;
+	
+	public RepeatedResponseMessageBody(PaymentResponse paymentResponse, ReversalResponse reversalResponse) {
+		this.paymentResponse = paymentResponse;
+		this.reversalResponse = reversalResponse;
+	}
 
-	public DisplayRequest() {
+	public PaymentResponse getPaymentResponse() {
+		return paymentResponse;
+	}
+
+	public ReversalResponse getReversalResponse() {
+		return reversalResponse;
 	}
 	
-	public DisplayRequest(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
-	}
-
-    public DisplayOutput getDisplayOutput() {
-		return displayOutput;
-	}
-
-	public void setDisplayOutput(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
-	}
-
-	@Override
-    public String toJson() {
-        Moshi moshi = new Moshi.Builder()
-                .add(new BigDecimalAdapter())
-				.add(new InstantAdapter())
-                .build();
-        JsonAdapter<DisplayRequest> jsonAdapter = moshi.adapter(DisplayRequest.class);
-        return jsonAdapter.toJson(this);
-    }
 }

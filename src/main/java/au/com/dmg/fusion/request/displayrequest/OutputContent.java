@@ -23,41 +23,25 @@
 
 package au.com.dmg.fusion.request.displayrequest;
 
-import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 
-import au.com.dmg.fusion.util.BigDecimalAdapter;
-import au.com.dmg.fusion.request.Request;
+public class OutputContent {
 
-public class DisplayRequest implements Request {
+	@Json(name = "OutputFormat")
+	private final String outputFormat;
+	@Json(name = "OutputText")
+	private final OutputText outputText;
 
-	@Json(name = "DisplayOutput")
-	private DisplayOutput displayOutput;
-
-	public DisplayRequest() {
-	}
-	
-	public DisplayRequest(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
+	public OutputContent(String outputFormat, OutputText outputText) {
+		this.outputFormat = outputFormat;
+		this.outputText = outputText;
 	}
 
-    public DisplayOutput getDisplayOutput() {
-		return displayOutput;
+	public String getOutputFormat() {
+		return outputFormat;
 	}
 
-	public void setDisplayOutput(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
+	public OutputText getOutputText() {
+		return outputText;
 	}
-
-	@Override
-    public String toJson() {
-        Moshi moshi = new Moshi.Builder()
-                .add(new BigDecimalAdapter())
-				.add(new InstantAdapter())
-                .build();
-        JsonAdapter<DisplayRequest> jsonAdapter = moshi.adapter(DisplayRequest.class);
-        return jsonAdapter.toJson(this);
-    }
 }

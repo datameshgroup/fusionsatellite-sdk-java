@@ -69,9 +69,9 @@ public class SaleItem {
     private final List<String> tags;
     @Json(name = "Restricted")
     private final Boolean restricted;
-    @Json(name = "PageUrl")
+    @Json(name = "PageURL")
     private final String pageUrl;
-    @Json(name = "ImageUrls")
+    @Json(name = "ImageURLs")
     private final List<String> imageUrls;
     @Json(name = "Style")
     private final String style;

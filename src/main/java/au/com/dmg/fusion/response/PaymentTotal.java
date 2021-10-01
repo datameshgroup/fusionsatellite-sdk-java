@@ -21,43 +21,39 @@
  *
  */
 
-package au.com.dmg.fusion.request.displayrequest;
+package au.com.dmg.fusion.response;
 
-import au.com.dmg.fusion.util.InstantAdapter;
+import java.math.BigDecimal;
+
 import com.squareup.moshi.Json;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 
-import au.com.dmg.fusion.util.BigDecimalAdapter;
-import au.com.dmg.fusion.request.Request;
+import au.com.dmg.fusion.data.TransactionType;
 
-public class DisplayRequest implements Request {
+public class PaymentTotal {
 
-	@Json(name = "DisplayOutput")
-	private DisplayOutput displayOutput;
+	@Json(name = "TransactionType")
+	private final TransactionType transactionType;
+	@Json(name = "TransactionCount")
+	private final Integer transactionCount;
+	@Json(name = "TransactionAmount")
+	private final BigDecimal transactionAmount;
 
-	public DisplayRequest() {
-	}
-	
-	public DisplayRequest(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
-	}
-
-    public DisplayOutput getDisplayOutput() {
-		return displayOutput;
+	public PaymentTotal(TransactionType transactionType, Integer transactionCount, BigDecimal transactionAmount) {
+		this.transactionType = transactionType;
+		this.transactionCount = transactionCount;
+		this.transactionAmount = transactionAmount;
 	}
 
-	public void setDisplayOutput(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
+	public TransactionType getTransactionType() {
+		return transactionType;
 	}
 
-	@Override
-    public String toJson() {
-        Moshi moshi = new Moshi.Builder()
-                .add(new BigDecimalAdapter())
-				.add(new InstantAdapter())
-                .build();
-        JsonAdapter<DisplayRequest> jsonAdapter = moshi.adapter(DisplayRequest.class);
-        return jsonAdapter.toJson(this);
-    }
+	public Integer getTransactionCount() {
+		return transactionCount;
+	}
+
+	public BigDecimal getTransactionAmount() {
+		return transactionAmount;
+	}
+
 }

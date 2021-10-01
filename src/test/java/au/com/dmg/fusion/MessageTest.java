@@ -67,7 +67,7 @@ public class MessageTest {
                                 .build()
                         )
                         .transactionConditions(new TransactionConditions.Builder()
-                                .allowedPaymentBrands(new LinkedList<String>())
+                                .allowedPaymentBrands(new LinkedList<PaymentBrand>())
                                 .build()
                         )
                         .addSaleItem(

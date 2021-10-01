@@ -23,30 +23,30 @@
 
 package au.com.dmg.fusion.response;
 
-import au.com.dmg.fusion.MessageHeader;
-import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
 import com.squareup.moshi.Json;
+
+import au.com.dmg.fusion.MessageHeader;
 
 public class RepeatedMessageResponse {
     @Json(name = "MessageHeader")
     private MessageHeader messageHeader;
-    @Json(name = "PaymentResponse")
-    private PaymentResponse paymentResponse;
+    @Json(name = "RepeatedResponseMessageBody")
+    private RepeatedResponseMessageBody repeatedResponseMessageBody;
 
-    public RepeatedMessageResponse(MessageHeader messageHeader, PaymentResponse paymentResponse) {
-        if (messageHeader == null || paymentResponse == null) {
-            throw new NullPointerException("Error both header and paymentresponse are required.");
+    public RepeatedMessageResponse(MessageHeader messageHeader, RepeatedResponseMessageBody repeatedResponseMessageBody) {
+        if (messageHeader == null || repeatedResponseMessageBody == null) {
+            throw new NullPointerException("Error both header and repeatedResponseMessageBody are required.");
         }
 
         this.messageHeader = messageHeader;
-        this.paymentResponse = paymentResponse;
+        this.repeatedResponseMessageBody = repeatedResponseMessageBody;
     }
 
     public MessageHeader getMessageHeader() {
         return messageHeader;
     }
 
-    public PaymentResponse getPaymentResponse() {
-        return paymentResponse;
+    public RepeatedResponseMessageBody getRepeatedResponseMessageBody() {
+        return repeatedResponseMessageBody;
     }
 }

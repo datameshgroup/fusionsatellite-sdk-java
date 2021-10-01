@@ -27,11 +27,12 @@ import com.squareup.moshi.*;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 
 public class InstantAdapter extends JsonAdapter<Instant> {
     @Override
     public Instant fromJson(JsonReader reader) throws IOException {
-        return Instant.parse(reader.nextString());
+        return OffsetDateTime.parse(reader.nextString()).toInstant();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class InstantAdapter extends JsonAdapter<Instant> {
 
     @FromJson
     public Instant fromJson2(String string) {
-        return Instant.parse(string);
+    	return OffsetDateTime.parse(string).toInstant();
     }
 
     @ToJson

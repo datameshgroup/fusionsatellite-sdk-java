@@ -23,5 +23,47 @@
 
 package au.com.dmg.fusion.response;
 
-public class ReconciliationResponse {
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.squareup.moshi.Json;
+
+public class ReconciliationResponse implements ResponseType {
+
+	@Json(name = "Response")
+	private final Response response;
+	@Json(name = "ReconciliationType")
+	private final String reconciliationType;
+	@Json(name = "POIReconciliationID")
+	private final String poiReconciliationID;
+	@Json(name = "TransactionTotals")
+	private final List<TransactionTotal> transactionTotals;
+
+	public ReconciliationResponse(Response response, String reconciliationType, String poiReconciliationID,
+			List<TransactionTotal> transactionTotals) {
+		this.response = response;
+		this.reconciliationType = reconciliationType;
+		this.poiReconciliationID = poiReconciliationID;
+		this.transactionTotals = transactionTotals;
+	}
+
+	@NotNull
+	public Response getResponse() {
+		return response;
+	}
+
+	@NotNull
+	public String getReconciliationType() {
+		return reconciliationType;
+	}
+
+	public String getPoiReconciliationID() {
+		return poiReconciliationID;
+	}
+
+	public List<TransactionTotal> getTransactionTotals() {
+		return transactionTotals;
+	}
+
 }

@@ -21,43 +21,21 @@
  *
  */
 
-package au.com.dmg.fusion.request.displayrequest;
+package au.com.dmg.fusion.response;
 
-import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 
-import au.com.dmg.fusion.util.BigDecimalAdapter;
-import au.com.dmg.fusion.request.Request;
+public class POIProfile {
 
-public class DisplayRequest implements Request {
+    @Json(name = "GenericProfile")
+    private final String genericProfile;
 
-	@Json(name = "DisplayOutput")
-	private DisplayOutput displayOutput;
-
-	public DisplayRequest() {
-	}
-	
-	public DisplayRequest(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
-	}
-
-    public DisplayOutput getDisplayOutput() {
-		return displayOutput;
-	}
-
-	public void setDisplayOutput(DisplayOutput displayOutput) {
-		this.displayOutput = displayOutput;
-	}
-
-	@Override
-    public String toJson() {
-        Moshi moshi = new Moshi.Builder()
-                .add(new BigDecimalAdapter())
-				.add(new InstantAdapter())
-                .build();
-        JsonAdapter<DisplayRequest> jsonAdapter = moshi.adapter(DisplayRequest.class);
-        return jsonAdapter.toJson(this);
+    public POIProfile(String genericProfile) {
+        this.genericProfile = genericProfile;
     }
+
+	public String getGenericProfile() {
+		return genericProfile;
+	}
+
 }
