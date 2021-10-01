@@ -81,33 +81,33 @@ Then on that activity, add the following code.
 
     onCreate( ... ){
         ...
-		// add this code to the onCreate method of your activity.
+        // add this code to the onCreate method of your activity.
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra(Message.INTENT_EXTRA_MESSAGE){
-			handleResponseIntent(intent)
-		}
+            handleResponseIntent(intent);
+        }
     }
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		if (isResponseIntent(intent)) {
-			handleResponseIntent(intent);
-		}
+	    super.onNewIntent(intent);
+	    if (isResponseIntent(intent)) {
+	        handleResponseIntent(intent);
+	    }
 	}
 
 	void handleResponseIntent(Intent intent){
-		// The response is sent as a Json and we will need to deserialize it.
-		Message message = null;
-		try{
-			message = Message.fromJson(intent.getStringExtra(Message.INTENT_EXTRA_MESSAGE));
-		} catch(Exception e){
-			// json errors may occur,
-			// if this is occuring, make sure you are using the latest fusion-sdk library
-			return;
-		}
-		SaleToPOIResponse response = message.response;
-		// we can now access the data.
+	    // The response is sent as a Json and we will need to deserialize it.
+	    Message message = null;
+	    try{
+	        message = Message.fromJson(intent.getStringExtra(Message.INTENT_EXTRA_MESSAGE));
+	    } catch(Exception e){
+	        // json errors may occur,
+	        // if this is occuring, make sure you are using the latest fusion-sdk library
+	        return;
+	    }
+	    SaleToPOIResponse response = message.response;
+	    // we can now access the data.
 	}
 
 ## License
