@@ -136,10 +136,6 @@ public class AmountsResp {
         this.tipAmount = builder.tipAmount;
         this.surchargeAmount = builder.surchargeAmount;
     }
-
-    public void doSomething() {
-        // do something
-    }
 }
 
 /*
