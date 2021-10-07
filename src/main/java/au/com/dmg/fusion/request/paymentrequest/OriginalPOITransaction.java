@@ -51,7 +51,7 @@ public class OriginalPOITransaction {
         return POITransactionID;
     }
 
-    public Boolean getReuuseCardDataFlag() {
+    public Boolean getReuseCardDataFlag() {
         return reuseCardDataFlag;
     }
 
