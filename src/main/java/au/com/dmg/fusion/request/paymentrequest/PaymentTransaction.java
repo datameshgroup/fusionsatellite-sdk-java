@@ -31,8 +31,8 @@ import java.util.List;
 public class PaymentTransaction {
     @Json(name = "AmountsReq")
     private final AmountsReq amountsReq;
-    @Json(name = "OriginalPOITransactionObject")
-    private final OriginalPOITransaction originalPOITransactionObject;
+    @Json(name = "OriginalPOITransaction")
+    private final OriginalPOITransaction originalPOITransaction;
     @Json(name = "TransactionConditions")
     private final TransactionConditions transactionConditions;
     @Json(name = "SaleItem")
@@ -45,7 +45,7 @@ public class PaymentTransaction {
     }
 
     public OriginalPOITransaction getOriginalPOITransactionObject() {
-        return originalPOITransactionObject;
+        return originalPOITransaction;
     }
 
     public TransactionConditions getTransactionConditions() {
@@ -63,7 +63,7 @@ public class PaymentTransaction {
     public static class Builder {
 
         private AmountsReq amountsReq;
-        private OriginalPOITransaction originalPOITransactionObject;
+        private OriginalPOITransaction originalPOITransaction;
         private TransactionConditions transactionConditions;
         private List<SaleItem> saleItems = new ArrayList<>();
         private PaymentData paymentData;
@@ -71,9 +71,9 @@ public class PaymentTransaction {
         public Builder() {
         }
 
-        Builder(AmountsReq amountsReq, OriginalPOITransaction originalPOITransactionObject, TransactionConditions transactionConditions, List<SaleItem> saleItems, PaymentData paymentData) {
+        Builder(AmountsReq amountsReq, OriginalPOITransaction originalPOITransaction, TransactionConditions transactionConditions, List<SaleItem> saleItems, PaymentData paymentData) {
             this.amountsReq = amountsReq;
-            this.originalPOITransactionObject = originalPOITransactionObject;
+            this.originalPOITransaction = originalPOITransaction;
             this.transactionConditions = transactionConditions;
             this.saleItems = saleItems;
             this.paymentData = paymentData;
@@ -84,8 +84,8 @@ public class PaymentTransaction {
             return Builder.this;
         }
 
-        public Builder originalPOITransactionObject(OriginalPOITransaction originalPOITransactionObject) {
-            this.originalPOITransactionObject = originalPOITransactionObject;
+        public Builder originalPOITransaction(OriginalPOITransaction originalPOITransaction) {
+            this.originalPOITransaction = originalPOITransaction;
             return Builder.this;
         }
 
@@ -136,7 +136,7 @@ public class PaymentTransaction {
 
     private PaymentTransaction(Builder builder) {
         this.amountsReq = builder.amountsReq;
-        this.originalPOITransactionObject = builder.originalPOITransactionObject;
+        this.originalPOITransaction = builder.originalPOITransaction;
         this.transactionConditions = builder.transactionConditions;
         this.saleItems = builder.saleItems;
         this.paymentData = builder.paymentData;
@@ -148,7 +148,7 @@ public class PaymentTransaction {
 package au.com.dmg.fusionsatellite.PaymentRequest
 class PaymentTransaction
 @Required AmountsReq amountsReq
-OriginalPOITransaction originalPOITransactionObject
+OriginalPOITransaction originalPOITransaction
 TransactionConditions transactionConditions
 List<SaleItem> saleItems
 @Required PaymentData paymentData
