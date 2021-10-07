@@ -50,9 +50,17 @@ public class Message implements Serializable {
     @Transient
     private transient int version = VERSION_UNDEFINED;
 
+    @Json(name = "FusionSatelliteLibraryVersion")
+    private String fusionSatelliteLibraryVersion = "1.0.2";
+
     public static String INTENT_EXTRA_MESSAGE = "SaleToPOIJson";
     public static String INTENT_EXTRA_PARENT_ID = "ParentActivityId";
     public static String INTENT_EXTRA_VERSION = "JsonVersion";
+    public static String INTENT_EXTRA_APPLICATION_NAME = "ApplicationName";
+    public static String INTENT_EXTRA_APPLICATION_VERSION = "SoftwareVersion";
+    public static String INTENT_ACTION_SALETOPOI_REQUEST = "au.com.axispay.action.SaleToPOIRequest";
+    public static String INTENT_ACTION_SALETOPOI_RESPONSE = "au.com.axispay.action.SaleToPOIResponse";
+    public static String AXISPAY_PACKAGE_NAME = "au.com.dmg.axispay";
 
     public Message(SaleToPOIRequest request) {
         this.request = request;
@@ -70,8 +78,8 @@ public class Message implements Serializable {
         return response;
     }
 
-    public int getVersion() {
-        return version;
+    public String getFusionSatelliteLibraryVersion(){
+        return fusionSatelliteLibraryVersion;
     }
 
     public String toJson() {
@@ -107,15 +115,15 @@ public class Message implements Serializable {
 
     private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
         String json = aInputStream.readUTF();
-        int version = aInputStream.readInt();
+        String version = aInputStream.readUTF();
         Message message = Message.fromJson(json);
         this.response = message.getResponse();
         this.request = message.getRequest();
-        this.version = version;
+        this.fusionSatelliteLibraryVersion = version;
     }
 
     private void writeObject(ObjectOutputStream aOutputStream) throws IOException {
         aOutputStream.writeUTF(this.toJson());
-        aOutputStream.writeInt(2);
+        aOutputStream.writeUTF(this.fusionSatelliteLibraryVersion);
     }
 }
