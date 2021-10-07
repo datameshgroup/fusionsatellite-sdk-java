@@ -44,7 +44,7 @@ public class PaymentTransaction {
         return amountsReq;
     }
 
-    public OriginalPOITransaction getOriginalPOITransactionObject() {
+    public OriginalPOITransaction getOriginalPOITransaction() {
         return originalPOITransaction;
     }
 

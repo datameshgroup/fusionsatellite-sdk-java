@@ -58,7 +58,7 @@ public class MessageTest {
                                 .requestedAmount(new BigDecimal("5.0"))
                                 .build()
                         )
-                        .originalPOITransactionObject(new OriginalPOITransaction.Builder()
+                        .originalPOITransaction(new OriginalPOITransaction.Builder()
                                 .saleID("saleID")
                                 .POIID("POIID")
                                 .POITransactionID(
