@@ -27,6 +27,6 @@ public enum PaymentType {
     Normal,
     Refund,
     CashAdvance,
-    PreAuthorization,
+    FirstReservation,
     Completion
 }
