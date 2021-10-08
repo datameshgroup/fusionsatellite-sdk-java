@@ -37,6 +37,8 @@ public class PaymentRequest implements Request {
     private final SaleData saleData;
     @Json(name = "PaymentTransaction")
     private final PaymentTransaction paymentTransaction;
+    @Json(name = "PaymentData")
+    private final PaymentData paymentData;
 
     @NotNull
     public PaymentTransaction getPaymentTransaction() {
@@ -48,11 +50,16 @@ public class PaymentRequest implements Request {
         return saleData;
     }
 
+    @NotNull
+    public PaymentData getPaymentData() {
+        return paymentData;
+    }
 
     public static class Builder {
 
         private SaleData saleData;
         private PaymentTransaction paymentTransaction;
+        private PaymentData paymentData;
 
         public Builder() {
         }
@@ -60,6 +67,7 @@ public class PaymentRequest implements Request {
         Builder(SaleData saleData, PaymentTransaction paymentTransaction) {
             this.saleData = saleData;
             this.paymentTransaction = paymentTransaction;
+            this.paymentData = paymentData;
         }
 
         public Builder saleData(SaleData saleData) {
@@ -70,6 +78,11 @@ public class PaymentRequest implements Request {
         public Builder paymentTransaction(PaymentTransaction paymentTransaction) {
             this.paymentTransaction = paymentTransaction;
             return Builder.this;
+        }
+
+        public PaymentRequest.Builder paymentData(PaymentData paymentData) {
+            this.paymentData = paymentData;
+            return PaymentRequest.Builder.this;
         }
 
         public PaymentRequest build() {
@@ -83,6 +96,11 @@ public class PaymentRequest implements Request {
                         + "Please set the value by \"paymentTransaction()\". "
                         + "The properties \"saleData\", \"paymentTransaction\" are required.");
             }
+            if (this.paymentData == null) {
+                throw new NullPointerException("The property \"paymentData\" is null. "
+                        + "Please set the value by \"paymentData()\". "
+                        + "The properties \"amountsReq\", \"paymentData\" are required.");
+            }
 
             return new PaymentRequest(this);
         }
@@ -91,6 +109,7 @@ public class PaymentRequest implements Request {
     private PaymentRequest(Builder builder) {
         this.saleData = builder.saleData;
         this.paymentTransaction = builder.paymentTransaction;
+        this.paymentData = builder.paymentData;
     }
 
     @Override

@@ -84,9 +84,10 @@ public class PaymentRequestTest {
                                         .productLabel("xx")
                                         .build()
                         )
-                        .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
                         .build()
-                ).build();
+                )
+                .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
+                .build();
 
         Moshi moshi = new Moshi.Builder()
                 .add(new BigDecimalAdapter())

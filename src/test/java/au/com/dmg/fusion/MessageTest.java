@@ -36,7 +36,7 @@ import java.util.LinkedList;
 public class MessageTest {
 
     @Test
-    public void testCreate(){
+    public void testCreate() {
         PaymentRequest paymentRequest = new PaymentRequest.Builder()
                 .saleData(new SaleData.Builder()
                         .saleReferenceID("saleref")
@@ -82,9 +82,10 @@ public class MessageTest {
                                         .productLabel("xx")
                                         .build()
                         )
-                        .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
                         .build()
-                ).build();
+                )
+                .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
+                .build();
 
         SaleToPOIRequest request = new SaleToPOIRequest.Builder()
                 .messageHeader(new MessageHeader.Builder()
@@ -102,7 +103,7 @@ public class MessageTest {
     }
 
     @Test
-    public void fromJson(){
+    public void fromJson() {
         Message message = null;
         try {
             message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"MessageCategory\":\"Display\",\"MessageClass\":\"Device\",\"MessageType\":\"Notification\",\"ServiceID\":\"ServiceID\"},\"PaymentRequest\":{\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":\"5.0\"},\"OriginalPOITransactionObject\":{\"POIID\":\"POIID\",\"POITransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.073Z\",\"TransactionID\":\"id\"},\"SaleID\":\"saleID\"},\"PaymentData\":{\"PaymentType\":\"Normal\"},\"SaleItem\":[{\"EanUpc\":\"xxx\",\"ImageUrls\":[],\"ItemAmount\":\"1.0\",\"ItemID\":1,\"ProductCode\":\"X\",\"ProductLabel\":\"xx\",\"Quantity\":\"1.0\",\"Restricted\":false,\"SaleChannel\":\"Unknown\",\"Tags\":[],\"TaxCode\":\"GST\",\"UnitOfMeasure\":\"Centilitre\",\"UnitPrice\":\"1\"}],\"TransactionConditions\":{\"AcquirerID\":[],\"AllowedPaymentBrands\":[]}},\"SaleData\":{\"OperatorID\":\"operatorID\",\"OperatorLanguage\":\"en\",\"SaleReferenceID\":\"saleref\",\"SaleTransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.057Z\",\"TransactionID\":\"x\"},\"ShiftNumber\":\"shiftno\",\"TokenRequestedType\":\"todo\"}}}}");
@@ -110,13 +111,13 @@ public class MessageTest {
             e.printStackTrace();
         }
 
-        assert(message.getRequest() != null);
-        assert(message.getResponse() == null);
-        assert(message.getRequest().getPaymentRequest().getPaymentTransaction().getAmountsReq().getCurrency().equals("AUD"));
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getPaymentTransaction().getAmountsReq().getCurrency().equals("AUD"));
     }
 
     @Test
-    public void fromJsonTestBadEnums(){
+    public void fromJsonTestBadEnums() {
         Message message = null;
         try {
             message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"MessageCategory\":\"Display\",\"MessageClass\":\"Device\",\"MessageType\":\"Notification\",\"ServiceID\":\"ServiceID\"},\"PaymentRequest\":{\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":\"5.0\"},\"OriginalPOITransactionObject\":{\"POIID\":\"POIID\",\"POITransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.073Z\",\"TransactionID\":\"id\"},\"SaleID\":\"saleID\"},\"PaymentData\":{\"PaymentType\":\"Normal\"},\"SaleItem\":[{\"EanUpc\":\"xxx\",\"ImageUrls\":[],\"ItemAmount\":\"1.0\",\"ItemID\":1,\"ProductCode\":\"X\",\"ProductLabel\":\"xx\",\"Quantity\":\"1.0\",\"Restricted\":false,\"SaleChannel\":\"Unknown\",\"Tags\":[],\"TaxCode\":\"GST\",\"UnitOfMeasure\":\"3f3f23hf83f\",\"UnitPrice\":\"1\"}],\"TransactionConditions\":{\"AcquirerID\":[],\"AllowedPaymentBrands\":[]}},\"SaleData\":{\"OperatorID\":\"operatorID\",\"OperatorLanguage\":\"en\",\"SaleReferenceID\":\"saleref\",\"SaleTransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.057Z\",\"TransactionID\":\"x\"},\"ShiftNumber\":\"shiftno\",\"TokenRequestedType\":\"todo\"}}}}");
@@ -124,9 +125,9 @@ public class MessageTest {
             e.printStackTrace();
         }
 
-        assert(message.getRequest() != null);
-        assert(message.getResponse() == null);
-        assert(message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getUnitOfMeasure() == UnitOfMeasure.Other);
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getUnitOfMeasure() == UnitOfMeasure.Other);
 
         message = null;
         try {
@@ -135,13 +136,13 @@ public class MessageTest {
             e.printStackTrace();
         }
 
-        assert(message.getRequest() != null);
-        assert(message.getResponse() == null);
-        assert(message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getUnitOfMeasure() == UnitOfMeasure.Centimetre);
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getUnitOfMeasure() == UnitOfMeasure.Centimetre);
     }
 
     @Test
-    public void testExtraJson(){
+    public void testExtraJson() {
         Message message = null;
         try {
             message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"MessageCategory\":\"Display\",\"MessageClass\":\"Device\",\"MessageType\":\"Notification\",\"ServiceID\":\"ServiceID\"},\"PaymentRequest\":{\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":\"5.0\"},\"OriginalPOITransactionObject\":{\"POIID\":\"POIID\",\"POITransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.073Z\",\"TransactionID\":\"id\"},\"SaleID\":\"saleID\"},\"PaymentData\":{\"PaymentType\":\"Normal\"},\"SaleItem\":[{\"EanUpc\":\"xxx\",\"ImageUrls\":[],\"ItemAmount\":\"1.0\",\"ItemID\":1,\"ProductCode\":\"X\",\"ProductLabel\":\"xx\",\"Quantity\":\"1.0\",\"Restricted\":false,\"SaleChannel\":\"Unknown\",\"Tags\":[],\"TaxCode\":\"GST\",\"UnitOfMeasure\":\"3f3f23hf83f\",\"UnitPrice\":\"1\"}],\"TransactionConditions\":{\"AcquirerID\":[],\"AllowedPaymentBrands\":[]}},\"SaleData\":{\"OperatorID\":\"operatorID\",\"OperatorLanguage\":\"en\",\"SaleReferenceID\":\"saleref\",\"SaleTransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.057Z\",\"TransactionID\":\"x\", \"ExtraField\":\"Value\"},\"ShiftNumber\":\"shiftno\",\"TokenRequestedType\":\"todo\"}}}}");
@@ -149,9 +150,9 @@ public class MessageTest {
             e.printStackTrace();
         }
 
-        assert(message.getRequest() != null);
-        assert(message.getResponse() == null);
-        assert(message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getUnitOfMeasure() == UnitOfMeasure.Other);
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getUnitOfMeasure() == UnitOfMeasure.Other);
 
     }
 }

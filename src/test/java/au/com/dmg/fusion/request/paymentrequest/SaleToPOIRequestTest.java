@@ -83,9 +83,10 @@ public class SaleToPOIRequestTest extends TestCase {
                                         .productLabel("xx")
                                         .build()
                         )
-                        .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
                         .build()
-                ).build();
+                )
+                .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
+                .build();
 
         SaleToPOIRequest request = new SaleToPOIRequest.Builder()
                 .messageHeader(new MessageHeader.Builder()

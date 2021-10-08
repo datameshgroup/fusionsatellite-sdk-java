@@ -37,8 +37,6 @@ public class PaymentTransaction {
     private final TransactionConditions transactionConditions;
     @Json(name = "SaleItem")
     private final List<SaleItem> saleItems;
-    @Json(name = "PaymentData")
-    private final PaymentData paymentData;
 
     public AmountsReq getAmountsReq() {
         return amountsReq;
@@ -56,17 +54,12 @@ public class PaymentTransaction {
         return saleItems;
     }
 
-    public PaymentData getPaymentData() {
-        return paymentData;
-    }
-
     public static class Builder {
 
         private AmountsReq amountsReq;
         private OriginalPOITransaction originalPOITransaction;
         private TransactionConditions transactionConditions;
         private List<SaleItem> saleItems = new ArrayList<>();
-        private PaymentData paymentData;
 
         public Builder() {
         }
@@ -76,7 +69,6 @@ public class PaymentTransaction {
             this.originalPOITransaction = originalPOITransaction;
             this.transactionConditions = transactionConditions;
             this.saleItems = saleItems;
-            this.paymentData = paymentData;
         }
 
         public Builder amountsReq(AmountsReq amountsReq) {
@@ -113,23 +105,12 @@ public class PaymentTransaction {
             return Builder.this;
         }
 
-        public Builder paymentData(PaymentData paymentData) {
-            this.paymentData = paymentData;
-            return Builder.this;
-        }
-
         public PaymentTransaction build() {
             if (this.amountsReq == null) {
                 throw new NullPointerException("The property \"amountsReq\" is null. "
                         + "Please set the value by \"amountsReq()\". "
                         + "The properties \"amountsReq\", \"paymentData\" are required.");
             }
-            if (this.paymentData == null) {
-                throw new NullPointerException("The property \"paymentData\" is null. "
-                        + "Please set the value by \"paymentData()\". "
-                        + "The properties \"amountsReq\", \"paymentData\" are required.");
-            }
-
             return new PaymentTransaction(this);
         }
     }
@@ -139,7 +120,6 @@ public class PaymentTransaction {
         this.originalPOITransaction = builder.originalPOITransaction;
         this.transactionConditions = builder.transactionConditions;
         this.saleItems = builder.saleItems;
-        this.paymentData = builder.paymentData;
     }
 }
 
