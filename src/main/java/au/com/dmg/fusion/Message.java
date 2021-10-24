@@ -53,6 +53,7 @@ public class Message implements Serializable {
     public static String INTENT_EXTRA_APPLICATION_VERSION = "SoftwareVersion";
     public static String INTENT_ACTION_SALETOPOI_REQUEST = "au.com.dmg.axispay.action.SaleToPOIRequest";
     public static String AXISPAY_PACKAGE_NAME = "au.com.dmg.axispay";
+    public static int INTENT_REQUEST_CODE = 100;
 
     public Message(SaleToPOIRequest request) {
         this.request = request;

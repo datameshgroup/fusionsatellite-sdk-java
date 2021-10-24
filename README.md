@@ -1,11 +1,11 @@
 # Java Fusion SDK
 
-Fusion SDK allows for the creation of payment requests for Datamesh terminals.
-This library is designed for both Java 8 and Android.
+Fusion SDK allows for the creation of payment requests for terminals running Satellite.
+This library is designed for both Java 8+ and Android.
 
 ## How to include
 
-    implementation "com.datameshgroup.fusion:fusion-sdk:1.0.2"
+    implementation "com.datameshgroup.fusion:fusion-sdk:1.1.0"
 
 If you are using Android you will need to add Java 8 syntax desugaring.
 In your app's build.gradle
@@ -22,77 +22,46 @@ In your app's build.gradle
 	}
 
 ## Creating Messages
+You should use the fusion reference API when creating Request objects  
 Please access the documentation here https://datameshgroup.github.io/fusion/
 
-## Sending Messages
-The app uses intents to send and receive messages
+# Android Implenetation Details
+The terminal uses startActivityForResult to create payment requests.
 ### Kotlin Example
-
-    val intent = getPackageManager().getLaunchIntentForPackage(Message.AXISPAY_PACKAGE_NAME)?.apply{
-		setAction(INTENT_ACTION_SALETOPOI_REQUEST)
+    val intent = Intent(Message.INTENT_ACTION_SALETOPOI_REQUEST).apply {
 		// this is the message payload, reference the API documents to see how to build these
 		putExtra(Message.INTENT_EXTRA_MESSAGE, message.toJson())
-		// this is required so the terminal knows which app to return the response to.
-		putExtra(Message.INTENT_EXTRA_PARENT, getPackageName)
 		// these 2 fields are optional and are used to label the POS.
 		putExtra(Message.INTENT_EXTRA_APPLICATION_NAME, "Pos Name")
 		putExtra(Message.INTENT_EXTRA_APPLICATION_VERSION, "1.0.0")
 	}
-
-
-    if(intent == null){
-		// AxisPay is not available on the device, this must be run on DMG terminals.
-		return
-	}
-	startActivity(intent)
+	startActivityForResult(intent, 100)
 
 ### Java Example
 
-    Intent intent = getPackageManager().getLaunchIntentForPackage(Message.AXISPAY_PACKAGE_NAME);
-    if (intent == null) {
-	    Toast.makeText(this, "AxisPay not Available.", Toast.LENGTH_SHORT).show();
-	    return;
-    }
-    // wrapper of request.
-    SaleToPOIRequest request; // You need to build this yourself first.
-    Message message = new Message(request);
-    // this is required for the intent filter.
-    intent.setAction(Message.INTENT_ACTION_SALETOPOI_REQUEST);
-    intent.putExtra(Message.INTENT_EXTRA_MESSAGE, message.toJson());
-    intent.putExtra(Message.INTENT_EXTRA_PARENT_ID, this.getPackageName());
-    // name of this app, that get's treated as the POS label by the terminal.
-    intent.putExtra(Message.INTENT_EXTRA_APPLICATION_NAME, "DemoPOS");
-    intent.putExtra(Message.INTENT_EXTRA_APPLICATION_VERSION, "1.0.0");
-    startActivity(intent);
 
-## Receiving Messages
-In your AndroidManifest.xml you must place an android intent filter to receive the response.
+        Intent intent = new Intent(Message.INTENT_ACTION_SALETOPOI_REQUEST);
 
-	    <intent-filter>
-		    <action android:name="au.com.axispay.action.SaleToPOIResponse" />
-	    </intent-filter>
+        // wrapper of request.
+        Message message = new Message(request);
 
-Add this to the activity you wish to receive the response on.
-Then on that activity, add the following code.
+        intent.putExtra(Message.INTENT_EXTRA_MESSAGE, message.toJson());
+        // name of this app, that get's treated as the POS label by the terminal.
+        intent.putExtra(Message.INTENT_EXTRA_APPLICATION_NAME, "DemoPOS");
+        intent.putExtra(Message.INTENT_EXTRA_APPLICATION_VERSION, "1.0.0");
+
+        startActivityForResult(intent, 100);
+
+## Receiving Response
+In the same activity add the following  
 
     @Override
-    onCreate( ... ){
-        ...
-        // add this code to the onCreate method of your activity.
-        Intent intent = getIntent();
-        if(intent != null && intent.hasExtra(Message.INTENT_EXTRA_MESSAGE){
-            handleResponseIntent(intent);
+    protected void onActivityResult(int requestCode, int responseCode, Intent data){
+        super.onActivityResult(requestCode, responseCode, data);
+        if(data != null && data.hasExtra(Message.INTENT_EXTRA_MESSAGE)) {
+            this.handleResponseIntent(data);
         }
     }
-
-    // used if you use singleTop activity
-	@Override
-	protected void onNewIntent(Intent intent) {
-	    super.onNewIntent(intent);
-	    if (isResponseIntent(intent)) {
-	        handleResponseIntent(intent);
-	    }
-	}
 
 	void handleResponseIntent(Intent intent){
 	    // The response is sent as a Json and we will need to deserialize it.
