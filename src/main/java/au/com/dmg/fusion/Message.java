@@ -33,7 +33,6 @@ import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
-import kotlin.jvm.Transient;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -41,25 +40,18 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Message implements Serializable {
-    public static int VERSION_UNDEFINED = -1;
-
     @Json(name = "SaleToPOIRequest")
     private SaleToPOIRequest request = null;
     @Json(name = "SaleToPOIResponse")
     private SaleToPOIResponse response = null;
-    @Transient
-    private transient int version = VERSION_UNDEFINED;
-
     @Json(name = "FusionSatelliteLibraryVersion")
-    private String fusionSatelliteLibraryVersion = "1.0.2";
+    public static String FUSION_SATELLITE_VERSION = "1.1.0";
 
     public static String INTENT_EXTRA_MESSAGE = "SaleToPOIJson";
-    public static String INTENT_EXTRA_PARENT_ID = "ParentActivityId";
     public static String INTENT_EXTRA_VERSION = "JsonVersion";
     public static String INTENT_EXTRA_APPLICATION_NAME = "ApplicationName";
     public static String INTENT_EXTRA_APPLICATION_VERSION = "SoftwareVersion";
-    public static String INTENT_ACTION_SALETOPOI_REQUEST = "au.com.axispay.action.SaleToPOIRequest";
-    public static String INTENT_ACTION_SALETOPOI_RESPONSE = "au.com.axispay.action.SaleToPOIResponse";
+    public static String INTENT_ACTION_SALETOPOI_REQUEST = "au.com.dmg.axispay.action.SaleToPOIRequest";
     public static String AXISPAY_PACKAGE_NAME = "au.com.dmg.axispay";
 
     public Message(SaleToPOIRequest request) {
@@ -76,10 +68,6 @@ public class Message implements Serializable {
 
     public SaleToPOIResponse getResponse() {
         return response;
-    }
-
-    public String getFusionSatelliteLibraryVersion(){
-        return fusionSatelliteLibraryVersion;
     }
 
     public String toJson() {
@@ -115,15 +103,12 @@ public class Message implements Serializable {
 
     private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
         String json = aInputStream.readUTF();
-        String version = aInputStream.readUTF();
         Message message = Message.fromJson(json);
         this.response = message.getResponse();
         this.request = message.getRequest();
-        this.fusionSatelliteLibraryVersion = version;
     }
 
     private void writeObject(ObjectOutputStream aOutputStream) throws IOException {
         aOutputStream.writeUTF(this.toJson());
-        aOutputStream.writeUTF(this.fusionSatelliteLibraryVersion);
     }
 }
