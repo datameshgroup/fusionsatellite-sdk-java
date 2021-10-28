@@ -25,7 +25,7 @@ In your app's build.gradle
 You should use the fusion reference API when creating Request objects  
 Please access the documentation here https://datameshgroup.github.io/fusion/
 
-# Android Implenetation Details
+# Android Implemetation Details
 The terminal uses startActivityForResult to create payment requests.
 ### Kotlin Example
     val intent = Intent(Message.INTENT_ACTION_SALETOPOI_REQUEST).apply {
