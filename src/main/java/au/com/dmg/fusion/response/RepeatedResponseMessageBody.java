@@ -23,6 +23,7 @@
 
 package au.com.dmg.fusion.response;
 
+import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
 import com.squareup.moshi.Json;
 
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;

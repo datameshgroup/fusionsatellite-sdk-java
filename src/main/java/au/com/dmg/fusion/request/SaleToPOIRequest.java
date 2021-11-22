@@ -34,6 +34,7 @@ import au.com.dmg.fusion.request.logoutrequest.LogoutRequest;
 import au.com.dmg.fusion.request.paymentrequest.PaymentRequest;
 import au.com.dmg.fusion.request.printrequest.PrintRequest;
 import au.com.dmg.fusion.request.reconciliationrequest.ReconciliationRequest;
+import au.com.dmg.fusion.request.reversalrequest.ReversalRequest;
 import au.com.dmg.fusion.request.transactionstatusrequest.TransactionStatusRequest;
 import au.com.dmg.fusion.securitytrailer.SecurityTrailer;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
@@ -68,6 +69,8 @@ public class SaleToPOIRequest implements SaleToPOI {
     private ReconciliationRequest reconciliationRequest;
     @Json(name = "TransactionStatusRequest")
     private TransactionStatusRequest transactionStatusRequest;
+    @Json(name = "ReversalRequest")
+    private ReversalRequest reversalRequest;
     @Json(name = "SecurityTrailer")
     private SecurityTrailer securityTrailer;
 
@@ -116,6 +119,10 @@ public class SaleToPOIRequest implements SaleToPOI {
         return abortTransactionRequest;
     }
 
+    public ReversalRequest getReversalRequest() {
+        return reversalRequest;
+    }
+
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -128,6 +135,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         private LoginRequest loginRequest;
         private LogoutRequest logoutRequest;
         private AbortTransactionRequest abortTransactionRequest;
+        private ReversalRequest reversalRequest;
         private CardAcquisitionRequest cardAcquisitionRequest;
         private DisplayRequest displayRequest;
         private InputRequest inputRequest;
@@ -180,7 +188,9 @@ public class SaleToPOIRequest implements SaleToPOI {
                 this.reconciliationRequest = (ReconciliationRequest) request;
             } else if (request instanceof TransactionStatusRequest) {
                 this.transactionStatusRequest = (TransactionStatusRequest) request;
-            } else {
+            } else if(request instanceof  ReversalRequest){
+                this.reversalRequest = (ReversalRequest) request;
+            }else {
                 throw new IllegalArgumentException("Error Request not identified.");
             }
 
@@ -233,6 +243,7 @@ public class SaleToPOIRequest implements SaleToPOI {
     private SaleToPOIRequest(Builder builder) {
         this.messageHeader = builder.messageHeader;
         this.abortTransactionRequest = builder.abortTransactionRequest;
+        this.reversalRequest = builder.reversalRequest;
         this.paymentRequest = builder.paymentRequest;
         this.cardAcquisitionRequest = builder.cardAcquisitionRequest;
         this.displayRequest = builder.displayRequest;

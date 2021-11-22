@@ -45,7 +45,7 @@ public class Message implements Serializable {
     @Json(name = "SaleToPOIResponse")
     private SaleToPOIResponse response = null;
     @Json(name = "FusionSatelliteLibraryVersion")
-    public static String FUSION_SATELLITE_VERSION = "1.1.0";
+    public static String FUSION_SATELLITE_VERSION = "1.2.0";
 
     public static String INTENT_EXTRA_MESSAGE = "SaleToPOIJson";
     public static String INTENT_EXTRA_VERSION = "JsonVersion";
@@ -90,6 +90,7 @@ public class Message implements Serializable {
                 .add(DefaultOnDataMismatchAdapter.newFactory(PaymentBrand.class, PaymentBrand.Other))
                 .add(DefaultOnDataMismatchAdapter.newFactory(PaymentInstrumentType.class, PaymentInstrumentType.Other))
                 .add(DefaultOnDataMismatchAdapter.newFactory(UnitOfMeasure.class, UnitOfMeasure.Other))
+                .add(DefaultOnDataMismatchAdapter.newFactory(MessageCategory.class, MessageCategory.Other))
                 .build();
 
         JsonAdapter<Message> jsonAdapter = moshi.adapter(Message.class);
