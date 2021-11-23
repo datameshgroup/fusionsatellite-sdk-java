@@ -25,6 +25,7 @@ package au.com.dmg.fusion.response;
 
 import au.com.dmg.fusion.Message;
 import au.com.dmg.fusion.data.*;
+import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.MessageHeader;
 import au.com.dmg.fusion.SaleToPOI;
@@ -68,6 +69,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private ReconciliationResponse reconciliationResponse;
     @Json(name = "TransactionStatusResponse")
     private TransactionStatusResponse transactionStatusResponse;
+    @Json(name = "ReversalResponse")
+    private ReversalResponse reversalResponse;
     @Json(name = "SecurityTrailer")
     private SecurityTrailer securityTrailer;
 
@@ -128,6 +131,11 @@ public class SaleToPOIResponse implements SaleToPOI {
     }
 
     @Nullable
+    public ReversalResponse getReversalResponse() {
+        return reversalResponse;
+    }
+
+    @Nullable
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -146,6 +154,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private PrintResponse printResponse;
         private ReconciliationResponse reconciliationResponse;
         private TransactionStatusResponse transactionStatusResponse;
+        private ReversalResponse reversalResponse;
         private SecurityTrailer securityTrailer;
 
         public MessageHeader getMessageHeader() {
@@ -195,7 +204,9 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.reconciliationResponse = (ReconciliationResponse) response;
             } else if (response instanceof TransactionStatusResponse) {
                 this.transactionStatusResponse = (TransactionStatusResponse) response;
-            } else {
+            } else if (response instanceof ReversalResponse){
+                this.reversalResponse = (ReversalResponse) response;
+            }else {
                 throw new IllegalArgumentException("Error Response not identified.");
             }
 
@@ -230,6 +241,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         this.printResponse = builder.printResponse;
         this.reconciliationResponse = builder.reconciliationResponse;
         this.transactionStatusResponse = builder.transactionStatusResponse;
+        this.reversalResponse = builder.reversalResponse;
         this.securityTrailer = builder.securityTrailer;
     }
 

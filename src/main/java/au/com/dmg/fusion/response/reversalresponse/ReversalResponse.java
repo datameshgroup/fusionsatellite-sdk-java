@@ -24,17 +24,30 @@
 package au.com.dmg.fusion.response.reversalresponse;
 
 import au.com.dmg.fusion.request.paymentrequest.POIData;
+import au.com.dmg.fusion.request.reversalrequest.ReversalRequest;
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
 import com.squareup.moshi.Json;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class ReversalResponse {
+import java.util.LinkedList;
+import java.util.List;
+
+public class ReversalResponse implements ResponseType {
 
     @Json(name = "Response")
     private final Response response;
     @Json(name = "POIData")
     private final POIData poiData;
+    @Json(name = "PaymentReceipt")
+    private final List<PaymentReceipt> paymentReceipt;
+
+    @Nullable
+    public List<PaymentReceipt> getPaymentReceipt() {
+        return paymentReceipt;
+    }
 
     @NotNull
     public Response getResponse() {
@@ -50,8 +63,26 @@ public class ReversalResponse {
 
         private Response response;
         private POIData poiData;
+        private List<PaymentReceipt> paymentReceipt;
 
         public Builder() {
+        }
+
+        public Builder addPaymentReceipt(PaymentReceipt paymentReceipt){
+            if (this.paymentReceipt == null){
+                this.paymentReceipt = new LinkedList<>();
+            }
+
+            if(paymentReceipt != null){
+                this.paymentReceipt.add(paymentReceipt);
+            }
+            return Builder.this;
+        }
+
+
+        public ReversalResponse.Builder paymentReceipt(List<PaymentReceipt> paymentReceipt) {
+            this.paymentReceipt = paymentReceipt;
+            return Builder.this;
         }
 
         Builder(Response response, POIData poiData) {
@@ -88,6 +119,7 @@ public class ReversalResponse {
     private ReversalResponse(Builder builder) {
         this.response = builder.response;
         this.poiData = builder.poiData;
+        this.paymentReceipt = builder.paymentReceipt;
     }
 }
 

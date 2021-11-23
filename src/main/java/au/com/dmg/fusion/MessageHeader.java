@@ -27,8 +27,6 @@ import au.com.dmg.fusion.data.MessageCategory;
 import au.com.dmg.fusion.data.MessageClass;
 import au.com.dmg.fusion.data.MessageType;
 
-import org.jsoup.internal.StringUtil;
-
 import com.squareup.moshi.Json;
 
 public class MessageHeader {
@@ -186,7 +184,7 @@ public class MessageHeader {
         this.messageCategory = builder.messageCategory;
         this.messageType = builder.messageType;
         this.serviceID = builder.serviceID;
-        this.protocolVersion = StringUtil.isBlank(builder.protocolVersion) ? "3.1-dmg" : builder.protocolVersion;
+        this.protocolVersion = (builder.protocolVersion == null || builder.protocolVersion.equals("")) ? "3.1-dmg" : builder.protocolVersion;
         this.saleID = builder.saleID;
         this.POIID = builder.POIID;
         this.deviceID = builder.deviceID;

@@ -91,6 +91,7 @@ public class Message implements Serializable {
                 .add(DefaultOnDataMismatchAdapter.newFactory(PaymentInstrumentType.class, PaymentInstrumentType.Other))
                 .add(DefaultOnDataMismatchAdapter.newFactory(UnitOfMeasure.class, UnitOfMeasure.Other))
                 .add(DefaultOnDataMismatchAdapter.newFactory(MessageCategory.class, MessageCategory.Other))
+                .add(DefaultOnDataMismatchAdapter.newFactory(ReversalReason.class, ReversalReason.Unknown))
                 .build();
 
         JsonAdapter<Message> jsonAdapter = moshi.adapter(Message.class);

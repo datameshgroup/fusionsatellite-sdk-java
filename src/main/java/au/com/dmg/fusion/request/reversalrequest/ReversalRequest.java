@@ -23,25 +23,34 @@
 
 package au.com.dmg.fusion.request.reversalrequest;
 
+import au.com.dmg.fusion.data.ReversalReason;
 import au.com.dmg.fusion.request.Request;
 import au.com.dmg.fusion.request.paymentrequest.OriginalPOITransaction;
 import au.com.dmg.fusion.request.reconciliationrequest.ReconciliationRequest;
+import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
+import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
+import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.DefaultOnDataMismatchAdapter;
 import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ReversalRequest implements Request {
 
     @Json(name = "ReversalReason")
-    private final String reversalReason;
+    private final ReversalReason reversalReason;
     @Json(name = "OriginalPOITransaction")
     private final OriginalPOITransaction originalPOITransaction;
 
     @NotNull
-    public String getReversalReason() {
+    public ReversalReason getReversalReason() {
         return reversalReason;
     }
 
@@ -52,18 +61,19 @@ public class ReversalRequest implements Request {
 
     public static class Builder {
 
-        private String reversalReason;
+        private ReversalReason reversalReason;
         private OriginalPOITransaction originalPOITransaction;
+        private List<PaymentReceipt> paymentReceipt;
 
         public Builder() {
         }
 
-        Builder(String reversalReason, OriginalPOITransaction originalPOITransaction) {
+        Builder(ReversalReason reversalReason, OriginalPOITransaction originalPOITransaction) {
             this.reversalReason = reversalReason;
             this.originalPOITransaction = originalPOITransaction;
         }
 
-        public Builder reversalReason(String reversalReason){
+        public Builder reversalReason(ReversalReason reversalReason){
             this.reversalReason = reversalReason;
             return Builder.this;
         }
@@ -99,6 +109,7 @@ public class ReversalRequest implements Request {
         Moshi moshi = new Moshi.Builder()
                 .add(new BigDecimalAdapter())
                 .add(new InstantAdapter())
+                .add(DefaultOnDataMismatchAdapter.newFactory(ReversalReason.class, ReversalReason.Unknown))
                 .build();
         JsonAdapter<ReversalRequest> jsonAdapter = moshi.adapter(ReversalRequest.class);
         return jsonAdapter.toJson(this);
