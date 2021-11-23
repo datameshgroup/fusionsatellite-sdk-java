@@ -21,31 +21,13 @@
  *
  */
 
-package au.com.dmg.fusion.response;
+package au.com.dmg.fusion.data;
 
-import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
-import com.squareup.moshi.Json;
-
-import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
-
-public class RepeatedResponseMessageBody {
-
-	@Json(name = "PaymentResponse")
-	private final PaymentResponse paymentResponse;
-	@Json(name = "ReversalResponse")
-	private final ReversalResponse reversalResponse;
-	
-	public RepeatedResponseMessageBody(PaymentResponse paymentResponse, ReversalResponse reversalResponse) {
-		this.paymentResponse = paymentResponse;
-		this.reversalResponse = reversalResponse;
-	}
-
-	public PaymentResponse getPaymentResponse() {
-		return paymentResponse;
-	}
-
-	public ReversalResponse getReversalResponse() {
-		return reversalResponse;
-	}
-	
+public enum ReversalReason {
+    CustCancel,
+    MerchantCancel,
+    Malfunction,
+    Unable2Compl,
+    SignatureDeclined,
+    Unknown
 }

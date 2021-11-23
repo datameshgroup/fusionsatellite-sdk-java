@@ -30,5 +30,7 @@ public enum MessageCategory {
     Logout,
     Payment,
     TransactionStatus,
-    Reconciliation
+    Reconciliation,
+    Reversal,
+    Other
 }

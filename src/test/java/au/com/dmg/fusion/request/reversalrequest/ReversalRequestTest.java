@@ -21,8 +21,31 @@
  *
  */
 
-package au.com.dmg.fusion.response;
+package au.com.dmg.fusion.request.reversalrequest;
 
-public class ReversalResponse {
+import au.com.dmg.fusion.data.ReversalReason;
+import au.com.dmg.fusion.request.paymentrequest.OriginalPOITransaction;
+import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
+import org.junit.Test;
+
+import java.time.Instant;
+
+import static org.junit.Assert.*;
+
+public class ReversalRequestTest {
+
+    @Test
+    public void requestTest(){
+        ReversalRequest reversal = new ReversalRequest.Builder()
+                .reversalReason(ReversalReason.SignatureDeclined)
+                .originalPOITransaction(new OriginalPOITransaction.Builder()
+                        .saleID("")
+                        .POIID("")
+                        .POITransactionID(new POITransactionID("x", Instant.ofEpochMilli(System.currentTimeMillis())))
+                        .build())
+                .build();
+
+        System.out.println(reversal.toJson());
+    }
 
 }
