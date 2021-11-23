@@ -5,7 +5,7 @@ This library is designed for both Java 8+ and Android.
 
 ## How to include
 
-    implementation "com.datameshgroup.fusion:fusion-sdk:1.1.0"
+    implementation "com.datameshgroup.fusion:fusion-sdk:1.2.0"
 
 If you are using Android you will need to add Java 8 syntax desugaring.
 In your app's build.gradle
@@ -51,6 +51,9 @@ The terminal uses startActivityForResult to create payment requests.
         intent.putExtra(Message.INTENT_EXTRA_APPLICATION_VERSION, "1.0.0");
 
         startActivityForResult(intent, 100);
+
+Note, message object is of type Message, you cannot use SaleToPOIRequest here, you must wrap the SaleToPOIRequest
+in the message object.
 
 ## Receiving Response
 In the same activity add the following  
