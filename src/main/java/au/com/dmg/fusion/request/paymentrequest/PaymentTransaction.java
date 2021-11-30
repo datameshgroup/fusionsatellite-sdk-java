@@ -64,7 +64,7 @@ public class PaymentTransaction {
         public Builder() {
         }
 
-        Builder(AmountsReq amountsReq, OriginalPOITransaction originalPOITransaction, TransactionConditions transactionConditions, List<SaleItem> saleItems, PaymentData paymentData) {
+        Builder(AmountsReq amountsReq, OriginalPOITransaction originalPOITransaction, TransactionConditions transactionConditions, List<SaleItem> saleItems) {
             this.amountsReq = amountsReq;
             this.originalPOITransaction = originalPOITransaction;
             this.transactionConditions = transactionConditions;
