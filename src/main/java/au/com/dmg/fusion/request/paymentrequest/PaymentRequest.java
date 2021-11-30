@@ -67,7 +67,6 @@ public class PaymentRequest implements Request {
         Builder(SaleData saleData, PaymentTransaction paymentTransaction) {
             this.saleData = saleData;
             this.paymentTransaction = paymentTransaction;
-            this.paymentData = paymentData;
         }
 
         public Builder saleData(SaleData saleData) {
