@@ -64,10 +64,11 @@ public class PaymentRequest implements Request {
         public Builder() {
         }
 
-        Builder(SaleData saleData, PaymentTransaction paymentTransaction) {
+        Builder(SaleData saleData, PaymentTransaction paymentTransaction, PaymentData paymentData) {
             this.saleData = saleData;
             this.paymentTransaction = paymentTransaction;
             this.paymentData = paymentData;
+            
         }
 
         public Builder saleData(SaleData saleData) {
