@@ -26,6 +26,7 @@ package au.com.dmg.fusion.request.displayrequest;
 import com.squareup.moshi.Json;
 
 import au.com.dmg.fusion.data.InfoQualify;
+import org.jetbrains.annotations.Nullable;
 
 public class DisplayOutput {
 	@Json(name = "ResponseRequiredFlag")
@@ -36,6 +37,11 @@ public class DisplayOutput {
 	private final InfoQualify infoQuality;
 	@Json(name = "OutputContent")
 	private final OutputContent outputContent;
+
+	@Nullable
+	public OutputContent getOutputContent() {
+		return outputContent;
+	}
 
 	public static class Builder {
 

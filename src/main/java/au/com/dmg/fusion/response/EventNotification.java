@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. DatameshGroup
+ * Copyright (c) 2022. DatameshGroup
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,37 +21,35 @@
  *
  */
 
-package au.com.dmg.fusion.data;
+package au.com.dmg.fusion.response;
 
-public enum MessageCategory {
-    Abort, 
-    Admin, 
-    BalanceInquiry, 
-    //*Batch,
-    CardAcquisition, 
-    //*CardReaderAPDU, 
-    //*CardReaderInit, 
-    //*CardReaderPowerOff, 
-    //*Diagnosis, 
-    Display, 
-    //*EnableService, 
-    Event, 
-    //*GetTotals, 
-    Input, 
-    //*InputUpdate, 
-    Login, 
-    Logout, 
-    //*Loyalty, 
-    Payment, 
-    //*PIN, 
-    Print, 
-    Reconciliation, 
-    //*Reversal, 
-    //*Sound, 
-    //*StoredValue, 
-    //*TransactionReport, 
-    TransactionStatus, 
-    //*Transmit,
-    Other
+import com.squareup.moshi.Json;
+
+import java.time.Instant;
+
+public class EventNotification implements ResponseType {
+    @Json(name = "TimeStamp")
+    private final Instant timeStamp;
+    @Json(name = "EventToNotify")
+    private final String eventToNotify;
+    @Json(name = "EventDetails")
+    private final String eventDetails;
+
+    public EventNotification(Instant timeStamp, String eventToNotify, String eventDetails) {
+        this.timeStamp = timeStamp;
+        this.eventToNotify = eventToNotify;
+        this.eventDetails = eventDetails;
+    }
+
+    public Instant getTimeStamp() {
+        return timeStamp;
+    }
+
+    public String getEventToNotify() {
+        return eventToNotify;
+    }
+
+    public String getEventDetails() {
+        return eventDetails;
+    }
 }
-//* These fields are part of the Nexo specification but not currently implemented into the DataMesh host.

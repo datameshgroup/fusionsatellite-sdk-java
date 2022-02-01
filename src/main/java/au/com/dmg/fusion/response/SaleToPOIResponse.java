@@ -40,6 +40,7 @@ import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.events.Event;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -71,6 +72,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private TransactionStatusResponse transactionStatusResponse;
     @Json(name = "ReversalResponse")
     private ReversalResponse reversalResponse;
+    @Json(name = "EventNotification")
+    private EventNotification eventNotification;    
     @Json(name = "SecurityTrailer")
     private SecurityTrailer securityTrailer;
 
@@ -136,6 +139,11 @@ public class SaleToPOIResponse implements SaleToPOI {
     }
 
     @Nullable
+    public EventNotification getEventNotification() {
+        return eventNotification;
+    }
+
+    @Nullable
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -155,6 +163,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private ReconciliationResponse reconciliationResponse;
         private TransactionStatusResponse transactionStatusResponse;
         private ReversalResponse reversalResponse;
+        private EventNotification eventNotification;
         private SecurityTrailer securityTrailer;
 
         public MessageHeader getMessageHeader() {
@@ -206,7 +215,9 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.transactionStatusResponse = (TransactionStatusResponse) response;
             } else if (response instanceof ReversalResponse){
                 this.reversalResponse = (ReversalResponse) response;
-            }else {
+            } else if (response instanceof EventNotification){
+                this.eventNotification = (EventNotification) response;
+            } else {
                 throw new IllegalArgumentException("Error Response not identified.");
             }
 
@@ -242,6 +253,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         this.reconciliationResponse = builder.reconciliationResponse;
         this.transactionStatusResponse = builder.transactionStatusResponse;
         this.reversalResponse = builder.reversalResponse;
+        this.eventNotification = builder.eventNotification;
         this.securityTrailer = builder.securityTrailer;
     }
 
