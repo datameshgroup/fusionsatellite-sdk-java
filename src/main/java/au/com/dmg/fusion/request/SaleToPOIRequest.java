@@ -49,7 +49,7 @@ public class SaleToPOIRequest implements SaleToPOI {
 
     @Json(name = "MessageHeader")
     private MessageHeader messageHeader;
-    @Json(name = "AbortTransactionRequest")
+    @Json(name = "AbortRequest")
     private AbortTransactionRequest abortTransactionRequest;
     @Json(name = "PaymentRequest")
     private PaymentRequest paymentRequest;

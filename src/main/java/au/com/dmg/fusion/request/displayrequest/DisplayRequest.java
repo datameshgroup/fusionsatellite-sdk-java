@@ -51,6 +51,30 @@ public class DisplayRequest implements Request {
 		this.displayOutput = displayOutput;
 	}
 
+	public String getDisplayText(){
+		String displayText = "";
+		if(displayOutput != null)
+		{
+			OutputContent outputContent = displayOutput.getOutputContent();
+			if(outputContent != null)
+			{
+				OutputText outputText = outputContent.getOutputText();
+				if(outputText != null)
+				{
+					displayText = outputText.getText();
+					if(displayText != null)
+					{
+						 // Some strings will be formatted as "SHORT TEXT | FULL TEXT"
+						int index = displayText.indexOf("|");
+						if((index > -1) && (index < displayText.length() - 2))
+                			displayText = displayText.substring(index+2).trim();
+					}
+				}
+			}
+		}
+		return displayText;
+	}
+
 	@Override
     public String toJson() {
         Moshi moshi = new Moshi.Builder()
