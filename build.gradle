@@ -6,7 +6,7 @@ plugins {
 
 group 'com.datameshgroup.fusion'
 
-version '1.2.0'
+version '1.2.2'
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ compileJava{
 
 dependencies {
     testImplementation 'junit:junit:4.+'
-    api "com.squareup.moshi:moshi:1.12.0"
+    api "com.squareup.moshi:moshi:1.13.0"
     api 'org.jsoup:jsoup:1.14.3'
 }
 
