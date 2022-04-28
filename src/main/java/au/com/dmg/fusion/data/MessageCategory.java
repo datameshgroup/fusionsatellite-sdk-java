@@ -46,7 +46,7 @@ public enum MessageCategory {
     //*PIN, 
     Print, 
     Reconciliation, 
-    //*Reversal, 
+    Reversal,
     //*Sound, 
     //*StoredValue, 
     //*TransactionReport, 
