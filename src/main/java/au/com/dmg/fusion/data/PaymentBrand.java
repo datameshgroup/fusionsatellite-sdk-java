@@ -38,5 +38,8 @@ public enum PaymentBrand {
     AliPay,
     @Json(name = "WeChat Pay") WeChatPay,
     Card,
+    @Json(name = "CryptoDotCom") CryptoDotCom,
+    @Json(name = "BPGiftCard") BPGiftCard,
+    @Json(name = "QantasPoints") QantasPoints,
     Other
 }
