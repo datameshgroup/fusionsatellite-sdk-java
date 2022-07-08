@@ -23,26 +23,21 @@
 
 package au.com.dmg.fusion.response;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 
+import au.com.dmg.fusion.data.*;
+import au.com.dmg.fusion.response.paymentresponse.*;
 import org.junit.Test;
 
 import au.com.dmg.fusion.MessageHeader;
-import au.com.dmg.fusion.data.InfoQualify;
-import au.com.dmg.fusion.data.MessageCategory;
-import au.com.dmg.fusion.data.MessageClass;
-import au.com.dmg.fusion.data.MessageType;
-import au.com.dmg.fusion.data.TerminalEnvironment;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
 import au.com.dmg.fusion.response.inputresponse.InputResult;
-import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
-import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
-import au.com.dmg.fusion.response.paymentresponse.PaymentResponseSaleData;
 
 public class SaleToPOIResponseTest {
     @Test
@@ -111,6 +106,62 @@ public class SaleToPOIResponseTest {
                                 new POIData.Builder()
                                         .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
                                         .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentReceipt(receipts)
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+    }
+
+    @Test
+    public void testPaymentLoyalty() {
+        List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
+        receipts.add(new PaymentReceipt.Builder()
+                .integratedPrintFlag(false)
+                .documentQualifier("Title")
+                .requiredSignatureFlag(true)
+                .build());
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build(), "reference")
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(
+                                new PaymentResult.Builder()
+                                        .paymentType(PaymentType.Normal)
+                                        .amountsResp(new AmountsResp.Builder()
+                                                .loyaltyAmount(new BigDecimal("50.0"))
+                                                .authorizedAmount(new BigDecimal("100.0"))
+                                                .build()
+                                        )
+                                        .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                                .loyaltyData(new LoyaltyData.Builder()
+                                                        .loyaltyBrand("Qantas")
+                                                        .build())
+                                                .build())
+                                        .onlineFlag(true)
                                         .build()
                         )
                         .paymentReceipt(receipts)
@@ -224,6 +275,8 @@ public class SaleToPOIResponseTest {
 
         System.out.println(response.toJson());
     }
+
+
 
     @Test
     public void testAbort() {
