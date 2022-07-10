@@ -24,7 +24,6 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import com.squareup.moshi.Json;
-import org.jetbrains.annotations.Nullable;
 
 public class PaymentInstrumentData {
 
@@ -32,9 +31,6 @@ public class PaymentInstrumentData {
     private final String paymentInstrumentType;
     @Json(name = "CardData")
     private final PaymentResponseCardData cardData;
-    @Json(name = "LoyaltyData")
-    @Nullable
-    private final LoyaltyData loyaltyData;
 
     public String getPaymentInstrumentType() {
         return paymentInstrumentType;
@@ -44,24 +40,18 @@ public class PaymentInstrumentData {
         return cardData;
     }
 
-    @Nullable
-    public LoyaltyData getLoyaltyData() {
-        return loyaltyData;
-    }
 
     public static class Builder {
 
         private String paymentInstrumentType;
         private PaymentResponseCardData cardData;
-        private LoyaltyData loyaltyData;
 
         public Builder() {
         }
 
-        Builder(String paymentInstrumentType, PaymentResponseCardData cardData, LoyaltyData loyaltyData) {
+        Builder(String paymentInstrumentType, PaymentResponseCardData cardData) {
             this.paymentInstrumentType = paymentInstrumentType;
             this.cardData = cardData;
-            this.loyaltyData = loyaltyData;
         }
 
         public Builder paymentInstrumentType(String paymentInstrumentType) {
@@ -74,11 +64,6 @@ public class PaymentInstrumentData {
             return Builder.this;
         }
 
-        public Builder loyaltyData(LoyaltyData loyaltyData){
-            this.loyaltyData = loyaltyData;
-            return Builder.this;
-        }
-
         public PaymentInstrumentData build() {
             return new PaymentInstrumentData(this);
         }
@@ -87,7 +72,6 @@ public class PaymentInstrumentData {
     private PaymentInstrumentData(Builder builder) {
         this.paymentInstrumentType = builder.paymentInstrumentType;
         this.cardData = builder.cardData;
-        this.loyaltyData = builder.loyaltyData;
     }
 }
 
@@ -96,5 +80,4 @@ package au.com.dmg.fusionsatellite.PaymentRequest
 class PaymentInstrumentData
 String paymentInstrumentType
 CardData cardData
-LoyaltyData loyaltyData
 * */

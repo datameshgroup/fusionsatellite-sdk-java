@@ -24,39 +24,50 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import com.squareup.moshi.Json;
+import java.math.BigDecimal;
 
-public class LoyaltyData {
+public class LoyaltyAmount {
 
-    @Json(name = "LoyaltyBrand")
-    private String loyaltyBrand;
+    @Json(name = "AmountValue")
+    private BigDecimal amountValue;
+
+    public BigDecimal getAmountValue() {
+        return amountValue;
+    }
 
     public static class Builder {
 
-        private String loyaltyBrand;
+        private BigDecimal amountValue;
 
         public Builder() {
         }
 
-        Builder(String loyaltyBrand) {
-            this.loyaltyBrand = loyaltyBrand;
+        Builder(BigDecimal amountValue) {
+            this.amountValue = amountValue;
         }
 
-        public Builder loyaltyBrand(String loyaltyBrand){
-            this.loyaltyBrand = loyaltyBrand;
+        public Builder amountValue(BigDecimal amountValue){
+            this.amountValue = amountValue;
             return Builder.this;
         }
 
-        public LoyaltyData build() {
-            if (this.loyaltyBrand == null) {
-                throw new NullPointerException("The property \"loyaltyData\" is null. "
-                        + "Please set the value by \"loyalty()\""
+        public LoyaltyAmount build() {
+            if (this.amountValue == null) {
+                throw new NullPointerException("The property \"amountValue\" is null. "
+                        + "Please set the value by \"amountValue()\""
                 );
             }
-            return new LoyaltyData(this);
+            return new LoyaltyAmount(this);
         }
     }
 
-    private LoyaltyData(Builder builder) {
-        this.loyaltyBrand = builder.loyaltyBrand;
+    private LoyaltyAmount(Builder builder) {
+        this.amountValue = builder.amountValue;
     }
 }
+
+/*
+package au.com.dmg.fusionsatellite.PaymentRequest
+class LoyaltyAmount
+BigDecimal amountValue
+* */

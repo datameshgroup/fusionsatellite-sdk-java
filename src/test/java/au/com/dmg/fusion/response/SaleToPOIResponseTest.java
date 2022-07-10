@@ -124,6 +124,23 @@ public class SaleToPOIResponseTest {
                 .requiredSignatureFlag(true)
                 .build());
 
+        LoyaltyAccount loyaltyAccount = new LoyaltyAccount.Builder()
+                .entryMode("Scanned")
+                .identificationType("AccountNumber")
+                .identificationSupport("LoyaltyCard")
+                .loyaltyID("XXXXXXXXXX")
+                .loyaltyBrand("Qantas")
+                .build();
+
+        LoyaltyAmount loyaltyAmount = new LoyaltyAmount.Builder()
+                .amountValue(new BigDecimal("50.0")).build();
+
+        List<LoyaltyResult> loyaltyResults = new LinkedList<LoyaltyResult>();
+        loyaltyResults.add(new LoyaltyResult.Builder()
+        .loyaltyAccount(loyaltyAccount)
+        .loyaltyAmount(loyaltyAmount)
+        .build());
+
         SaleToPOIResponse response = new SaleToPOIResponse.Builder()
                 .messageHeader(new MessageHeader.Builder()
                         .protocolVersion("3.1")
@@ -152,19 +169,14 @@ public class SaleToPOIResponseTest {
                                 new PaymentResult.Builder()
                                         .paymentType(PaymentType.Normal)
                                         .amountsResp(new AmountsResp.Builder()
-                                                .loyaltyAmount(new BigDecimal("50.0"))
                                                 .authorizedAmount(new BigDecimal("100.0"))
                                                 .build()
                                         )
-                                        .paymentInstrumentData(new PaymentInstrumentData.Builder()
-                                                .loyaltyData(new LoyaltyData.Builder()
-                                                        .loyaltyBrand("Qantas")
-                                                        .build())
-                                                .build())
                                         .onlineFlag(true)
                                         .build()
                         )
                         .paymentReceipt(receipts)
+                        .loyaltyResult(loyaltyResults)
                         .build())
                 .build();
 

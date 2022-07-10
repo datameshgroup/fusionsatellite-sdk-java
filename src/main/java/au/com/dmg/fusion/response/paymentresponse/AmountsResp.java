@@ -43,10 +43,6 @@ public class AmountsResp {
     @Json(name = "SurchargeAmount")
     private BigDecimal surchargeAmount;
 
-    @Json(name = "LoyaltyAmount")
-    @Nullable
-    private BigDecimal loyaltyAmount;
-
     public String getCurrency() {
         return currency;
     }
@@ -71,11 +67,6 @@ public class AmountsResp {
         return surchargeAmount;
     }
 
-    @Nullable
-    public BigDecimal getLoyaltyAmount() {
-        return loyaltyAmount;
-    }
-
     public static class Builder {
 
         private String currency;
@@ -84,19 +75,17 @@ public class AmountsResp {
         private BigDecimal cashBackAmount;
         private BigDecimal tipAmount;
         private BigDecimal surchargeAmount;
-        private BigDecimal loyaltyAmount;
 
         public Builder() {
         }
 
-        Builder(String currency, BigDecimal authorizedAmount, BigDecimal totalFeesAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal surchargeAmount, BigDecimal loyaltyAmount) {
+        Builder(String currency, BigDecimal authorizedAmount, BigDecimal totalFeesAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal surchargeAmount) {
             this.currency = currency;
             this.authorizedAmount = authorizedAmount;
             this.totalFeesAmount = totalFeesAmount;
             this.cashBackAmount = cashBackAmount;
             this.tipAmount = tipAmount;
             this.surchargeAmount = surchargeAmount;
-            this.loyaltyAmount = loyaltyAmount;
         }
 
         public Builder currency(String currency){
@@ -129,11 +118,6 @@ public class AmountsResp {
             return Builder.this;
         }
 
-        public Builder loyaltyAmount(BigDecimal loyaltyAmount){
-            this.loyaltyAmount = loyaltyAmount;
-            return Builder.this;
-        }
-
         public AmountsResp build() {
             if(this.authorizedAmount == null){
                 throw new NullPointerException("The property \"authorizedAmount\" is null. "
@@ -152,7 +136,6 @@ public class AmountsResp {
         this.cashBackAmount = builder.cashBackAmount;
         this.tipAmount = builder.tipAmount;
         this.surchargeAmount = builder.surchargeAmount;
-        this.loyaltyAmount = builder.loyaltyAmount;
     }
 }
 
@@ -165,5 +148,4 @@ BigDecimal totalFeesAmount
 BigDecimal cashBackAmount
 BigDecimal tipAmount
 BigDecimal surchargeAmount
-BigDecimal loyaltyAmount
 * */

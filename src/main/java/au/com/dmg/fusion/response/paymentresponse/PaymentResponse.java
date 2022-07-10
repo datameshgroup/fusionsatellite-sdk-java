@@ -47,6 +47,9 @@ public class PaymentResponse implements ResponseType {
     private final List<String> allowedProductCodes;
     @Json(name = "PaymentReceipt")
     private final List<PaymentReceipt> paymentReceipt;
+    @Json(name = "LoyaltyResult")
+    @Nullable
+    private final List<LoyaltyResult> loyaltyResult;
 
     @NotNull
     public Response getResponse() {
@@ -78,6 +81,11 @@ public class PaymentResponse implements ResponseType {
         return paymentReceipt;
     }
 
+    @Nullable
+    public List<LoyaltyResult> getLoyaltyResult() {
+        return loyaltyResult;
+    }
+
     public static class Builder {
 
         private Response response;
@@ -86,17 +94,19 @@ public class PaymentResponse implements ResponseType {
         private PaymentResult paymentResult;
         private List<String> allowedProductCodes;
         private List<PaymentReceipt> paymentReceipt;
+        private List<LoyaltyResult> loyaltyResult;
 
         public Builder() {
         }
 
-        Builder(Response response, PaymentResponseSaleData saleData, POIData poiData, PaymentResult paymentResult, List<String> allowedProductCodes, List<PaymentReceipt> paymentReceipt) {
+        Builder(Response response, PaymentResponseSaleData saleData, POIData poiData, PaymentResult paymentResult, List<String> allowedProductCodes, List<PaymentReceipt> paymentReceipt, List<LoyaltyResult> loyaltyResult) {
             this.response = response;
             this.saleData = saleData;
             this.poiData = poiData;
             this.paymentResult = paymentResult;
             this.allowedProductCodes = allowedProductCodes;
             this.paymentReceipt = paymentReceipt;
+            this.loyaltyResult = loyaltyResult;
         }
 
         public Builder response(Response response) {
@@ -148,6 +158,22 @@ public class PaymentResponse implements ResponseType {
             return Builder.this;
         }
 
+        public Builder loyaltyResult(List<LoyaltyResult> loyaltyResult) {
+            this.loyaltyResult = loyaltyResult;
+            return Builder.this;
+        }
+
+        public Builder addLoyaltyResult(LoyaltyResult loyaltyResult){
+            if (this.loyaltyResult == null){
+                this.loyaltyResult = new LinkedList<>();
+            }
+
+            if(loyaltyResult != null){
+                this.loyaltyResult.add(loyaltyResult);
+            }
+            return Builder.this;
+        }
+
         public PaymentResponse build() {
             if (this.response == null) {
                 throw new NullPointerException("The property \"response\" is null. "
@@ -176,6 +202,7 @@ public class PaymentResponse implements ResponseType {
         this.paymentResult = builder.paymentResult;
         this.allowedProductCodes = builder.allowedProductCodes;
         this.paymentReceipt = builder.paymentReceipt;
+        this.loyaltyResult = builder.loyaltyResult;
     }
 }
 
@@ -189,5 +216,6 @@ class PaymentResponse
 PaymentResult paymentResult
 List<String> allowedProductCodes
 List<PaymentReceipt> paymentReceipt
+List<LoyaltyResult> loyaltyResult
 * */
 
