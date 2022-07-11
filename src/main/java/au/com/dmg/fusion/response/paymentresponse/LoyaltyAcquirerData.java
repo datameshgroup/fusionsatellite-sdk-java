@@ -25,8 +25,6 @@ package au.com.dmg.fusion.response.paymentresponse;
 
 import com.squareup.moshi.Json;
 
-import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
-
 public class LoyaltyAcquirerData {
 
     @Json(name = "LoyaltyAcquirerID")
@@ -36,7 +34,7 @@ public class LoyaltyAcquirerData {
     private String approvalCode;
 
     @Json(name = "LoyaltyTransactionID")
-    private SaleTransactionID loyaltyTransactionID;
+    private LoyaltyTransactionID loyaltyTransactionID;
 
     @Json(name = "HostReconciliationID")
     private String hostReconciliationID;
@@ -49,7 +47,7 @@ public class LoyaltyAcquirerData {
         return approvalCode;
     }
 
-    public SaleTransactionID getLoyaltyTransactionID() {
+    public LoyaltyTransactionID getLoyaltyTransactionID() {
         return loyaltyTransactionID;
     }
 
@@ -60,13 +58,13 @@ public class LoyaltyAcquirerData {
     public static class Builder {
         private String loyaltyAcquirerID;
         private String approvalCode;
-        private SaleTransactionID loyaltyTransactionID;
+        private LoyaltyTransactionID loyaltyTransactionID;
         private String hostReconciliationID;
 
         public Builder() {
         }
 
-        Builder(String loyaltyAcquirerID, String approvalCode, SaleTransactionID loyaltyTransactionID, String hostReconciliationID) {
+        Builder(String loyaltyAcquirerID, String approvalCode, LoyaltyTransactionID loyaltyTransactionID, String hostReconciliationID) {
             this.loyaltyAcquirerID = loyaltyAcquirerID;
             this.approvalCode = approvalCode;
             this.loyaltyTransactionID = loyaltyTransactionID;
@@ -83,7 +81,7 @@ public class LoyaltyAcquirerData {
             return Builder.this;
         }
 
-        public Builder loyaltyTransactionID(SaleTransactionID loyaltyTransactionID){
+        public Builder loyaltyTransactionID(LoyaltyTransactionID loyaltyTransactionID){
             this.loyaltyTransactionID = loyaltyTransactionID;
             return Builder.this;
         }
@@ -111,6 +109,6 @@ package au.com.dmg.fusionsatellite.PaymentRequest
 class LoyaltyAcquirerData
 String loyaltyAcquirerID
 String approvalCode
-SaleTransactionID loyaltyTransactionID
+LoyaltyTransactionID loyaltyTransactionID
 String hostReconciliationID
 * */
