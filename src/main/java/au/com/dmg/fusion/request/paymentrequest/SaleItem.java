@@ -84,7 +84,6 @@ public class SaleItem {
     @Json(name = "WeightUnitOfMeasure")
     private final String weightUnitOfMeasure;
 
-
     public Integer getItemID() {
         return itemID;
     }

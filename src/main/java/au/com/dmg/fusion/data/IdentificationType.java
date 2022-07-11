@@ -23,17 +23,11 @@
 
 package au.com.dmg.fusion.data;
 
-public enum EntryMode {
-    File,
-    Keyed,
-    Manual,
-    Scanned,
-    MagStripe,
-    ICC, //Contact ICC (asynchronous)
-    SynchronousICC, //Contact ICC (synchronous)
-    Tapped,
-    Mobile,
-    RFID,
-    Contactless,
-    Unknown
+public enum IdentificationType {
+    Unknown,
+    PAN,
+    ISOTrack2,
+    BarCode,
+    AccountNumber,
+    PhoneNumber
 }

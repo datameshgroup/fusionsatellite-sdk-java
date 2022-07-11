@@ -40,6 +40,7 @@ public class PaymentInstrumentData {
         return cardData;
     }
 
+
     public static class Builder {
 
         private String paymentInstrumentType;
@@ -64,7 +65,6 @@ public class PaymentInstrumentData {
         }
 
         public PaymentInstrumentData build() {
-
             return new PaymentInstrumentData(this);
         }
     }
