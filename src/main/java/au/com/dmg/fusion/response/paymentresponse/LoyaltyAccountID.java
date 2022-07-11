@@ -77,6 +77,7 @@ public class LoyaltyAccountID {
 
         Builder(EntryMode entryMode, IdentificationType identificationType, IdentificationSupport identificationSupport, String loyaltyID) {
             this.entryMode = entryMode;
+            this.identificationType = identificationType;
             this.identificationSupport = identificationSupport;
             this.loyaltyID = loyaltyID;
         }
