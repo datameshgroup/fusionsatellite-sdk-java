@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. DatameshGroup
+ * Copyright (c) 2022. DatameshGroup
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,17 +23,8 @@
 
 package au.com.dmg.fusion.data;
 
-public enum EntryMode {
-    File,
-    Keyed,
-    Manual,
-    Scanned,
-    MagStripe,
-    ICC, //Contact ICC (asynchronous)
-    SynchronousICC, //Contact ICC (synchronous)
-    Tapped,
-    Mobile,
-    RFID,
-    Contactless,
-    Unknown
+public enum LoyaltyUnit {
+        Unknown,
+        Point,
+        Monetary
 }

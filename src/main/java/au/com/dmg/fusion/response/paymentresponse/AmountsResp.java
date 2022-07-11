@@ -24,7 +24,6 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import com.squareup.moshi.Json;
-import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 

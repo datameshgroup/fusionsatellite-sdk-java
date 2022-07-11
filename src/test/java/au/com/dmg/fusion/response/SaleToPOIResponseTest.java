@@ -124,17 +124,21 @@ public class SaleToPOIResponseTest {
                 .requiredSignatureFlag(true)
                 .build());
 
-        LoyaltyAccount loyaltyAccount = new LoyaltyAccount.Builder()
-                .entryMode("Scanned")
-                .identificationType("AccountNumber")
-                .identificationSupport("LoyaltyCard")
+        LoyaltyAccountID loyaltyAccountID =  new LoyaltyAccountID.Builder()
+                .entryMode(EntryMode.Scanned)
+                .identificationType(IdentificationType.AccountNumber)
+                .identificationSupport(IdentificationSupport.LoyaltyCard)
                 .loyaltyID("XXXXXXXXXX")
-                .loyaltyBrand("Qantas")
+                .build();
+    
+        LoyaltyAccount loyaltyAccount = new LoyaltyAccount.Builder()
+                .loyaltyAccountID(loyaltyAccountID)
+                .loyaltyBrand(LoyaltyBrand.Qantas)
                 .build();
 
         LoyaltyAmount loyaltyAmount = new LoyaltyAmount.Builder()
-                .amountValue(new BigDecimal("50.0")).build();
-
+                .amountValue(new BigDecimal("100.0")).build();
+        
         List<LoyaltyResult> loyaltyResults = new LinkedList<LoyaltyResult>();
         loyaltyResults.add(new LoyaltyResult.Builder()
         .loyaltyAccount(loyaltyAccount)
@@ -168,6 +172,14 @@ public class SaleToPOIResponseTest {
                         .paymentResult(
                                 new PaymentResult.Builder()
                                         .paymentType(PaymentType.Normal)
+                                        .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                                .paymentInstrumentType("Card")
+                                                .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .paymentBrand(PaymentBrand.VISA)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .build())
+                                                .build())
                                         .amountsResp(new AmountsResp.Builder()
                                                 .authorizedAmount(new BigDecimal("100.0"))
                                                 .build()

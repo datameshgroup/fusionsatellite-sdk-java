@@ -24,26 +24,63 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import com.squareup.moshi.Json;
+
+import au.com.dmg.fusion.data.CurrencySymbol;
+import au.com.dmg.fusion.data.LoyaltyUnit;
+
 import java.math.BigDecimal;
+
+import org.jetbrains.annotations.Nullable;
 
 public class LoyaltyAmount {
 
+    @Json(name = "LoyaltyUnit")
+    @Nullable
+    private LoyaltyUnit loyaltyUnit;
+
+    @Json(name = "Currency")
+    @Nullable
+    private CurrencySymbol currency;
+
     @Json(name = "AmountValue")
     private BigDecimal amountValue;
+
+    @Nullable
+    public LoyaltyUnit getLoyaltyUnit() {
+        return loyaltyUnit;
+    }
+
+    @Nullable
+    public CurrencySymbol getCurrency() {
+        return currency;
+    }
 
     public BigDecimal getAmountValue() {
         return amountValue;
     }
 
     public static class Builder {
-
+        private LoyaltyUnit loyaltyUnit = LoyaltyUnit.Monetary;
+        private CurrencySymbol currency = CurrencySymbol.AUD;
         private BigDecimal amountValue;
 
         public Builder() {
         }
 
-        Builder(BigDecimal amountValue) {
+        Builder(LoyaltyUnit loyaltyUnit,  CurrencySymbol currency, BigDecimal amountValue) {
+            this.loyaltyUnit = loyaltyUnit;
+            this.currency = currency;
             this.amountValue = amountValue;
+        }
+
+        public Builder loyaltyUnit(LoyaltyUnit loyaltyUnit){
+            this.loyaltyUnit = loyaltyUnit;
+            return Builder.this;
+        }
+        
+        public Builder currency(CurrencySymbol currency){
+            this.currency = currency;
+            return Builder.this;
         }
 
         public Builder amountValue(BigDecimal amountValue){
@@ -62,6 +99,8 @@ public class LoyaltyAmount {
     }
 
     private LoyaltyAmount(Builder builder) {
+        this.loyaltyUnit = builder.loyaltyUnit;
+        this.currency = builder.currency;
         this.amountValue = builder.amountValue;
     }
 }
@@ -69,5 +108,7 @@ public class LoyaltyAmount {
 /*
 package au.com.dmg.fusionsatellite.PaymentRequest
 class LoyaltyAmount
+LoyaltyUnit loyaltyUnit
+CurrencySymbol currency
 BigDecimal amountValue
 * */

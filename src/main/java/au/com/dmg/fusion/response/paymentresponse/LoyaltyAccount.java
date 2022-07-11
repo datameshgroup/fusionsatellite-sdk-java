@@ -24,108 +24,56 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import com.squareup.moshi.Json;
+
+import au.com.dmg.fusion.data.LoyaltyBrand;
+
 import org.jetbrains.annotations.NotNull;
 
 public class LoyaltyAccount {
 
-    @Json(name = "EntryMode")
-    private String entryMode;
-    @Json(name = "IdentificationType")
-    private String identificationType;
-    @Json(name = "IdentificationSupport")
-    private String identificationSupport;
-    @Json(name = "LoyaltyID")
-    private String loyaltyID;
+    @Json(name = "LoyaltyAccountID")
+    private LoyaltyAccountID loyaltyAccountID;
+    
     @Json(name = "LoyaltyBrand")
-    private String loyaltyBrand;
+    private LoyaltyBrand loyaltyBrand;
 
     @NotNull
-    public String getEntryMode() {
-        return entryMode;
+    public LoyaltyAccountID getLoyaltyAccountID() {
+        return loyaltyAccountID;
     }
 
     @NotNull
-    public String getIdentificationType() {
-        return identificationType;
-    }
-
-    @NotNull
-    public String getIdentificationSupport() {
-        return identificationSupport;
-    }
-
-    @NotNull
-    public String getLoyaltyID() {
-        return loyaltyID;
-    }
-
-    @NotNull
-    public String getLoyaltyBrand() {
+    public LoyaltyBrand getLoyaltyBrand() {
         return loyaltyBrand;
     }
 
     public static class Builder {
 
-        private String entryMode;
-        private String identificationType;
-        private String identificationSupport;
-        private String loyaltyID;
-        private String loyaltyBrand;
+        private LoyaltyAccountID loyaltyAccountID;
+        private LoyaltyBrand loyaltyBrand;
 
         public Builder() {
         }
 
-        Builder(String entryMode, String identificationType, String identificationSupport, String loyaltyID, String loyaltyBrand) {
-            this.entryMode = entryMode;
-            this.identificationSupport = identificationSupport;
-            this.loyaltyID = loyaltyID;
+        Builder(LoyaltyAccountID loyaltyAccountID, LoyaltyBrand loyaltyBrand) {
+            this.loyaltyAccountID = loyaltyAccountID;
             this.loyaltyBrand = loyaltyBrand;
         }
 
-        public Builder entryMode(String entryMode){
-            this.entryMode = entryMode;
+        public Builder loyaltyAccountID(LoyaltyAccountID loyaltyAccountID){
+            this.loyaltyAccountID = loyaltyAccountID;
             return Builder.this;
         }
 
-        public Builder identificationType(String identificationType){
-            this.identificationType = identificationType;
-            return Builder.this;
-        }
-
-        public Builder identificationSupport(String identificationSupport){
-            this.identificationSupport = identificationSupport;
-            return Builder.this;
-        }
-
-        public Builder loyaltyID(String loyaltyID){
-            this.loyaltyID = loyaltyID;
-            return Builder.this;
-        }
-
-        public Builder loyaltyBrand(String loyaltyBrand){
+        public Builder loyaltyBrand(LoyaltyBrand loyaltyBrand){
             this.loyaltyBrand = loyaltyBrand;
             return Builder.this;
         }
 
         public LoyaltyAccount build() {
-            if (this.entryMode == null) {
-                throw new NullPointerException("The property \"entryMode\" is null. "
-                        + "Please set the value by \"entryMode()\""
-                );
-            }
-            if (this.identificationType == null) {
-                throw new NullPointerException("The property \"identificationType\" is null. "
-                        + "Please set the value by \"identificationType()\""
-                );
-            }
-            if (this.identificationSupport == null) {
-                throw new NullPointerException("The property \"identificationSupport\" is null. "
-                        + "Please set the value by \"identificationSupport()\""
-                );
-            }
-            if (this.loyaltyID == null) {
-                throw new NullPointerException("The property \"loyaltyID\" is null. "
-                        + "Please set the value by \"loyaltyID()\""
+            if (this.loyaltyAccountID == null) {
+                throw new NullPointerException("The property \"loyaltyAccountID\" is null. "
+                        + "Please set the value by \"loyaltyAccountID()\""
                 );
             }
             if (this.loyaltyBrand == null) {
@@ -138,10 +86,7 @@ public class LoyaltyAccount {
     }
 
     private LoyaltyAccount(Builder builder) {
-        this.entryMode = builder.entryMode;
-        this.identificationType = builder.identificationType;
-        this.identificationSupport = builder.identificationSupport;
-        this.loyaltyID = builder.loyaltyID;
+        this.loyaltyAccountID = builder.loyaltyAccountID;
         this.loyaltyBrand = builder.loyaltyBrand;
     }
 }
@@ -149,9 +94,6 @@ public class LoyaltyAccount {
 /*
 package au.com.dmg.fusion.response.paymentresponse
 class LoyaltyAccount
-String entryMode
-String identificationType
-String identificationSupport
-String loyaltyID
-String loyaltyBrand
+LoyaltyAccountID loyaltyAccountID
+LoyaltyBrand loyaltyBrand
 * */

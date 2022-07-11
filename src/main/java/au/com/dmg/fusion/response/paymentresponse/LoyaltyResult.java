@@ -24,37 +24,69 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import com.squareup.moshi.Json;
-import org.jetbrains.annotations.NotNull;
+
+import au.com.dmg.fusion.request.paymentrequest.AmountsReq.Builder;
+
+import java.math.BigDecimal;
+
+import org.jetbrains.annotations.Nullable;
 
 public class LoyaltyResult {
 
     @Json(name = "LoyaltyAccount")
     private LoyaltyAccount loyaltyAccount;
+
+    @Json(name = "CurrentBalance")
+    @Nullable
+    private BigDecimal currentBalance;
+
     @Json(name = "LoyaltyAmount")
     private LoyaltyAmount loyaltyAmount;
 
-    @NotNull
+    @Json(name = "LoyaltyAcquirerData")
+    private LoyaltyAcquirerData loyaltyAcquirerData;
+
+    @Json(name = "Rebates")
+    private Rebates rebates;
+
     public LoyaltyAccount getLoyaltyAccount() {
         return loyaltyAccount;
     }
 
-    @NotNull
+    @Nullable
+    public BigDecimal getCurrentBalance() {
+        return currentBalance;
+    }
+
     public LoyaltyAmount getLoyaltyAmount() {
         return loyaltyAmount;
     }
 
- 
+    public LoyaltyAcquirerData getLoyaltyAcquirerData() {
+        return loyaltyAcquirerData;
+    }
+
+    public Rebates getRebates() {
+        return rebates;
+    }
+
     public static class Builder {
 
         private LoyaltyAccount loyaltyAccount;
+        private BigDecimal currentBalance;
         private LoyaltyAmount loyaltyAmount;
+        private LoyaltyAcquirerData loyaltyAcquirerData;
+        private Rebates rebates;
 
         public Builder() {
         }
 
-        Builder(LoyaltyAccount loyaltyAccount, LoyaltyAmount loyaltyAmount) {
+        Builder(LoyaltyAccount loyaltyAccount, BigDecimal currentBalance, LoyaltyAmount loyaltyAmount, LoyaltyAcquirerData loyaltyAcquirerData, Rebates rebates) {
             this.loyaltyAccount = loyaltyAccount;
+            this.currentBalance = currentBalance;
             this.loyaltyAmount = loyaltyAmount;
+            this.loyaltyAcquirerData = loyaltyAcquirerData;
+            this.rebates = rebates;
         }
 
         public Builder loyaltyAccount(LoyaltyAccount loyaltyAccount) {
@@ -62,8 +94,23 @@ public class LoyaltyResult {
             return Builder.this;
         }
 
+        public Builder currentBalance(BigDecimal currentBalance) {
+            this.currentBalance = currentBalance;
+            return Builder.this;
+        }
+
         public Builder loyaltyAmount(LoyaltyAmount loyaltyAmount) {
             this.loyaltyAmount = loyaltyAmount;
+            return Builder.this;
+        }
+
+        public Builder loyaltyAcquirerData(LoyaltyAcquirerData loyaltyAcquirerData) {
+            this.loyaltyAcquirerData = loyaltyAcquirerData;
+            return Builder.this;
+        }
+
+        public Builder rebates(Rebates rebates) {
+            this.rebates = rebates;
             return Builder.this;
         }
 
@@ -85,14 +132,20 @@ public class LoyaltyResult {
 
     private LoyaltyResult(Builder builder) {
         this.loyaltyAccount = builder.loyaltyAccount;
+        this.currentBalance = builder.currentBalance;
         this.loyaltyAmount = builder.loyaltyAmount;
+        this.loyaltyAcquirerData = builder.loyaltyAcquirerData;
+        this.rebates = builder.rebates;
+
     }
 }
-
 
 /*
 package au.com.dmg.fusionsatellite.response
 class LoyaltyResult
-LoyaltyAccount loyaltyAccount;
-LoyaltyAmount loyaltyAmount;
+LoyaltyAccount loyaltyAccount
+BigDecimal currentBalance
+LoyaltyAmount loyaltyAmount
+LoyaltyAcquirerData loyaltyAcquirerData
+Rebates rebates
 * */
