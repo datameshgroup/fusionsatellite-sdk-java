@@ -103,6 +103,83 @@ public class MessageTest {
     }
 
     @Test
+    public void testSecurityTrailerGeneration() {
+        PaymentRequest paymentRequest = new PaymentRequest.Builder()
+                .saleData(new SaleData.Builder()
+                        .saleReferenceID("saleref")
+                        .operatorID("operatorID")
+                        .operatorLanguage("en")
+                        .shiftNumber("shiftno")
+                        .tokenRequestedType("todo")
+                        .saleTransactionID(
+                                new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build()
+                        )
+                        .build()
+                )
+                .paymentTransaction(new PaymentTransaction.Builder()
+                        .amountsReq(new AmountsReq.Builder()
+                                .currency("AUD")
+                                .requestedAmount(new BigDecimal("5.0"))
+                                .build()
+                        )
+                        .originalPOITransaction(new OriginalPOITransaction.Builder()
+                                .saleID("saleID")
+                                .POIID("POIID")
+                                .POITransactionID(
+                                        new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis()))
+                                )
+                                .build()
+                        )
+                        .transactionConditions(new TransactionConditions.Builder()
+                                .allowedPaymentBrands(new LinkedList<PaymentBrand>())
+                                .build()
+                        )
+                        .addSaleItem(
+                                new SaleItem.Builder()
+                                        .itemID(1)
+                                        .productCode("X")
+                                        .eanUpc("xxx")
+                                        .unitOfMeasure(UnitOfMeasure.Centilitre)
+                                        .quantity(new BigDecimal("1.0"))
+                                        .unitPrice(new BigDecimal(1.0))
+                                        .itemAmount(new BigDecimal("1.0"))
+                                        .productLabel("xx")
+                                        .build()
+                        )
+                        .build()
+                )
+                .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
+                .build();
+
+        SaleToPOIRequest request = new SaleToPOIRequest.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .messageCategory(MessageCategory.Display)
+                        .messageClass(MessageClass.Device)
+                        .messageType(MessageType.Notification)
+                        .serviceID("ServiceID")
+                        .build())
+                .request(paymentRequest)
+                .build();
+
+        Message message = new Message(request);
+        try {
+            message.populateSecurityTrailer(
+                    "44DACB2A22A4A752ADC1BBFFE6CEFB589451E0FFD83F8B21",
+                    "mykey",
+                    "1"
+            );
+        } catch (Exception e){
+            System.out.println(e.toString());
+            assert(false);
+        }
+        System.out.println(message.toString());
+        assert(message.getRequest().getSecurityTrailer() != null);
+    }
+
+    @Test
     public void fromJson() {
         Message message = null;
         try {

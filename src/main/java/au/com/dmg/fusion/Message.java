@@ -24,9 +24,13 @@
 package au.com.dmg.fusion;
 
 import au.com.dmg.fusion.data.*;
+import au.com.dmg.fusion.request.Request;
 import au.com.dmg.fusion.request.SaleToPOIRequest;
+import au.com.dmg.fusion.request.paymentrequest.carddata.KEKIdentifier;
 import au.com.dmg.fusion.response.SaleToPOIResponse;
+import au.com.dmg.fusion.securitytrailer.*;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.Crypto;
 import au.com.dmg.fusion.util.DefaultOnDataMismatchAdapter;
 import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
@@ -34,10 +38,14 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.*;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class Message implements Serializable {
     @Json(name = "SaleToPOIRequest")
@@ -108,6 +116,54 @@ public class Message implements Serializable {
         return toJson();
     }
 
+    public void populateSecurityTrailer(String KEK, String keyIdentifier, String keyVersion) throws InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        if(this.request == null){
+            throw new IllegalStateException("No Request Available. Security Trailer generation only supported for SaleToPOIRequest.");
+        }
+        Request myRequest = this.request.getRequest();
+        if(myRequest == null){
+            throw new IllegalStateException("No Request available inside SaleToPOIRequest");
+        }
+        String requestJson = this.request.toJson();
+        byte[] key = Crypto.generate16ByteKey();
+        byte[] encryptedKey = Crypto.generateEncryptedKey(key, KEK);
+        String encryptedHexKey = Crypto.byteArrayToHexString(encryptedKey);
+
+        String macBody = buildMACBody(this.request.getMessageHeader(), this.request.getRequest());
+        String hexKey = Crypto.byteArrayToHexString(key);
+        String MAC = Crypto.generateMAC(macBody, hexKey).toUpperCase();
+
+        // Security Trailer
+        KEK kek = new KEK("v4", //
+                new KEKIdentifier(keyIdentifier, keyVersion), //
+                new KeyEncryptionAlgorithm("des-ede3-cbc"), //
+                encryptedHexKey);
+
+        Recipient recipient = new Recipient(kek, //
+                new MACAlgorithm("id-retail-cbc-mac-sha-256"), //
+                new EncapsulatedContent("iddata"), //
+                MAC);
+
+        AuthenticatedData authenticatedData = new AuthenticatedData("v0", recipient);
+
+        SecurityTrailer securityTrailer = new SecurityTrailer("id-ctauthData", authenticatedData);
+        //todo.
+        SaleToPOIRequest newRequest = new SaleToPOIRequest.Builder()
+                .request(this.request.getRequest())
+                .messageHeader(this.request.getMessageHeader())
+                .securityTrailer(securityTrailer)
+                .build();
+        this.request = newRequest;
+    }
+
+    private String buildMACBody(MessageHeader messageHeader, Request request) {
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<MessageHeader> jsonAdapter = moshi.adapter(MessageHeader.class);
+        String macBody = String.format("\"MessageHeader\":%s,\"%sRequest\":%s", jsonAdapter.toJson(messageHeader),
+                messageHeader.getMessageCategory(), request.toJson());
+
+        return macBody;
+    }
 
     private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
         String json = aInputStream.readUTF();

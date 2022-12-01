@@ -42,6 +42,7 @@ import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
@@ -254,6 +255,35 @@ public class SaleToPOIRequest implements SaleToPOI {
         this.reconciliationRequest = builder.reconciliationRequest;
         this.transactionStatusRequest = builder.transactionStatusRequest;
         this.securityTrailer = builder.securityTrailer;
+    }
+
+    @Nullable
+    public Request getRequest(){
+        if(this.paymentRequest != null){
+            return paymentRequest;
+        } else if(this.abortTransactionRequest != null){
+            return abortTransactionRequest;
+        } else if(this.reversalRequest != null){
+            return reversalRequest;
+        } else if(this.cardAcquisitionRequest != null){
+            return cardAcquisitionRequest;
+        } else if(this.displayRequest != null){
+            return displayRequest;
+        } else if(this.inputRequest != null){
+            return inputRequest;
+        } else if(this.loginRequest != null){
+            return loginRequest;
+        } else if(this.logoutRequest != null){
+            return logoutRequest;
+        } else if(this.printRequest != null){
+            return printRequest;
+        } else if(this.reconciliationRequest != null){
+            return reconciliationRequest;
+        } else if(this.transactionStatusRequest != null){
+            return transactionStatusRequest;
+        } else {
+            return null;
+        }
     }
 
     public String toJson() {
