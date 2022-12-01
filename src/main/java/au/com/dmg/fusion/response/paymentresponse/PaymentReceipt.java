@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 import java.nio.charset.StandardCharsets;
 
@@ -133,7 +133,7 @@ public class PaymentReceipt {
         Document.OutputSettings outputSettings = new Document.OutputSettings();
         outputSettings.prettyPrint(false);
 
-        return Jsoup.clean(content, "", Whitelist.none(), outputSettings).trim();
+        return Jsoup.clean(content, "", Safelist.none(), outputSettings).trim();
     }
 
     public String getReceiptContentAsHtml(){
