@@ -41,6 +41,7 @@ public enum PaymentBrand {
     @Json(name = "CryptoDotCom") CryptoDotCom,
     @Json(name = "BPGiftCard") BPGiftCard,
     @Json(name = "QantasPoints") QantasPoints,
+    @Json(name = "DRCDollars") DRCDollars,
     @Json(name = "Cash") Cash,
     Other
 }
