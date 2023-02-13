@@ -25,6 +25,7 @@ package au.com.dmg.fusion;
 
 import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.request.SaleToPOIRequest;
+import au.com.dmg.fusion.request.paymentrequest.CustomField;
 import au.com.dmg.fusion.response.SaleToPOIResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.util.DefaultOnDataMismatchAdapter;
@@ -97,6 +98,7 @@ public class Message implements Serializable {
                 .add(DefaultOnDataMismatchAdapter.newFactory(IdentificationType.class, IdentificationType.Unknown))
                 .add(DefaultOnDataMismatchAdapter.newFactory(IdentificationSupport.class, IdentificationSupport.Unknown))
                 .add(DefaultOnDataMismatchAdapter.newFactory(LoyaltyUnit.class, LoyaltyUnit.Unknown))
+                .add(DefaultOnDataMismatchAdapter.newFactory(CustomFieldType.class, CustomFieldType.string))
                 .build();
 
         JsonAdapter<Message> jsonAdapter = moshi.adapter(Message.class);
