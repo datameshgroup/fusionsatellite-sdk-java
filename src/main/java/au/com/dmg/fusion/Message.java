@@ -25,7 +25,6 @@ package au.com.dmg.fusion;
 
 import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.request.SaleToPOIRequest;
-import au.com.dmg.fusion.request.paymentrequest.CustomField;
 import au.com.dmg.fusion.response.SaleToPOIResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.util.DefaultOnDataMismatchAdapter;
