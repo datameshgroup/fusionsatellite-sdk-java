@@ -401,12 +401,16 @@ public class SaleItem {
         }
 
         public Builder addCustomField(CustomField customField) {
-            this.customFields.add(customField);
+            if(customField != null){
+                this.customFields.add(customField);
+            }
             return Builder.this;
         }
 
         public Builder addCustomFields(List<CustomField> customFields) {
-            this.customFields.addAll(customFields);
+            if (customFields != null) {
+                this.customFields.addAll(customFields);
+            }
             return Builder.this;
         }
 

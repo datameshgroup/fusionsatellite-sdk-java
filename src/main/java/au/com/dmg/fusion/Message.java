@@ -98,7 +98,7 @@ public class Message implements Serializable {
                 .add(DefaultOnDataMismatchAdapter.newFactory(IdentificationType.class, IdentificationType.Unknown))
                 .add(DefaultOnDataMismatchAdapter.newFactory(IdentificationSupport.class, IdentificationSupport.Unknown))
                 .add(DefaultOnDataMismatchAdapter.newFactory(LoyaltyUnit.class, LoyaltyUnit.Unknown))
-                .add(DefaultOnDataMismatchAdapter.newFactory(CustomFieldType.class, CustomFieldType.string))
+                .add(DefaultOnDataMismatchAdapter.newFactory(CustomFieldType.class, CustomFieldType.unknown))
                 .build();
 
         JsonAdapter<Message> jsonAdapter = moshi.adapter(Message.class);

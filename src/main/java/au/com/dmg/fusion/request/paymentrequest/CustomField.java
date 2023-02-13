@@ -29,8 +29,8 @@ public class CustomField {
         public Builder() {
         }
 
-        Builder(String jey, CustomFieldType type, String value) {
-            this.key = jey;
+        Builder(String key, CustomFieldType type, String value){
+            this.key = key;
             this.type = type;
             this.value = value;
         }

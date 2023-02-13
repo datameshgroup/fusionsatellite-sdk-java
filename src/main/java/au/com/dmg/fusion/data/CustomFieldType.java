@@ -5,5 +5,6 @@ public enum CustomFieldType {
     number,
     string,
     array,
-    object
+    object,
+    unknown
 }
