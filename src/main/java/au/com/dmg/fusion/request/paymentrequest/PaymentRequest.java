@@ -135,10 +135,6 @@ public class PaymentRequest implements Request {
                         + "Please set the value by \"paymentData()\". "
                         + "The properties \"amountsReq\", \"paymentData\" are required.");
             }
-            if(this.customFields == null) {
-                //van
-            }
-
             return new PaymentRequest(this);
         }
     }
