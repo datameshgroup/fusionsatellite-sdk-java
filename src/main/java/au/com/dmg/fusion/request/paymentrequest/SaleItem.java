@@ -25,6 +25,7 @@ package au.com.dmg.fusion.request.paymentrequest;
 
 import au.com.dmg.fusion.data.UnitOfMeasure;
 import com.squareup.moshi.Json;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -190,6 +191,7 @@ public class SaleItem {
         return parentItemID;
     }
 
+    @NotNull
     public List<CustomField> getCustomFields() {return customFields;}
 
     public static class Builder {

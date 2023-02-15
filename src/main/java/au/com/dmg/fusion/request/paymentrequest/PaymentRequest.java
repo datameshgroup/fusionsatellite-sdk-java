@@ -60,6 +60,7 @@ public class PaymentRequest implements Request {
         return paymentData;
     }
 
+    @NotNull
     public List<CustomField> getCustomFields() {
         return customFields;
     }
@@ -106,16 +107,12 @@ public class PaymentRequest implements Request {
         }
 
         public PaymentRequest.Builder addCustomField(CustomField customField) {
-            if(customField != null){
-                this.customFields.add(customField);
-            }
+            this.customFields.add(customField);
             return PaymentRequest.Builder.this;
         }
 
         public PaymentRequest.Builder addCustomFields(List<CustomField> customFields) {
-            if(customFields!=null){
-                this.customFields.addAll(customFields);
-            }
+            this.customFields.addAll(customFields);
             return PaymentRequest.Builder.this;
         }
 

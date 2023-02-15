@@ -2,77 +2,83 @@ package au.com.dmg.fusion.request.paymentrequest;
 
 import au.com.dmg.fusion.data.CustomFieldType;
 import com.squareup.moshi.Json;
+import org.jetbrains.annotations.NotNull;
 
 public class CustomField {
-    @Json(name = "key")
-    private final String key;
-    @Json(name = "type")
-    private final CustomFieldType type;
-    @Json(name = "value")
-    private final String value;
+    @Json(name = "Key")
+    private final String Key;
+    @Json(name = "Type")
+    private final CustomFieldType Type;
+    @Json(name = "Value")
+    private final String Value;
 
+    @NotNull
     public String getKey() {
-        return key;
+        return Key;
     }
+
+    @NotNull
     public CustomFieldType getType() {
-        return type;
+        return Type;
     }
+
+    @NotNull
     public String getValue() {
-        return value;
+        return Value;
     }
 
     public static class Builder {
-        private String key;
-        private CustomFieldType type;
-        private String value;
+        private String Key;
+        private CustomFieldType Type;
+        private String Value;
 
         public Builder() {
         }
 
-        Builder(String key, CustomFieldType type, String value){
-            this.key = key;
-            this.type = type;
-            this.value = value;
+        Builder(String Key, CustomFieldType Type, String Value){
+            this.Key = Key;
+            this.Type = Type;
+            this.Value = Value;
         }
 
-        public Builder key(String key) {
-            this.key = key;
+        public Builder Key(String Key) {
+            this.Key = Key;
             return Builder.this;
         }
 
-        public Builder type(CustomFieldType type) {
-            this.type = type;
+        public Builder Type(CustomFieldType Type) {
+            this.Type = Type;
             return Builder.this;
         }
 
-        public Builder value(String value) {
-            this.value = value;
+        public Builder Value(String Value) {
+            this.Value = Value;
             return Builder.this;
         }
 
         public CustomField build() {
-            if(this.key == null){
-                throw new NullPointerException("The property \"key\" is null. "
-                        + "Please set the value by \"key()\". "
-                        + "the properties \"key\", \"type\", and \"value\" are required.");
+            if(this.Key == null){
+                throw new NullPointerException("The property \"Key\" is null. "
+                        + "Please set the Value by \"Key()\". "
+                        + "the properties \"Key\", \"Type\", and \"Value\" are required.");
             }
-            if(this.type == null){
-                throw new NullPointerException("The property \"type\" is null. "
-                        + "Please set the value by \"type(CustomFieldType.<type>)\". "
-                        + "the properties \"key\", \"type\", and \"value\" are required.");
+            if(this.Type == null){
+                throw new NullPointerException("The property \"Type\" is null. "
+                        + "Please set the Value by \"Type(CustomFieldType.<Type>)\". "
+                        + "the properties \"Key\", \"Type\", and \"Value\" are required.");
             }
-            if(this.value == null){
-                throw new NullPointerException("The property \"value\" is null. "
-                        + "Please set the value by \"value()\". "
-                        + "the properties \"key\", \"type\", and \"value\" are required.");
+            if(this.Value == null){
+                throw new NullPointerException("The property \"Value\" is null. "
+                        + "Please set the Value by \"Value()\". "
+                        + "the properties \"Key\", \"Type\", and \"Value\" are required.");
             }
             
             return new CustomField(this);
         }
     }
     private CustomField(Builder builder) {
-        this.key = builder.key;
-        this.type = builder.type;
-        this.value = builder.value;
+        this.Key = builder.Key;
+        this.Type = builder.Type;
+        this.Value = builder.Value;
     }
 }
