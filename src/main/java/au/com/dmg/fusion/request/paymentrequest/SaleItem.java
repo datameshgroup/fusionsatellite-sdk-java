@@ -25,6 +25,7 @@ package au.com.dmg.fusion.request.paymentrequest;
 
 import au.com.dmg.fusion.data.UnitOfMeasure;
 import com.squareup.moshi.Json;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -83,6 +84,8 @@ public class SaleItem {
     private final BigDecimal weight;
     @Json(name = "WeightUnitOfMeasure")
     private final String weightUnitOfMeasure;
+    @Json(name = "CustomFields")
+    private final List<CustomField> customFields;
 
     public Integer getItemID() {
         return itemID;
@@ -188,6 +191,9 @@ public class SaleItem {
         return parentItemID;
     }
 
+    @NotNull
+    public List<CustomField> getCustomFields() {return customFields;}
+
     public static class Builder {
 
         private Integer itemID;
@@ -217,11 +223,12 @@ public class SaleItem {
         private String colour;
         private BigDecimal weight;
         private String weightUnitOfMeasure;
+        private List<CustomField> customFields  = new ArrayList<>();
 
         public Builder() {
         }
 
-        Builder(Integer itemID, String productCode, String eanUpc, UnitOfMeasure unitOfMeasure, BigDecimal quantity, BigDecimal unitPrice, BigDecimal itemAmount, String taxCode, String saleChannel, String productLabel, String additionalProductInfo, Integer parentItemID, BigDecimal costBase, BigDecimal discount, List<String> categories, String brand, BigDecimal quantityInStock, List<String> tags, Boolean restricted, String pageUrl, List<String> imageUrls, String style, String size, String colour, BigDecimal weight, String weightUnitOfMeasure) {
+        Builder(Integer itemID, String productCode, String eanUpc, UnitOfMeasure unitOfMeasure, BigDecimal quantity, BigDecimal unitPrice, BigDecimal itemAmount, String taxCode, String saleChannel, String productLabel, String additionalProductInfo, Integer parentItemID, BigDecimal costBase, BigDecimal discount, List<String> categories, String brand, BigDecimal quantityInStock, List<String> tags, Boolean restricted, String pageUrl, List<String> imageUrls, String style, String size, String colour, BigDecimal weight, String weightUnitOfMeasure, List<CustomField> customFields) {
             this.itemID = itemID;
             this.productCode = productCode;
             this.eanUpc = eanUpc;
@@ -248,6 +255,7 @@ public class SaleItem {
             this.colour = colour;
             this.weight = weight;
             this.weightUnitOfMeasure = weightUnitOfMeasure;
+            this.customFields = customFields;
         }
 
         public Builder itemID(Integer itemID) {
@@ -385,6 +393,29 @@ public class SaleItem {
             return Builder.this;
         }
 
+        public Builder customFields(List<CustomField> customFields) {
+            if(customFields == null){
+                this.customFields = new ArrayList<>();
+            } else {
+                this.customFields = customFields;
+            }
+            return Builder.this;
+        }
+
+        public Builder addCustomField(CustomField customField) {
+            if(customField != null){
+                this.customFields.add(customField);
+            }
+            return Builder.this;
+        }
+
+        public Builder addCustomFields(List<CustomField> customFields) {
+            if (customFields != null) {
+                this.customFields.addAll(customFields);
+            }
+            return Builder.this;
+        }
+
         public SaleItem build() {
             if (this.itemID == null) {
                 throw new NullPointerException("The property \"itemID\" is null. "
@@ -453,6 +484,7 @@ public class SaleItem {
         this.colour = builder.colour;
         this.weight = builder.weight;
         this.weightUnitOfMeasure = builder.weightUnitOfMeasure;
+        this.customFields = builder.customFields;
     }
 }
 

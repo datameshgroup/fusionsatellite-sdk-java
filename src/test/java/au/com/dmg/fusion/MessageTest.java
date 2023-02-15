@@ -80,11 +80,29 @@ public class MessageTest {
                                         .unitPrice(new BigDecimal(1.0))
                                         .itemAmount(new BigDecimal("1.0"))
                                         .productLabel("xx")
+                                        .addCustomField(new CustomField.Builder()
+                                                .Key("SampleProductCustomFieldKey")
+                                                .Type(CustomFieldType.Integer)
+                                                .Value("21")
+                                                .build()
+                                        )
                                         .build()
                         )
                         .build()
                 )
                 .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
+                .addCustomField(new CustomField.Builder()
+                        .Key("testCustomFieldKey")
+                        .Type(CustomFieldType.Object)
+                        .Value("{\"TransitData\":{\"DriverID\":123,\"OperatorID\":456,\"ContractID\":\"0f9653cc-a68b-11ed-afa1-0242ac120002\",\"VehicleID\":789,\"RouteVariant\":\"X\",\"TransactionLocation\":{\"Lattitude\":33.8688,\"Longitude\":151.2093},\"Trip\":{\"Boarding\":{\"StopID\":\"\",\"StopName\":\"\",\"ZoneID\":\"\"},\"Destination\":{\"StopID\":\"\",\"StopName\":\"\",\"ZoneID\":\"\"}},\"Ticket\":[{\"Type\":\"Adult\",\"Price\":1.1,\"ID\":\"9fe0e990-a68d-11ed-afa1-0242ac120002\"}]}}")
+                        .build()
+                )
+                .addCustomField(new CustomField.Builder()
+                        .Key("testCustomFieldKey2")
+                        .Type(CustomFieldType.Object)
+                        .Value("{\"TransitData2\":{\"DriverID\":123,\"OperatorID\":456,\"ContractID\":\"0f9653cc-a68b-11ed-afa1-0242ac120002\",\"VehicleID\":789,\"RouteVariant\":\"X\",\"TransactionLocation\":{\"Lattitude\":33.8688,\"Longitude\":151.2093},\"Trip\":{\"Boarding\":{\"StopID\":\"\",\"StopName\":\"\",\"ZoneID\":\"\"},\"Destination\":{\"StopID\":\"\",\"StopName\":\"\",\"ZoneID\":\"\"}},\"Ticket\":[{\"Type\":\"Adult\",\"Price\":1.1,\"ID\":\"9fe0e990-a68d-11ed-afa1-0242ac120002\"}]}}")
+                        .build()
+                )
                 .build();
 
         SaleToPOIRequest request = new SaleToPOIRequest.Builder()
@@ -114,6 +132,17 @@ public class MessageTest {
         assert (message.getRequest() != null);
         assert (message.getResponse() == null);
         assert (message.getRequest().getPaymentRequest().getPaymentTransaction().getAmountsReq().getCurrency().equals("AUD"));
+
+        message = null;
+        try {
+            message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"ProtocolVersion\":\"3.1\",\"MessageClass\":\"Service\",\"MessageCategory\":\"Payment\",\"MessageType\":\"Request\",\"ServiceID\":\"serviceId\",\"SaleID\":\"saleID\",\"POIID\":\"poiID\"},\"PaymentRequest\":{\"CustomFields\":[{\"Key\":\"testCustomFieldKey\",\"Type\":\"Object\",\"Value\":\"{\\\"TransitData\\\":{\\\"DriverID\\\":123,\\\"OperatorID\\\":456,\\\"ContractID\\\":\\\"0f9653cc-a68b-11ed-afa1-0242ac120002\\\",\\\"VehicleID\\\":789,\\\"RouteVariant\\\":\\\"X\\\",\\\"TransactionLocation\\\":{\\\"Lattitude\\\":33.8688,\\\"Longitude\\\":151.2093},\\\"Trip\\\":{\\\"Boarding\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"},\\\"Destination\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"}},\\\"Ticket\\\":[{\\\"Type\\\":\\\"Adult\\\",\\\"Price\\\":1.1,\\\"ID\\\":\\\"9fe0e990-a68d-11ed-afa1-0242ac120002\\\"}]}}\"},{\"Key\":\"testCustomFieldKey2\",\"Type\":\"Object\",\"Value\":\"{\\\"TransitData2\\\":{\\\"DriverID\\\":123,\\\"OperatorID\\\":456,\\\"ContractID\\\":\\\"0f9653cc-a68b-11ed-afa1-0242ac120002\\\",\\\"VehicleID\\\":789,\\\"RouteVariant\\\":\\\"X\\\",\\\"TransactionLocation\\\":{\\\"Lattitude\\\":33.8688,\\\"Longitude\\\":151.2093},\\\"Trip\\\":{\\\"Boarding\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"},\\\"Destination\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"}},\\\"Ticket\\\":[{\\\"Type\\\":\\\"Adult\\\",\\\"Price\\\":1.1,\\\"ID\\\":\\\"9fe0e990-a68d-11ed-afa1-0242ac120002\\\"}]}}\"}],\"SaleData\":{\"OperatorID\":\"OperatorID\",\"OperatorLanguage\":\"en-us\",\"ShiftNumber\":\"1\",\"SaleTransactionID\":{\"TransactionID\":\"id\",\"TimeStamp\":\"2023-02-11T01:24:04.165Z\"},\"SaleReferenceID\":\"saleref\",\"SaleTerminalData\":{\"TerminalEnvironment\":\"Attended\",\"SaleCapabilities\":[\"CashierStatus\",\"CashierError\",\"CashierInput\",\"CustomerAssistance\",\"PrinterReceipt\"]},\"TokenRequestedType\":\"todo\"},\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":5.95,\"CashBackAmount\":0},\"SaleItem\":[{\"CustomFields\":[{\"Key\":\"productCustomFieldKey\",\"Type\":\"Integer\",\"Value\":\"21\"}],\"ProductCode\":\"productCode\",\"UnitOfMeasure\":\"ea\",\"Quantity\":\"1\",\"UnitPrice\":\"3.95\",\"ItemAmount\":3.95,\"ProductLabel\":\"productLabel\"},{\"CustomFields\":[{\"Key\":\"SampleProductCustomFieldKey2\",\"Type\":\"Object\",\"Value\":\"objecthere\"}],\"ProductCode\":\"productcode2\",\"UnitOfMeasure\":\"other\",\"Quantity\":\"2\",\"UnitPrice\":\"1\",\"ItemAmount\":2,\"ProductLabel\":\"productLabel2\"}]},\"PaymentData\":{\"PaymentType\":\"Normal\",\"PaymentInstrumentData\":{\"PaymentInstrumentType\":\"Card\"}}}}}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getCustomFields().get(0).getType().equals(CustomFieldType.Object));
     }
 
     @Test
@@ -139,6 +168,40 @@ public class MessageTest {
         assert (message.getRequest() != null);
         assert (message.getResponse() == null);
         assert (message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getUnitOfMeasure() == UnitOfMeasure.Centimetre);
+
+        message = null;
+        try {
+            message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"ProtocolVersion\":\"3.1\",\"MessageClass\":\"Service\",\"MessageCategory\":\"Payment\",\"MessageType\":\"Request\",\"ServiceID\":\"serviceId\",\"SaleID\":\"saleID\",\"POIID\":\"poiID\"},\"PaymentRequest\":{\"CustomFields\":[{\"Key\":\"testCustomFieldKey\",\"Type\":\"Ssss\",\"Value\":\"1\"},{\"Key\":\"testCustomFieldKey2\",\"Type\":\"integer\",\"Value\":\"badEnumString\"}],\"SaleData\":{\"OperatorID\":\"OperatorID\",\"OperatorLanguage\":\"en-us\",\"ShiftNumber\":\"1\",\"SaleTransactionID\":{\"TransactionID\":\"id\",\"TimeStamp\":\"2023-02-11T01:24:04.165Z\"},\"SaleReferenceID\":\"saleref\",\"SaleTerminalData\":{\"TerminalEnvironment\":\"Attended\",\"SaleCapabilities\":[\"CashierStatus\",\"CashierError\",\"CashierInput\",\"CustomerAssistance\",\"PrinterReceipt\"]},\"TokenRequestedType\":\"todo\"},\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":5.95,\"CashBackAmount\":0},\"SaleItem\":[{\"CustomFields\":[{\"key\":\"productCustomFieldKey\",\"Type\":\"Integer\",\"Value\":\"21\"}],\"ProductCode\":\"productCode\",\"UnitOfMeasure\":\"ea\",\"Quantity\":\"1\",\"UnitPrice\":\"3.95\",\"ItemAmount\":3.95,\"ProductLabel\":\"productLabel\"},{\"CustomFields\":[{\"key\":\"SampleProductCustomFieldKey2\",\"type\":\"object\",\"value\":\"objecthere\"}],\"ProductCode\":\"productcode2\",\"UnitOfMeasure\":\"other\",\"Quantity\":\"2\",\"UnitPrice\":\"1\",\"ItemAmount\":2,\"ProductLabel\":\"productLabel2\"}]},\"PaymentData\":{\"PaymentType\":\"Normal\",\"PaymentInstrumentData\":{\"PaymentInstrumentType\":\"Card\"}}}}}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getPaymentTransaction().getSaleItems().get(0).getCustomFields().get(0).getType() == CustomFieldType.Integer);
+
+
+        message = null;
+        try {
+            message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"ProtocolVersion\":\"3.1\",\"MessageClass\":\"Service\",\"MessageCategory\":\"Payment\",\"MessageType\":\"Request\",\"ServiceID\":\"serviceId\",\"SaleID\":\"saleID\",\"POIID\":\"poiID\"},\"PaymentRequest\":{\"CustomFields\":[{\"Key\":\"testCustomFieldKey\",\"Type\":\"Object\",\"Value\":\"{\\\"TransitData\\\":{\\\"DriverID\\\":123,\\\"OperatorID\\\":456,\\\"ContractID\\\":\\\"0f9653cc-a68b-11ed-afa1-0242ac120002\\\",\\\"VehicleID\\\":789,\\\"RouteVariant\\\":\\\"X\\\",\\\"TransactionLocation\\\":{\\\"Lattitude\\\":33.8688,\\\"Longitude\\\":151.2093},\\\"Trip\\\":{\\\"Boarding\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"},\\\"Destination\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"}},\\\"Ticket\\\":[{\\\"Type\\\":\\\"Adult\\\",\\\"Price\\\":1.1,\\\"ID\\\":\\\"9fe0e990-a68d-11ed-afa1-0242ac120002\\\"}]}}\"},{\"Key\":\"testCustomFieldKey2\",\"Type\":\"Object\",\"Value\":\"{\\\"TransitData2\\\":{\\\"DriverID\\\":123,\\\"OperatorID\\\":456,\\\"ContractID\\\":\\\"0f9653cc-a68b-11ed-afa1-0242ac120002\\\",\\\"VehicleID\\\":789,\\\"RouteVariant\\\":\\\"X\\\",\\\"TransactionLocation\\\":{\\\"Lattitude\\\":33.8688,\\\"Longitude\\\":151.2093},\\\"Trip\\\":{\\\"Boarding\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"},\\\"Destination\\\":{\\\"StopID\\\":\\\"\\\",\\\"StopName\\\":\\\"\\\",\\\"ZoneID\\\":\\\"\\\"}},\\\"Ticket\\\":[{\\\"Type\\\":\\\"Adult\\\",\\\"Price\\\":1.1,\\\"ID\\\":\\\"9fe0e990-a68d-11ed-afa1-0242ac120002\\\"}]}}\"}],\"SaleData\":{\"OperatorID\":\"OperatorID\",\"OperatorLanguage\":\"en-us\",\"ShiftNumber\":\"1\",\"SaleTransactionID\":{\"TransactionID\":\"id\",\"TimeStamp\":\"2023-02-11T01:24:04.165Z\"},\"SaleReferenceID\":\"saleref\",\"SaleTerminalData\":{\"TerminalEnvironment\":\"Attended\",\"SaleCapabilities\":[\"CashierStatus\",\"CashierError\",\"CashierInput\",\"CustomerAssistance\",\"PrinterReceipt\"]},\"TokenRequestedType\":\"todo\"},\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":5.95,\"CashBackAmount\":0},\"SaleItem\":[{\"CustomFields\":[{\"Key\":\"productCustomFieldKey\",\"Type\":\"Integer\",\"Value\":\"21\"}],\"ProductCode\":\"productCode\",\"UnitOfMeasure\":\"ea\",\"Quantity\":\"1\",\"UnitPrice\":\"3.95\",\"ItemAmount\":3.95,\"ProductLabel\":\"productLabel\"},{\"CustomFields\":[{\"Key\":\"SampleProductCustomFieldKey2\",\"Type\":\"Object\",\"Value\":\"objecthere\"}],\"ProductCode\":\"productcode2\",\"UnitOfMeasure\":\"other\",\"Quantity\":\"2\",\"UnitPrice\":\"1\",\"ItemAmount\":2,\"ProductLabel\":\"productLabel2\"}]},\"PaymentData\":{\"PaymentType\":\"Normal\",\"PaymentInstrumentData\":{\"PaymentInstrumentType\":\"Card\"}}}}}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getCustomFields().get(0).getType() == CustomFieldType.Object);
+
+        message = null;
+        try {
+            message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"ProtocolVersion\":\"3.1\",\"MessageClass\":\"Service\",\"MessageCategory\":\"Payment\",\"MessageType\":\"Request\",\"ServiceID\":\"serviceId\",\"SaleID\":\"saleID\",\"POIID\":\"poiID\"},\"PaymentRequest\":{\"CustomFields\":[{\"Key\":\"testCustomFieldKey\",\"Type\":\"UNKNOWN(\\\"unknown\\\")\",\"Value\":\"{12345}\"}],\"SaleData\":{\"OperatorID\":\"OperatorID\",\"OperatorLanguage\":\"en-us\",\"ShiftNumber\":\"1\",\"SaleTransactionID\":{\"TransactionID\":\"id\",\"TimeStamp\":\"2023-02-11T01:24:04.165Z\"},\"SaleReferenceID\":\"saleref\",\"SaleTerminalData\":{\"TerminalEnvironment\":\"Attended\",\"SaleCapabilities\":[\"CashierStatus\",\"CashierError\",\"CashierInput\",\"CustomerAssistance\",\"PrinterReceipt\"]},\"TokenRequestedType\":\"todo\"},\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":5.95,\"CashBackAmount\":0},\"SaleItem\":[{\"CustomFields\":[{\"Key\":\"productCustomFieldKey\",\"Type\":\"Integer\",\"Value\":\"21\"}],\"ProductCode\":\"productCode\",\"UnitOfMeasure\":\"ea\",\"Quantity\":\"1\",\"UnitPrice\":\"3.95\",\"ItemAmount\":3.95,\"ProductLabel\":\"productLabel\"},{\"CustomFields\":[{\"Key\":\"SampleProductCustomFieldKey2\",\"Type\":\"Object\",\"Value\":\"objecthere\"}],\"ProductCode\":\"productcode2\",\"UnitOfMeasure\":\"other\",\"Quantity\":\"2\",\"UnitPrice\":\"1\",\"ItemAmount\":2,\"ProductLabel\":\"productLabel2\"}]},\"PaymentData\":{\"PaymentType\":\"Normal\",\"PaymentInstrumentData\":{\"PaymentInstrumentType\":\"Card\"}}}}}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert (message.getRequest() != null);
+        assert (message.getResponse() == null);
+        assert (message.getRequest().getPaymentRequest().getCustomFields().get(0).getType() == CustomFieldType.Unknown);
     }
 
     @Test
@@ -146,7 +209,7 @@ public class MessageTest {
         Message message = null;
         try {
             message = Message.fromJson("{\"SaleToPOIRequest\":{\"MessageHeader\":{\"MessageCategory\":\"Display\",\"MessageClass\":\"Device\",\"MessageType\":\"Notification\",\"ServiceID\":\"ServiceID\"},\"PaymentRequest\":{\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":\"5.0\"},\"OriginalPOITransactionObject\":{\"POIID\":\"POIID\",\"POITransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.073Z\",\"TransactionID\":\"id\"},\"SaleID\":\"saleID\"},\"PaymentData\":{\"PaymentType\":\"Normal\"},\"SaleItem\":[{\"EanUpc\":\"xxx\",\"ImageUrls\":[],\"ItemAmount\":\"1.0\",\"ItemID\":1,\"ProductCode\":\"X\",\"ProductLabel\":\"xx\",\"Quantity\":\"1.0\",\"Restricted\":false,\"SaleChannel\":\"Unknown\",\"Tags\":[],\"TaxCode\":\"GST\",\"UnitOfMeasure\":\"3f3f23hf83f\",\"UnitPrice\":\"1\"}],\"TransactionConditions\":{\"AcquirerID\":[],\"AllowedPaymentBrands\":[]}},\"SaleData\":{\"OperatorID\":\"operatorID\",\"OperatorLanguage\":\"en\",\"SaleReferenceID\":\"saleref\",\"SaleTransactionID\":{\"TimeStamp\":\"2021-09-22T01:10:21.057Z\",\"TransactionID\":\"x\", \"ExtraField\":\"Value\"},\"ShiftNumber\":\"shiftno\",\"TokenRequestedType\":\"todo\"}}}}");
-        } catch (IOException e) {
+                } catch (IOException e) {
             e.printStackTrace();
         }
 

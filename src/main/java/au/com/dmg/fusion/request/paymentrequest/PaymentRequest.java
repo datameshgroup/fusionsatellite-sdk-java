@@ -31,6 +31,9 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PaymentRequest implements Request {
 
     @Json(name = "SaleData")
@@ -39,6 +42,8 @@ public class PaymentRequest implements Request {
     private final PaymentTransaction paymentTransaction;
     @Json(name = "PaymentData")
     private final PaymentData paymentData;
+    @Json(name = "CustomFields")
+    private final List<CustomField> customFields;
 
     @NotNull
     public PaymentTransaction getPaymentTransaction() {
@@ -55,20 +60,26 @@ public class PaymentRequest implements Request {
         return paymentData;
     }
 
+    @NotNull
+    public List<CustomField> getCustomFields() {
+        return customFields;
+    }
+
     public static class Builder {
 
         private SaleData saleData;
         private PaymentTransaction paymentTransaction;
         private PaymentData paymentData;
+        private List<CustomField> customFields  = new ArrayList<>();
 
         public Builder() {
         }
 
-        Builder(SaleData saleData, PaymentTransaction paymentTransaction, PaymentData paymentData) {
+        Builder(SaleData saleData, PaymentTransaction paymentTransaction, PaymentData paymentData, List<CustomField> customFields) {
             this.saleData = saleData;
             this.paymentTransaction = paymentTransaction;
             this.paymentData = paymentData;
-            
+            this.customFields = customFields;
         }
 
         public Builder saleData(SaleData saleData) {
@@ -83,6 +94,25 @@ public class PaymentRequest implements Request {
 
         public PaymentRequest.Builder paymentData(PaymentData paymentData) {
             this.paymentData = paymentData;
+            return PaymentRequest.Builder.this;
+        }
+
+        public Builder customFields(List<CustomField> customFields) {
+            if(customFields == null){
+                this.customFields = new ArrayList<>();
+            } else {
+                this.customFields = customFields;
+            }
+            return PaymentRequest.Builder.this;
+        }
+
+        public PaymentRequest.Builder addCustomField(CustomField customField) {
+            this.customFields.add(customField);
+            return PaymentRequest.Builder.this;
+        }
+
+        public PaymentRequest.Builder addCustomFields(List<CustomField> customFields) {
+            this.customFields.addAll(customFields);
             return PaymentRequest.Builder.this;
         }
 
@@ -102,7 +132,6 @@ public class PaymentRequest implements Request {
                         + "Please set the value by \"paymentData()\". "
                         + "The properties \"amountsReq\", \"paymentData\" are required.");
             }
-
             return new PaymentRequest(this);
         }
     }
@@ -111,6 +140,7 @@ public class PaymentRequest implements Request {
         this.saleData = builder.saleData;
         this.paymentTransaction = builder.paymentTransaction;
         this.paymentData = builder.paymentData;
+        this.customFields = builder.customFields;
     }
 
     @Override
