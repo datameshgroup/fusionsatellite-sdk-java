@@ -6,25 +6,25 @@ import org.jetbrains.annotations.NotNull;
 
 public class CustomField {
     @Json(name = "Key")
-    private final String Key;
+    private final String key;
     @Json(name = "Type")
-    private final CustomFieldType Type;
+    private final CustomFieldType type;
     @Json(name = "Value")
-    private final String Value;
+    private final String value;
 
     @NotNull
     public String getKey() {
-        return Key;
+        return key;
     }
 
     @NotNull
     public CustomFieldType getType() {
-        return Type;
+        return type;
     }
 
     @NotNull
     public String getValue() {
-        return Value;
+        return value;
     }
 
     public static class Builder {
@@ -77,8 +77,8 @@ public class CustomField {
         }
     }
     private CustomField(Builder builder) {
-        this.Key = builder.Key;
-        this.Type = builder.Type;
-        this.Value = builder.Value;
+        this.key = builder.Key;
+        this.type = builder.Type;
+        this.value = builder.Value;
     }
 }
