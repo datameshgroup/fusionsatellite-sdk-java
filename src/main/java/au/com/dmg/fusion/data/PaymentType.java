@@ -25,6 +25,7 @@ package au.com.dmg.fusion.data;
 
 public enum PaymentType {
     Normal,
+    Reversal,
     Refund,
     CashAdvance,
     FirstReservation,
