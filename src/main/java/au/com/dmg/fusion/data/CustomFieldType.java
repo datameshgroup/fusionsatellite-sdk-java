@@ -6,5 +6,6 @@ public enum CustomFieldType {
     String,
     Array,
     Object,
+    Boolean,
     Unknown
 }
