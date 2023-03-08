@@ -191,7 +191,6 @@ public class SaleItem {
         return parentItemID;
     }
 
-    @NotNull
     public List<CustomField> getCustomFields() {return customFields;}
 
     public static class Builder {

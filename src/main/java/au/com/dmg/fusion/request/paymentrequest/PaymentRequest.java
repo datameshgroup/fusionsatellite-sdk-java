@@ -60,7 +60,6 @@ public class PaymentRequest implements Request {
         return paymentData;
     }
 
-    @NotNull
     public List<CustomField> getCustomFields() {
         return customFields;
     }
