@@ -2,9 +2,12 @@ package au.com.dmg.fusion.request.paymentrequest;
 
 import au.com.dmg.fusion.data.CustomFieldType;
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.JsonReader;
+import com.squareup.moshi.Moshi;
+import okio.Buffer;
+import okio.BufferedSource;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class CustomField {
@@ -38,7 +41,7 @@ public class CustomField {
         public Builder() {
         }
 
-        Builder(String key, CustomFieldType type, String value){
+        Builder(String key, CustomFieldType type, String value) {
             this.key = key;
             this.type = type;
             this.value = value;
@@ -78,68 +81,104 @@ public class CustomField {
             this.type = CustomFieldType.Number;
             return Builder.this;
         }
-        public Builder value(boolean value){
+
+        public Builder value(boolean value) {
             this.value = Boolean.toString(value);
             this.type = CustomFieldType.Boolean;
             return Builder.this;
         }
 
         public CustomField build() {
-            if(this.key == null){
+            if (this.key == null) {
                 throw new NullPointerException("The property \"Key\" is null. "
                         + "Please set the Value by \"Key()\". "
                         + "the properties \"Key\", \"Type\", and \"Value\" are required.");
             }
-            if(this.type == null){
+            if (this.type == null) {
                 throw new NullPointerException("The property \"Type\" is null. "
                         + "Please set the Value by \"Type(CustomFieldType.<Type>)\". "
                         + "the properties \"Key\", \"Type\", and \"Value\" are required.");
             }
-            if(this.value == null){
+            if (this.value == null) {
                 throw new NullPointerException("The property \"Value\" is null. "
                         + "Please set the Value by \"Value()\". "
                         + "the properties \"Key\", \"Type\", and \"Value\" are required.");
             }
 
-            if (this.type == CustomFieldType.Array){
-                try{
-                    JSONArray jsonArray = new JSONArray(this.value);
-                } catch (Exception e){
-                    throw new IllegalArgumentException("Error " + this.value + " is not a valid array message: " + e.getMessage());
+            if (this.type == CustomFieldType.Array) {
+                if(!isValidJsonArray(this.value)){
+                    throw new IllegalArgumentException("Error " + this.value + " is not a valid JSON array");
                 }
-
-            } else if (this.type == CustomFieldType.Boolean){
-                if(!this.value.equals("true") && !this.value.equals("false")){
+            } else if (this.type == CustomFieldType.Boolean) {
+                if (!this.value.equals("true") && !this.value.equals("false")) {
                     throw new IllegalArgumentException("Error " + this.value + " must either be 'true' or 'false'");
                 }
-            } else if (this.type == CustomFieldType.Integer){
-                try{
+            } else if (this.type == CustomFieldType.Integer) {
+                try {
                     Integer i = Integer.valueOf(this.value);
-                } catch (NumberFormatException err){
+                } catch (NumberFormatException err) {
                     throw new IllegalArgumentException("Error " + this.value + " is not a valid integer.");
                 }
-            } else if (this.type == CustomFieldType.Number){
+            } else if (this.type == CustomFieldType.Number) {
                 try {
                     Double d = Double.valueOf(this.value);
-                } catch (NumberFormatException err){
+                } catch (NumberFormatException err) {
                     throw new IllegalArgumentException("Error " + this.value + " is not a valid decimal point number");
                 }
-            } else if (this.type == CustomFieldType.Object){
-                try{
-                    JSONObject obj = new JSONObject(this.value);
-                } catch (Exception e){
-                    throw new IllegalArgumentException("Error " + this.value + " is not a valid JSON Object: " + e.getMessage());
+            } else if (this.type == CustomFieldType.Object) {
+                if (!isValidJsonObject(this.value)) {
+                    throw new IllegalArgumentException("Error " + this.value + " is not a valid JSON Object");
                 }
-            } else if (this.type == CustomFieldType.Unknown){
+            } else if (this.type == CustomFieldType.Unknown) {
                 throw new IllegalArgumentException("Error unknown type used for data. do not used this.");
             }
 
             return new CustomField(this);
         }
     }
+
     private CustomField(Builder builder) {
         this.key = builder.key;
         this.type = builder.type;
         this.value = builder.value;
+    }
+
+    private static boolean isValidJsonArray(String jsonString) {
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<Object> jsonAdapter = moshi.adapter(Object.class).lenient();
+        BufferedSource source = new Buffer().writeUtf8(jsonString);
+        JsonReader jsonReader = JsonReader.of(source);
+        try {
+            jsonReader.beginArray();
+            while (jsonReader.hasNext()) {
+                jsonAdapter.fromJson(jsonReader);
+            }
+            jsonReader.endArray();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static boolean isValidJsonObject(String jsonString) {
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<Object> jsonAdapter = moshi.adapter(Object.class).lenient();
+        try {
+            BufferedSource source = new Buffer().writeUtf8(jsonString);
+            JsonReader jsonReader = JsonReader.of(source);
+
+            if (jsonReader.peek() != JsonReader.Token.BEGIN_OBJECT) {
+                return false;
+            }
+            jsonReader.beginObject();
+            while (jsonReader.hasNext()) {
+                jsonReader.nextName();
+                jsonAdapter.fromJson(jsonReader);
+            }
+            jsonReader.endObject();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

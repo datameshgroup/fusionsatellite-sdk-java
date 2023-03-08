@@ -68,9 +68,64 @@ public class CustomFieldTest {
     }
 
     @Test
+    public void testMalformedArray(){
+        try{
+            CustomField customField = new CustomField.Builder()
+                    .value("[123,44")
+                    .type(CustomFieldType.Array)
+                    .key("key")
+                    .build();
+            assert(false);
+        } catch (IllegalArgumentException arg){
+            assert(true);
+        }
+    }
+
+    @Test
+    public void testMalformedArray2(){
+        try{
+            CustomField customField = new CustomField.Builder()
+                    .value("[test]")
+                    .type(CustomFieldType.Array)
+                    .key("key")
+                    .build();
+            assert(false);
+        } catch (IllegalArgumentException arg){
+            assert(true);
+        }
+    }
+
+    @Test
     public void testValidTypeObject(){
         CustomField customField = new CustomField.Builder()
                 .value("{}")
+                .type(CustomFieldType.Object)
+                .key("key")
+                .build();
+    }
+
+    @Test
+    public void testValidTypeObject2(){
+        CustomField customField = new CustomField.Builder()
+                .value("{\"1\": 2, \"2\": 3, \"4\": 11}")
+                .type(CustomFieldType.Object)
+                .key("key")
+                .build();
+    }
+
+    @Test
+    public void testValidTypeObject3(){
+        CustomField customField = new CustomField.Builder()
+                .value("{\"a\": \"hello world\"}")
+                .type(CustomFieldType.Object)
+                .key("key")
+                .build();
+    }
+
+    @Test
+    public void testValidTypeObject4(){
+        CustomField customField = new CustomField.Builder()
+                .value("{\"x\" : { \"y\": \"z\", \"z\": 2}}")
                 .type(CustomFieldType.Object)
                 .key("key")
                 .build();
