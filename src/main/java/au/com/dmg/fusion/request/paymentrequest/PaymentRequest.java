@@ -143,12 +143,7 @@ public class PaymentRequest implements Request {
                         + "Please set the value by \"paymentData()\". "
                         + "The properties \"amountsReq\", \"paymentData\", and \"extensionData\" are required.");
             }
-            if (this.extensionData==null){
-                throw new NullPointerException("The property \"extensionData\" is null. "
-                        + "Please set the value by \"extensionData()\". "
-                        + "The properties \"amountsReq\", \"paymentData\", and \"extensionData\" are required.");
-            }
-            return new PaymentRequest(this);
+             return new PaymentRequest(this);
         }
     }
 
