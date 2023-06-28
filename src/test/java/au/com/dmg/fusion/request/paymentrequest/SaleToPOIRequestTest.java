@@ -31,6 +31,10 @@ import au.com.dmg.fusion.request.SaleToPOIRequest;
 import au.com.dmg.fusion.request.aborttransactionrequest.AbortTransactionRequest;
 import au.com.dmg.fusion.request.loginrequest.LoginRequest;
 import au.com.dmg.fusion.request.loginrequest.SaleSoftware;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Stop;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.TransitData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Trip;
 import au.com.dmg.fusion.request.transactionstatusrequest.MessageReference;
 import junit.framework.TestCase;
 
@@ -90,6 +94,28 @@ public class SaleToPOIRequestTest extends TestCase {
                         )
                         .build()
                 )
+                .extensionData(new ExtensionData.Builder().transitData(
+                                new TransitData.Builder()
+                                        .isWheelchairEnabled(false)
+                                        .trip(new Trip.Builder()
+                                                .totalDistanceTravelled(new BigDecimal(222.22))
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(0)
+                                                        .stopName("test0")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(1)
+                                                        .stopName("test1")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .build())
+                                        .build())
+                        .build())
                 .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
                 .build();
 
@@ -109,7 +135,7 @@ public class SaleToPOIRequestTest extends TestCase {
     }
 
     public void testFromJson() {
-        String jsonString = "{\"SaleToPOIRequest\":{\"MessageHeader\":{\"MessageCategory\":\"Display\",\"MessageClass\":\"Device\",\"MessageType\":\"Notification\",\"ServiceID\":\"ServiceID\"},\"PaymentRequest\":{\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":\"5.0\"},\"OriginalPOITransactionObject\":{\"POIID\":\"POIID\",\"POITransactionID\":{\"TimeStamp\":\"2021-09-28T01:32:51.262Z\",\"TransactionID\":\"id\"},\"SaleID\":\"saleID\"},\"PaymentData\":{\"PaymentType\":\"Normal\"},\"SaleItem\":[{\"EanUpc\":\"xxx\",\"ImageUrls\":[],\"ItemAmount\":\"1.0\",\"ItemID\":1,\"ProductCode\":\"X\",\"ProductLabel\":\"xx\",\"Quantity\":\"1.0\",\"Restricted\":false,\"SaleChannel\":\"Unknown\",\"Tags\":[],\"TaxCode\":\"GST\",\"UnitOfMeasure\":\"Centilitre\",\"UnitPrice\":\"1\"}],\"TransactionConditions\":{\"AcquirerID\":[],\"AllowedPaymentBrands\":[]}},\"SaleData\":{\"OperatorID\":\"operatorID\",\"OperatorLanguage\":\"en\",\"SaleReferenceID\":\"saleref\",\"SaleTransactionID\":{\"TimeStamp\":\"2021-09-28T01:32:51.257Z\",\"TransactionID\":\"x\"},\"ShiftNumber\":\"shiftno\",\"TokenRequestedType\":\"todo\"}}}}";
+      String jsonString = "{\"SaleToPOIRequest\":{\"MessageHeader\":{\"MessageCategory\":\"Display\",\"MessageClass\":\"Device\",\"MessageType\":\"Notification\",\"ServiceID\":\"ServiceID\"},\"PaymentRequest\":{\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":\"5.0\"},\"OriginalPOITransactionObject\":{\"POIID\":\"POIID\",\"POITransactionID\":{\"TimeStamp\":\"2021-09-28T01:32:51.262Z\",\"TransactionID\":\"id\"},\"SaleID\":\"saleID\"},\"PaymentData\":{\"PaymentType\":\"Normal\"},\"SaleItem\":[{\"EanUpc\":\"xxx\",\"ImageUrls\":[],\"ItemAmount\":\"1.0\",\"ItemID\":1,\"ProductCode\":\"X\",\"ProductLabel\":\"xx\",\"Quantity\":\"1.0\",\"Restricted\":false,\"SaleChannel\":\"Unknown\",\"Tags\":[],\"TaxCode\":\"GST\",\"UnitOfMeasure\":\"Centilitre\",\"UnitPrice\":\"1\"}],\"TransactionConditions\":{\"AcquirerID\":[],\"AllowedPaymentBrands\":[]}},\"ExtensionData\":{\"TransitData\":{\"IsWheelchairEnabled\":false,\"Trip\":{\"Stops\":[{\"Latitude\":\"3432423\",\"Longitude\":\"-3432423\",\"StopIndex\":0,\"StopName\":\"test0\",\"Timestamp\":\"2023-06-22T01:52:39.625Z\"},{\"Latitude\":\"3432423\",\"Longitude\":\"-3432423\",\"StopIndex\":1,\"StopName\":\"test1\",\"Timestamp\":\"2023-06-22T01:52:39.625Z\"}],\"TotalDistanceTravelled\":\"222.219999999999998863131622783839702606201171875\"}}},\"SaleData\":{\"OperatorID\":\"operatorID\",\"OperatorLanguage\":\"en\",\"SaleReferenceID\":\"saleref\",\"SaleTransactionID\":{\"TimeStamp\":\"2021-09-28T01:32:51.257Z\",\"TransactionID\":\"x\"},\"ShiftNumber\":\"shiftno\",\"TokenRequestedType\":\"todo\"}}}}";
         SaleToPOIRequest request = null;
         try {
             request = Message.fromJson(jsonString).getRequest();

@@ -23,6 +23,7 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.request.Request;
 import au.com.dmg.fusion.util.InstantAdapter;
@@ -44,6 +45,8 @@ public class PaymentRequest implements Request {
     private final PaymentData paymentData;
     @Json(name = "CustomFields")
     private final List<CustomField> customFields;
+    @Json(name = "ExtensionData")
+    private final ExtensionData extensionData;
 
     @NotNull
     public PaymentTransaction getPaymentTransaction() {
@@ -64,21 +67,25 @@ public class PaymentRequest implements Request {
         return customFields;
     }
 
+    public ExtensionData getExtensionData() {return extensionData; }
+
     public static class Builder {
 
         private SaleData saleData;
         private PaymentTransaction paymentTransaction;
         private PaymentData paymentData;
         private List<CustomField> customFields  = new ArrayList<>();
+        private ExtensionData extensionData;
 
         public Builder() {
         }
 
-        Builder(SaleData saleData, PaymentTransaction paymentTransaction, PaymentData paymentData, List<CustomField> customFields) {
+        Builder(SaleData saleData, PaymentTransaction paymentTransaction, PaymentData paymentData, List<CustomField> customFields, ExtensionData extensionData) {
             this.saleData = saleData;
             this.paymentTransaction = paymentTransaction;
             this.paymentData = paymentData;
             this.customFields = customFields;
+            this.extensionData = extensionData;
         }
 
         public Builder saleData(SaleData saleData) {
@@ -115,21 +122,31 @@ public class PaymentRequest implements Request {
             return PaymentRequest.Builder.this;
         }
 
+        public Builder extensionData(ExtensionData extensionData){
+            this.extensionData = extensionData;
+            return Builder.this;
+        }
+
         public PaymentRequest build() {
             if (this.saleData == null) {
                 throw new NullPointerException("The property \"saleData\" is null. "
                         + "Please set the value by \"saleData()\". "
-                        + "The properties \"saleData\", \"paymentTransaction\" are required.");
+                        + "The properties \"saleData\", \"paymentTransaction\", and \"extensionData\" are required.");
             }
             if (this.paymentTransaction == null) {
                 throw new NullPointerException("The property \"paymentTransaction\" is null. "
                         + "Please set the value by \"paymentTransaction()\". "
-                        + "The properties \"saleData\", \"paymentTransaction\" are required.");
+                        + "The properties \"saleData\", \"paymentTransaction\", and \"extensionData\" are required.");
             }
             if (this.paymentData == null) {
                 throw new NullPointerException("The property \"paymentData\" is null. "
                         + "Please set the value by \"paymentData()\". "
-                        + "The properties \"amountsReq\", \"paymentData\" are required.");
+                        + "The properties \"amountsReq\", \"paymentData\", and \"extensionData\" are required.");
+            }
+            if (this.extensionData==null){
+                throw new NullPointerException("The property \"extensionData\" is null. "
+                        + "Please set the value by \"extensionData()\". "
+                        + "The properties \"amountsReq\", \"paymentData\", and \"extensionData\" are required.");
             }
             return new PaymentRequest(this);
         }
@@ -140,6 +157,7 @@ public class PaymentRequest implements Request {
         this.paymentTransaction = builder.paymentTransaction;
         this.paymentData = builder.paymentData;
         this.customFields = builder.customFields;
+        this.extensionData = builder.extensionData;
     }
 
     @Override

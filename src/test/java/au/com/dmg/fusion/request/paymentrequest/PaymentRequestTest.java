@@ -28,6 +28,10 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedList;
 
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Stop;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.TransitData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Trip;
 import org.junit.Test;
 
 import com.squareup.moshi.JsonAdapter;
@@ -87,6 +91,28 @@ public class PaymentRequestTest {
                         .build()
                 )
                 .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
+                .extensionData(new ExtensionData.Builder().transitData(
+                                new TransitData.Builder()
+                                        .isWheelchairEnabled(false)
+                                        .trip(new Trip.Builder()
+                                                .totalDistanceTravelled(new BigDecimal(222.22))
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(0)
+                                                        .stopName("test0")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(1)
+                                                        .stopName("test1")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .build())
+                                        .build())
+                        .build())
                 .build();
 
         Moshi moshi = new Moshi.Builder()
