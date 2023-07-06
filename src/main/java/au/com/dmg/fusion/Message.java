@@ -54,6 +54,8 @@ public class Message implements Serializable {
     public static String INTENT_ACTION_SALETOPOI_REQUEST = "au.com.dmg.axispay.action.SaleToPOIRequest";
     public static String INTENT_ACTION_BROADCAST=  "au.com.dmg.axispay.Fusion.REQUEST";
     public static String AXISPAY_PACKAGE_NAME = "au.com.dmg.axispay";
+    public static String AXIS_PULL_UPDATE = "au.com.dmg.axispay.action.UPDATE";
+    public static String AXIS_RESULT_ACTIVITY = "OnUpdateFinishAction";
     public static int INTENT_REQUEST_CODE = 100;
 
     public Message(SaleToPOIRequest request) {

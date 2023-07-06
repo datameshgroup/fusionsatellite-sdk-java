@@ -26,6 +26,10 @@ package au.com.dmg.fusion;
 import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.request.SaleToPOIRequest;
 import au.com.dmg.fusion.request.paymentrequest.*;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Stop;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.TransitData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Trip;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -103,6 +107,28 @@ public class MessageTest {
                         .value("{\"TransitData2\":{\"DriverID\":123,\"OperatorID\":456,\"ContractID\":\"0f9653cc-a68b-11ed-afa1-0242ac120002\",\"VehicleID\":789,\"RouteVariant\":\"X\",\"TransactionLocation\":{\"Lattitude\":33.8688,\"Longitude\":151.2093},\"Trip\":{\"Boarding\":{\"StopID\":\"\",\"StopName\":\"\",\"ZoneID\":\"\"},\"Destination\":{\"StopID\":\"\",\"StopName\":\"\",\"ZoneID\":\"\"}},\"Ticket\":[{\"Type\":\"Adult\",\"Price\":1.1,\"ID\":\"9fe0e990-a68d-11ed-afa1-0242ac120002\"}]}}")
                         .build()
                 )
+                .extensionData(new ExtensionData.Builder().transitData(
+                                new TransitData.Builder()
+                                        .isWheelchairEnabled(false)
+                                        .trip(new Trip.Builder()
+                                                .totalDistanceTravelled(new BigDecimal(222.22))
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(0)
+                                                        .stopName("test0")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(1)
+                                                        .stopName("test1")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .build())
+                                        .build())
+                        .build())
                 .build();
 
         SaleToPOIRequest request = new SaleToPOIRequest.Builder()
