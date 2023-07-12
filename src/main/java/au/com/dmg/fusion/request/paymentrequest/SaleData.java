@@ -45,6 +45,8 @@ public class SaleData {
 	private final String tokenRequestedType;
 	@Json(name = "SaleTransactionID")
 	private SaleTransactionID saleTransactionID;
+	@Json(name = "SponsoredMerchant")
+	private SponsoredMerchant sponsoredMerchant;
 
 	public String getOperatorID() {
 		return operatorID;
@@ -75,6 +77,8 @@ public class SaleData {
 		return saleTransactionID;
 	}
 
+	public SponsoredMerchant getSponsoredMerchant() { return sponsoredMerchant; }
+
 	public static class Builder {
 
 		private String operatorID;
@@ -84,12 +88,13 @@ public class SaleData {
 		private SaleTerminalData saleTerminalData;
 		private String tokenRequestedType;
 		private SaleTransactionID saleTransactionID;
+		private SponsoredMerchant sponsoredMerchant;
 
 		public Builder() {
 		}
 
 		Builder(String operatorID, String operatorLanguage, String shiftNumber, String saleReferenceID, SaleTerminalData saleTerminalData,
-				String tokenRequestedType, SaleTransactionID saleTransactionID) {
+				String tokenRequestedType, SaleTransactionID saleTransactionID, SponsoredMerchant sponsoredMerchant) {
 			this.operatorID = operatorID;
 			this.operatorLanguage = operatorLanguage;
 			this.shiftNumber = shiftNumber;
@@ -97,6 +102,7 @@ public class SaleData {
 			this.saleTerminalData = saleTerminalData;
 			this.tokenRequestedType = tokenRequestedType;
 			this.saleTransactionID = saleTransactionID;
+			this.sponsoredMerchant = sponsoredMerchant;
 		}
 
 		public Builder operatorID(String operatorID) {
@@ -134,6 +140,11 @@ public class SaleData {
 			return Builder.this;
 		}
 
+		public Builder sponsoredMerchant(SponsoredMerchant sponsoredMerchant){
+			this.sponsoredMerchant = sponsoredMerchant;
+			return Builder.this;
+		}
+
 		public SaleData build() {
 			if (this.operatorLanguage == null) {
 				operatorLanguage = "en";
@@ -156,6 +167,7 @@ public class SaleData {
 		this.saleTerminalData = builder.saleTerminalData;
 		this.saleTransactionID = builder.saleTransactionID;
 		this.tokenRequestedType = builder.tokenRequestedType;
+		this.sponsoredMerchant = builder.sponsoredMerchant;
 	}
 }
 
