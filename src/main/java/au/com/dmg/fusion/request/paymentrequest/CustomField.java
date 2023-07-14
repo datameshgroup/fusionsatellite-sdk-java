@@ -57,14 +57,6 @@ public class CustomField {
             return Builder.this;
         }
 
-        /**
-         * @param value the value should be valid JSON, serialized as a String.
-         *              e.g [1,2,3,4] should be "[1,2,3,4]", with a type of Array
-         *              true should be "true" with a type of Boolean
-         *              321.5 should be "321.5" with a type of Number
-         *              {a:"hello world"} should be "{a:\"hello world\"}"
-         * @return
-         */
         public Builder value(String value) {
             this.value = value;
             return Builder.this;
