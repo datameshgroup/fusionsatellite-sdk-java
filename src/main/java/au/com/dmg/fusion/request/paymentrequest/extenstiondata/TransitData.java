@@ -1,7 +1,12 @@
 package au.com.dmg.fusion.request.paymentrequest.extenstiondata;
 
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 public class TransitData {
     @Json(name = "IsWheelchairEnabled")
@@ -58,4 +63,16 @@ public class TransitData {
         this.trip = builder.trip;
     }
 
+    public String toJsonString() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<TransitData> jsonAdapter = moshi.adapter(TransitData.class);
+        return jsonAdapter.toJson(this);
+    }
+
+    public JSONObject toJsonObject(){
+        return new JSONObject(toJsonString());
+    }
 }
