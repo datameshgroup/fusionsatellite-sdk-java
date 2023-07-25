@@ -39,6 +39,8 @@ public class SaleTerminalData {
     private final List<SaleCapability> saleCapabilities;
     @Json(name = "TotalsGroupID")
     private final String totalsGroupID;
+    @Json(name = "DeviceID")
+    private final String deviceID;
 
     public TerminalEnvironment getTerminalEnvironment() {
         return terminalEnvironment;
@@ -52,19 +54,23 @@ public class SaleTerminalData {
         return totalsGroupID;
     }
 
+    public String getDeviceID() { return deviceID; }
+
     public static class Builder {
 
         private TerminalEnvironment terminalEnvironment;
         private List<SaleCapability> saleCapabilities = new ArrayList<>();
         private String totalsGroupID;
+        private String deviceID;
 
         public Builder() {
         }
 
-        Builder(TerminalEnvironment terminalEnvironment, List<SaleCapability> saleCapabilities, String totalsGroupID) {
+        Builder(TerminalEnvironment terminalEnvironment, List<SaleCapability> saleCapabilities, String totalsGroupID, String deviceID) {
             this.terminalEnvironment = terminalEnvironment;
             this.saleCapabilities = saleCapabilities;
             this.totalsGroupID = totalsGroupID;
+            this.deviceID = deviceID;
         }
 
         public Builder terminalEnvironment(TerminalEnvironment terminalEnvironment) {
@@ -87,6 +93,11 @@ public class SaleTerminalData {
             return Builder.this;
         }
 
+        public Builder deviceID(String deviceId){
+            this.deviceID = deviceId;
+            return Builder.this;
+        }
+
         public SaleTerminalData build() {
 
             return new SaleTerminalData(this);
@@ -97,6 +108,7 @@ public class SaleTerminalData {
         this.terminalEnvironment = builder.terminalEnvironment;
         this.saleCapabilities = builder.saleCapabilities;
         this.totalsGroupID = builder.totalsGroupID;
+        this.deviceID = builder.deviceID;;
     }
 }
 
@@ -106,4 +118,5 @@ class SaleTerminalData
 TerminalEnvironment terminalEnvironment
 List<SaleCapability> saleCapabilities
 String totalsGroupID
+String deviceID
 * */

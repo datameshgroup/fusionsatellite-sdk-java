@@ -23,8 +23,6 @@
 
 package au.com.dmg.fusion.response;
 
-import au.com.dmg.fusion.Message;
-import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.MessageHeader;
@@ -32,20 +30,12 @@ import au.com.dmg.fusion.SaleToPOI;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
 import au.com.dmg.fusion.securitytrailer.SecurityTrailer;
-import au.com.dmg.fusion.util.DefaultOnDataMismatchAdapter;
 import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.w3c.dom.events.Event;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 public class SaleToPOIResponse implements SaleToPOI {
     @Json(name = "MessageHeader")
@@ -72,6 +62,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private TransactionStatusResponse transactionStatusResponse;
     @Json(name = "ReversalResponse")
     private ReversalResponse reversalResponse;
+    @Json(name = "GetTotalsResponse")
+    private GetTotalsResponse getTotalsResponse;
     @Json(name = "EventNotification")
     private EventNotification eventNotification;    
     @Json(name = "SecurityTrailer")
@@ -144,6 +136,9 @@ public class SaleToPOIResponse implements SaleToPOI {
     }
 
     @Nullable
+    public GetTotalsResponse getGetTotalsResponse(){ return getTotalsResponse; }
+
+    @Nullable
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -163,6 +158,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private ReconciliationResponse reconciliationResponse;
         private TransactionStatusResponse transactionStatusResponse;
         private ReversalResponse reversalResponse;
+        private GetTotalsResponse getTotalsResponse;
         private EventNotification eventNotification;
         private SecurityTrailer securityTrailer;
 
@@ -172,6 +168,9 @@ public class SaleToPOIResponse implements SaleToPOI {
 
         public PaymentResponse getPaymentResponse() {
             return paymentResponse;
+        }
+        public GetTotalsResponse getTotalsResponse(){
+            return getTotalsResponse;
         }
 
         public SecurityTrailer getSecurityTrailer() {
@@ -185,6 +184,11 @@ public class SaleToPOIResponse implements SaleToPOI {
             this.messageHeader = messageHeader;
             this.paymentResponse = paymentResponse;
             this.securityTrailer = securityTrailer;
+        }
+
+        Builder(MessageHeader messageHeader, GetTotalsResponse getTotalsResponse){
+            this.messageHeader = messageHeader;
+            this.getTotalsResponse = getTotalsResponse;
         }
 
         public Builder messageHeader(MessageHeader messageHeader) {
@@ -215,6 +219,8 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.transactionStatusResponse = (TransactionStatusResponse) response;
             } else if (response instanceof ReversalResponse){
                 this.reversalResponse = (ReversalResponse) response;
+            } else if (response instanceof GetTotalsResponse) {
+                this.getTotalsResponse = (GetTotalsResponse) response;
             } else if (response instanceof EventNotification){
                 this.eventNotification = (EventNotification) response;
             } else {
