@@ -72,6 +72,14 @@ public class AmountsResp {
 
     public List<AdditionalAmount> getAdditionalAmounts() { return additionalAmounts; }
 
+    public BigDecimal getTotalAdditionalAmount(){
+        BigDecimal total = null;
+        for(AdditionalAmount additionalAmount: additionalAmounts){
+            total = total.add(additionalAmount.getValue());
+        }
+        return null;
+    }
+
     public static class Builder {
 
         private String currency;
