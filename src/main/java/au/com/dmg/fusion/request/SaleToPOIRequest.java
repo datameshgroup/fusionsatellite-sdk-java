@@ -28,6 +28,7 @@ import au.com.dmg.fusion.SaleToPOI;
 import au.com.dmg.fusion.request.aborttransactionrequest.AbortTransactionRequest;
 import au.com.dmg.fusion.request.cardacquisitionrequest.CardAcquisitionRequest;
 import au.com.dmg.fusion.request.displayrequest.DisplayRequest;
+import au.com.dmg.fusion.request.gettotalsrequest.GetTotalsRequest;
 import au.com.dmg.fusion.request.inputrequest.InputRequest;
 import au.com.dmg.fusion.request.loginrequest.LoginRequest;
 import au.com.dmg.fusion.request.logoutrequest.LogoutRequest;
@@ -42,8 +43,6 @@ import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-
-import java.io.Serializable;
 
 public class SaleToPOIRequest implements SaleToPOI {
 
@@ -71,6 +70,8 @@ public class SaleToPOIRequest implements SaleToPOI {
     private TransactionStatusRequest transactionStatusRequest;
     @Json(name = "ReversalRequest")
     private ReversalRequest reversalRequest;
+    @Json(name = "GetTotalsRequest")
+    private GetTotalsRequest getGetTotalsRequest;
     @Json(name = "SecurityTrailer")
     private SecurityTrailer securityTrailer;
 
@@ -123,6 +124,8 @@ public class SaleToPOIRequest implements SaleToPOI {
         return reversalRequest;
     }
 
+    public GetTotalsRequest getGetTotalsRequest(){ return getGetTotalsRequest; }
+
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -142,6 +145,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         private PrintRequest printRequest;
         private ReconciliationRequest reconciliationRequest;
         private TransactionStatusRequest transactionStatusRequest;
+        private GetTotalsRequest getTotalsRequest;
         private SecurityTrailer securityTrailer;
 
         public Builder() {
@@ -155,6 +159,10 @@ public class SaleToPOIRequest implements SaleToPOI {
         Builder(MessageHeader messageHeader, LoginRequest loginRequest) {
             this.messageHeader = messageHeader;
             this.loginRequest = loginRequest;
+        }
+        Builder(MessageHeader messageHeader, GetTotalsRequest getTotalsRequest) {
+            this.messageHeader = messageHeader;
+            this.getTotalsRequest = getTotalsRequest;
         }
 
         public Builder messageHeader(MessageHeader messageHeader) {
@@ -190,11 +198,13 @@ public class SaleToPOIRequest implements SaleToPOI {
                 this.transactionStatusRequest = (TransactionStatusRequest) request;
             } else if(request instanceof  ReversalRequest){
                 this.reversalRequest = (ReversalRequest) request;
-            }else {
+            } else if (request instanceof GetTotalsRequest) {
+                this.getTotalsRequest = (GetTotalsRequest) request;
+            } else {
                 throw new IllegalArgumentException("Error Request not identified.");
             }
 
-            // Need to check the header. DIfferent Requests have different requirements for the header.
+            // Need to check the header. DDifferent Requests have different requirements for the header.
             if (this.loginRequest != null){
                 if(messageHeader.getProtocolVersion() == null){
                     throw new NullPointerException("With a LoginRequest, MessageHeader.ProtocolVersion cannot be null.");
@@ -224,8 +234,6 @@ public class SaleToPOIRequest implements SaleToPOI {
                 }
             }
 
-
-
             return Builder.this;
         }
 
@@ -253,6 +261,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         this.printRequest = builder.printRequest;
         this.reconciliationRequest = builder.reconciliationRequest;
         this.transactionStatusRequest = builder.transactionStatusRequest;
+        this.getGetTotalsRequest = builder.getTotalsRequest;
         this.securityTrailer = builder.securityTrailer;
     }
 

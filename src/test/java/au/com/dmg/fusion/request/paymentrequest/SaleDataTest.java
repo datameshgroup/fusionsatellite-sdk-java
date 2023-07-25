@@ -23,6 +23,9 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
+import au.com.dmg.fusion.data.SaleCapability;
+import au.com.dmg.fusion.data.TerminalEnvironment;
+import au.com.dmg.fusion.request.SaleTerminalData;
 import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -31,6 +34,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Arrays;
 
 public class SaleDataTest {
 
@@ -39,10 +43,52 @@ public class SaleDataTest {
         SaleData data = new SaleData.Builder()
                 .operatorID("x")
                 .operatorLanguage("en")
+                .shiftNumber("ShiftNumber123")
                 .saleReferenceID("xx")
                 .shiftNumber("f3f")
+                .saleTerminalData(new SaleTerminalData.Builder()
+                        .terminalEnvironment(TerminalEnvironment.Attended)
+                        .saleCapabilities(Arrays.asList(SaleCapability.CashierStatus, SaleCapability.CustomerAssistance))
+                        .totalsGroupID("TotalsGroupID123")
+                        .deviceID("TestDeviceID123")
+                        .build())
                 .tokenRequestedType("ffff")
                 .saleTransactionID(new SaleTransactionID.Builder("x", Instant.ofEpochMilli(System.currentTimeMillis())).build())
+                .build();
+
+        Moshi moshi = new Moshi.Builder()
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<SaleData> jsonAdapter = moshi.adapter(SaleData.class);
+        String json = jsonAdapter.toJson(data);
+        System.out.println(json);
+
+        SaleData sd = jsonAdapter.fromJson(json);
+        assert(sd.getOperatorID().equals("x"));
+    }
+
+    @Test
+    public void testSaleDataWithSponsoredMerchant() throws IOException {
+        SponsoredMerchant sponsoredMerchant = new SponsoredMerchant.Builder()
+                .siteID("SiteID123")
+                .businessID("BusinessID123")
+                .registeredIdentifier("RegisteredIdentifier123")
+                .build();
+        SaleData data = new SaleData.Builder()
+                .operatorID("x")
+                .operatorLanguage("en")
+                .shiftNumber("ShiftNumber123")
+                .saleReferenceID("xx")
+                .shiftNumber("f3f")
+                .saleTerminalData(new SaleTerminalData.Builder()
+                        .terminalEnvironment(TerminalEnvironment.Attended)
+                        .saleCapabilities(Arrays.asList(SaleCapability.CashierStatus, SaleCapability.CustomerAssistance))
+                        .totalsGroupID("TotalsGroupID123")
+                        .deviceID("TestDeviceID123")
+                        .build())
+                .tokenRequestedType("ffff")
+                .saleTransactionID(new SaleTransactionID.Builder("x", Instant.ofEpochMilli(System.currentTimeMillis())).build())
+                .sponsoredMerchant(sponsoredMerchant)
                 .build();
 
         Moshi moshi = new Moshi.Builder()
