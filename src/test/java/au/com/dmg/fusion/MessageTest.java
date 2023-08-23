@@ -109,6 +109,8 @@ public class MessageTest {
                 )
                 .extensionData(new ExtensionData.Builder().transitData(
                                 new TransitData.Builder()
+                                        .nswAllowTSSSubsidy(true)
+                                        .nswAllowTSSSubsidy(false)
                                         .isWheelchairEnabled(false)
                                         .trip(new Trip.Builder()
                                                 .totalDistanceTravelled(new BigDecimal(222.22))

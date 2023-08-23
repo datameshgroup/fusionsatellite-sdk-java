@@ -328,7 +328,11 @@ public class SaleItem {
         }
 
         public Builder categories(List<String> categories) {
-            this.categories = categories;
+            if(categories == null){
+                this.categories = new ArrayList<>();
+            } else {
+                this.categories = categories;
+            }
             return Builder.this;
         }
 
@@ -343,7 +347,11 @@ public class SaleItem {
         }
 
         public Builder imageUrls(List<String> imageUrls) {
-            this.imageUrls = imageUrls;
+            if(imageUrls == null){
+                this.imageUrls = new ArrayList<>();
+            } else {
+                this.imageUrls = imageUrls;
+            }
             return Builder.this;
         }
 
@@ -383,12 +391,25 @@ public class SaleItem {
         }
 
         public Builder tags(List<String> tags) {
-            this.tags = tags;
+            if(tags == null){
+                this.tags = new ArrayList<>();
+            } else {
+                this.tags = tags;
+            }
             return Builder.this;
         }
 
-        public Builder addTags(String tags) {
-            this.tags.add(tags);
+        public Builder addTag(String tag) {
+            if(tags != null){
+                this.tags.add(tag);
+            }
+            return Builder.this;
+        }
+
+        public Builder addTags(List<String> tags) {
+            if (tags != null) {
+                this.tags.addAll(tags);
+            }
             return Builder.this;
         }
 

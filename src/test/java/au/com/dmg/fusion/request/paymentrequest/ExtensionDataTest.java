@@ -69,6 +69,8 @@ public class ExtensionDataTest {
                         .build())
                 .build();
         TransitData transitData = new TransitData.Builder()
+                .nswAllowTSSSubsidy(true)
+                .nswAllowTSSLift(false)
                 .isWheelchairEnabled(true)
                 .trip(trip)
                 .build();

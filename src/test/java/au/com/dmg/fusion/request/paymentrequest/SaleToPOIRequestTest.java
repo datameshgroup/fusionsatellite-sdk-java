@@ -96,6 +96,8 @@ public class SaleToPOIRequestTest extends TestCase {
                 )
                 .extensionData(new ExtensionData.Builder().transitData(
                                 new TransitData.Builder()
+                                        .nswAllowTSSSubsidy(true)
+                                        .nswAllowTSSLift(false)
                                         .isWheelchairEnabled(false)
                                         .trip(new Trip.Builder()
                                                 .totalDistanceTravelled(new BigDecimal(222.22))

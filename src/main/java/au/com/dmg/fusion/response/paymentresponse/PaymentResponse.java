@@ -30,6 +30,7 @@ import com.squareup.moshi.Json;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -130,7 +131,11 @@ public class PaymentResponse implements ResponseType {
         }
 
         public Builder allowedProductCodes(List<String> allowedProductCodes) {
-            this.allowedProductCodes = allowedProductCodes;
+            if(allowedProductCodes == null){
+                this.allowedProductCodes = new ArrayList<>();
+            } else {
+                this.allowedProductCodes = allowedProductCodes;
+            }
             return Builder.this;
         }
 
