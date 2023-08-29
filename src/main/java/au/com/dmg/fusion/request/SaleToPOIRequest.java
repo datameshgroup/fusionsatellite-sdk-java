@@ -36,7 +36,9 @@ import au.com.dmg.fusion.request.paymentrequest.PaymentRequest;
 import au.com.dmg.fusion.request.printrequest.PrintRequest;
 import au.com.dmg.fusion.request.reconciliationrequest.ReconciliationRequest;
 import au.com.dmg.fusion.request.reversalrequest.ReversalRequest;
+import au.com.dmg.fusion.request.terminalinformationrequest.TerminalInformationRequest;
 import au.com.dmg.fusion.request.transactionstatusrequest.TransactionStatusRequest;
+import au.com.dmg.fusion.response.terminalinformationresponse.TerminalInformationResponse;
 import au.com.dmg.fusion.securitytrailer.SecurityTrailer;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.util.InstantAdapter;
@@ -72,6 +74,8 @@ public class SaleToPOIRequest implements SaleToPOI {
     private ReversalRequest reversalRequest;
     @Json(name = "GetTotalsRequest")
     private GetTotalsRequest getGetTotalsRequest;
+    @Json(name = "TerminalInformationRequest")
+    private TerminalInformationRequest terminalInformationRequest;
     @Json(name = "SecurityTrailer")
     private SecurityTrailer securityTrailer;
 
@@ -126,6 +130,8 @@ public class SaleToPOIRequest implements SaleToPOI {
 
     public GetTotalsRequest getGetTotalsRequest(){ return getGetTotalsRequest; }
 
+    public TerminalInformationRequest getTerminalInformationRequest(){ return terminalInformationRequest; }
+
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -146,6 +152,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         private ReconciliationRequest reconciliationRequest;
         private TransactionStatusRequest transactionStatusRequest;
         private GetTotalsRequest getTotalsRequest;
+        private TerminalInformationRequest terminalInformationRequest;
         private SecurityTrailer securityTrailer;
 
         public Builder() {
@@ -163,6 +170,11 @@ public class SaleToPOIRequest implements SaleToPOI {
         Builder(MessageHeader messageHeader, GetTotalsRequest getTotalsRequest) {
             this.messageHeader = messageHeader;
             this.getTotalsRequest = getTotalsRequest;
+        }
+
+        Builder(MessageHeader messageHeader, TerminalInformationRequest terminalInformationRequest) {
+            this.messageHeader = messageHeader;
+            this.terminalInformationRequest = terminalInformationRequest;
         }
 
         public Builder messageHeader(MessageHeader messageHeader) {
@@ -200,6 +212,8 @@ public class SaleToPOIRequest implements SaleToPOI {
                 this.reversalRequest = (ReversalRequest) request;
             } else if (request instanceof GetTotalsRequest) {
                 this.getTotalsRequest = (GetTotalsRequest) request;
+            } else if (request instanceof TerminalInformationRequest) {
+                this.terminalInformationRequest = (TerminalInformationRequest) request;
             } else {
                 throw new IllegalArgumentException("Error Request not identified.");
             }
@@ -262,6 +276,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         this.reconciliationRequest = builder.reconciliationRequest;
         this.transactionStatusRequest = builder.transactionStatusRequest;
         this.getGetTotalsRequest = builder.getTotalsRequest;
+        this.terminalInformationRequest = builder.terminalInformationRequest;
         this.securityTrailer = builder.securityTrailer;
     }
 

@@ -52,6 +52,7 @@ public enum MessageCategory {
     //*TransactionReport, 
     TransactionStatus, 
     //*Transmit,
+    TerminalInformation,
     Other
 }
 //* These fields are part of the Nexo specification but not currently implemented into the DataMesh host.

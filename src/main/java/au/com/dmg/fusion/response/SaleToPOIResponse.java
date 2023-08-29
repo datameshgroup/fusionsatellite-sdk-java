@@ -24,6 +24,7 @@
 package au.com.dmg.fusion.response;
 
 import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
+import au.com.dmg.fusion.response.terminalinformationresponse.TerminalInformationResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.MessageHeader;
 import au.com.dmg.fusion.SaleToPOI;
@@ -64,6 +65,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private ReversalResponse reversalResponse;
     @Json(name = "GetTotalsResponse")
     private GetTotalsResponse getTotalsResponse;
+    @Json(name = "TerminalInformationResponse")
+    private TerminalInformationResponse terminalInformationResponse;
     @Json(name = "EventNotification")
     private EventNotification eventNotification;    
     @Json(name = "SecurityTrailer")
@@ -136,6 +139,11 @@ public class SaleToPOIResponse implements SaleToPOI {
     }
 
     @Nullable
+    public TerminalInformationResponse getTerminalInformationResponse(){
+        return terminalInformationResponse;
+    }
+
+    @Nullable
     public GetTotalsResponse getGetTotalsResponse(){ return getTotalsResponse; }
 
     @Nullable
@@ -160,6 +168,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private ReversalResponse reversalResponse;
         private GetTotalsResponse getTotalsResponse;
         private EventNotification eventNotification;
+        private TerminalInformationResponse terminalInformationResponse;
         private SecurityTrailer securityTrailer;
 
         public MessageHeader getMessageHeader() {
@@ -172,7 +181,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         public GetTotalsResponse getTotalsResponse(){
             return getTotalsResponse;
         }
-
+        public TerminalInformationResponse getTerminalInformationResponse() { return terminalInformationResponse; }
         public SecurityTrailer getSecurityTrailer() {
             return securityTrailer;
         }
@@ -189,6 +198,11 @@ public class SaleToPOIResponse implements SaleToPOI {
         Builder(MessageHeader messageHeader, GetTotalsResponse getTotalsResponse){
             this.messageHeader = messageHeader;
             this.getTotalsResponse = getTotalsResponse;
+        }
+
+        Builder(MessageHeader messageHeader, TerminalInformationResponse terminalInformationResponse){
+            this.messageHeader = messageHeader;
+            this.terminalInformationResponse = terminalInformationResponse;
         }
 
         public Builder messageHeader(MessageHeader messageHeader) {
@@ -221,6 +235,8 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.reversalResponse = (ReversalResponse) response;
             } else if (response instanceof GetTotalsResponse) {
                 this.getTotalsResponse = (GetTotalsResponse) response;
+            } else if (response instanceof TerminalInformationResponse){
+                this.terminalInformationResponse = (TerminalInformationResponse) response;
             } else if (response instanceof EventNotification){
                 this.eventNotification = (EventNotification) response;
             } else {
@@ -260,6 +276,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         this.transactionStatusResponse = builder.transactionStatusResponse;
         this.reversalResponse = builder.reversalResponse;
         this.eventNotification = builder.eventNotification;
+        this.terminalInformationResponse = builder.terminalInformationResponse;
         this.securityTrailer = builder.securityTrailer;
     }
 
