@@ -146,7 +146,7 @@ If the terminal POS App is on the foreground and user is not able to access the 
 <mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.10*</mark>
 ### Kotlin Example
 ```kotlin
-    val intent = Intent(Message::AXIS_PULL_UPDATE)
+    val intent = Intent("au.com.dmg.axispay.action.UPDATE")
     // AXIS_RESULT_ACTIVITY = Activity to go back to after the update
     intent.putExtra(Message::AXIS_RESULT_ACTIVITY, "<POS Activity here>")
     startActivity(intent)
