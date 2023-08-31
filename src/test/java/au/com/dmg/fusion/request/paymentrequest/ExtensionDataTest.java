@@ -40,6 +40,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,9 +70,8 @@ public class ExtensionDataTest {
                         .build())
                 .build();
         TransitData transitData = new TransitData.Builder()
-                .nswAllowTSSSubsidy(true)
-                .nswAllowTSSLift(false)
                 .isWheelchairEnabled(true)
+                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                 .trip(trip)
                 .build();
         ExtensionData extensionData = new ExtensionData.Builder()
@@ -128,6 +128,7 @@ public class ExtensionDataTest {
                 .extensionData(new ExtensionData.Builder().transitData(
                         new TransitData.Builder()
                                 .isWheelchairEnabled(false)
+                                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                                 .trip(new Trip.Builder()
                                         .totalDistanceTravelled(new BigDecimal(222.22))
                                         .addStop(new Stop.Builder()
@@ -164,6 +165,9 @@ public class ExtensionDataTest {
             e.printStackTrace();
         }
         assert (serializedRequest.getSaleData().getOperatorID().equals("operatorID"));
+        assert(serializedRequest.getExtensionData().getTransitData().getTags().size() == 2);
+        assert(serializedRequest.getExtensionData().getTransitData().getTags().get(0).equals("TransitDataTag1"));
+        assert(serializedRequest.getExtensionData().getTransitData().getTags().get(1).equals("TransitDataTag2"));
     }
 
     @Test //(expected=NullPointerException.class)
