@@ -56,15 +56,15 @@ The terminal uses startActivityForResult to create payment requests.
 in the message object_**.
 
 ## Abort Request
-The terminal uses sendBroadcast to send an Abort request during a payment.
-
+The terminal uses sendBroadcast to send an Abort request during a payment.</br>
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.10*</mark>
 ### Kotlin Example
 ```kotlin
     val abortRequest = Intent(Message.INTENT_ACTION_BROADCAST)
     val message = Message(abortRequest)
     abortRequest.putExtra(Message.INTENT_EXTRA_MESSAGE, message.toJson())
     // required intent extra
-    abortRequest.putExtra("RETURN_TO_PACKAGE", this.getPackageName());
+    abortRequest.putExtra(Message.RETURN_TO_PACKAGE, this.packageName)
 
     sendBroadcast(abortRequest)
 ```   
@@ -73,11 +73,13 @@ The terminal uses sendBroadcast to send an Abort request during a payment.
 ```java
     Intent intentAbort = new Intent(Message.INTENT_ACTION_BROADCAST);
     Message message = new Message(abortRequest);
-    intentAbort.putExtra(Message.INTENT_EXTRA_MESSAGE, message.toJson());
+    intentAbort.putExtra(Message.INTENT_EXTRA_MESSAGE, this.getPackageName());
+    // required intent extra
+    intentAbort.putExtra(Message.RETURN_TO_PACKAGE, message.toJson());
     
     sendBroadcast(intentAbort);
 ```
-## Receiving Response
+## Receiving startActivity/startActivityForResult Intent Response
 In the same activity add the following  
 ```java
     @Override
@@ -102,25 +104,103 @@ In the same activity add the following
 	    // we can now access the data.
 	}
 ```
+## Sending Broadcast Intent Request
+Requirements:
+- Intent action should be: Message.INTENT_ACTION_BROADCAST
+- Minimum fusion-sdk version 1.3.10
+- Minimum Satellite version: 48D
+```kotlin
+val intent = Intent(Message.INTENT_ACTION_BROADCAST)
+```
+
+
+## Receiving Broadcast Intent Response
+Requirements:
+- A class that implements BroadcastReceiver
+- An appropriate intent-filter fot the BroadcastReceiver Class and Activity with action: **fusion_broadcast_receiver**
+- Minimum fusion-sdk version 1.3.10
+- Minimum Satellite version: 48D
+
+Sample AndroidManifest.xml snippet:
+```xml
+<activity
+        android:name=".BroadcastReceiverClass"
+        android:exported="true" >
+    <intent-filter>
+        <action android:name="fusion_broadcast_receiver"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+    </intent-filter>
+</activity>
+<activity
+android:name=".BroadcastReceiverActivity"
+android:exported="true" >
+<intent-filter>
+    <action android:name="fusion_broadcast_receiver"/>
+    <category android:name="android.intent.category.DEFAULT"/>
+</intent-filter>
+</activity>
+```
 
 ## Satellite Update Request
-If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for update using intent below. 
-
+If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for update using intent below.
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.10*</mark>
 ### Kotlin Example
 ```kotlin
-    val intent = Intent(Message::AXIS_PULL_UPDATE)
+    val intent = Intent("au.com.dmg.axispay.action.UPDATE")
     // AXIS_RESULT_ACTIVITY = Activity to go back to after the update
     intent.putExtra(Message::AXIS_RESULT_ACTIVITY, "<POS Activity here>")
-    startActivityForResult(intent, 100)
+    startActivity(intent)
 ```   
 
 ### Java Example
 ```java
     Intent intent = new Intent(Message.AXIS_PULL_UPDATE);
-
     // AXIS_RESULT_ACTIVITY = Activity to go back to after the update
     intent.putExtra(Message.AXIS_RESULT_ACTIVITY, "<POS Activity here>");
-    startActivityForResult(intent,100);
+    startActivity(intent);
+```
+
+## Satellite Terminal Information Request
+If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for terminal information using intent below.</br>
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.10*</mark>
+### Kotlin Example
+```kotlin
+     val terminalInfoRequest = SaleToPOIRequest.Builder()
+    .messageHeader(
+        MessageHeader.Builder()
+            .messageClass(MessageClass.Service)
+            .messageCategory(MessageCategory.TerminalInformation)
+            .messageType(MessageType.Request)
+            .serviceID("")
+            .build()
+    )
+    .request(TerminalInformationRequest())
+    .build()
+
+val intent = Intent(Message.INTENT_ACTION_BROADCAST)
+val terminalInfoRequestMessage = Message(terminalInfoRequest)
+intent.putExtra(Message.INTENT_EXTRA_MESSAGE, terminalInfoRequestMessage.toJson())
+sendBroadcast(intent)
+```   
+
+### Java Example
+```java
+    SaleToPOIRequest terminalInfoRequest = new SaleToPOIRequest.Builder()
+        .messageHeader(
+        new MessageHeader.Builder()
+        .messageClass(MessageClass.Service)
+        .messageCategory(MessageCategory.TerminalInformation)
+        .messageType(MessageType.Request)
+        .serviceID("")
+        .build()
+        )
+        .request(new TerminalInformationRequest())
+        .build();
+
+        Intent intent = new Intent(Message.INTENT_ACTION_BROADCAST);
+        Message terminalInfoRequestMessage = new Message(terminalInfoRequest);
+        intent.putExtra(Message.INTENT_EXTRA_MESSAGE, terminalInfoRequestMessage.toJson());
+        sendBroadcast(intent);
 ```
 
 ## License

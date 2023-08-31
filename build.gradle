@@ -5,8 +5,8 @@ plugins {
 }
 
 group 'com.datameshgroup.fusion'
-
-version '1.3.7'
+// Update Message.FUSION_SATELLITE_VERSION when you update this
+version '1.3.10'
 
 repositories {
     mavenCentral()

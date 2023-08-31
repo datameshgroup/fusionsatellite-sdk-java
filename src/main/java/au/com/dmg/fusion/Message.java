@@ -45,16 +45,20 @@ public class Message implements Serializable {
     @Json(name = "SaleToPOIResponse")
     private SaleToPOIResponse response = null;
     @Json(name = "FusionSatelliteLibraryVersion")
-    public static String FUSION_SATELLITE_VERSION = "1.2.0";
+    public static String FUSION_SATELLITE_VERSION = "1.3.10";
 
+    public static String AXISPAY_PACKAGE_NAME = "au.com.dmg.axispay";
+    public static String AXISPAY_LAUNCH = "au.com.dmg.axispay" + ".MainActivity";
     public static String INTENT_EXTRA_MESSAGE = "SaleToPOIJson";
     public static String INTENT_EXTRA_VERSION = "JsonVersion";
     public static String INTENT_EXTRA_APPLICATION_NAME = "ApplicationName";
     public static String INTENT_EXTRA_APPLICATION_VERSION = "SoftwareVersion";
-    public static String INTENT_ACTION_SALETOPOI_REQUEST = "au.com.dmg.axispay.action.SaleToPOIRequest";
-    public static String INTENT_ACTION_BROADCAST=  "au.com.dmg.axispay.Fusion.REQUEST";
-    public static String AXISPAY_PACKAGE_NAME = "au.com.dmg.axispay";
-    public static String AXIS_PULL_UPDATE = "au.com.dmg.axispay.action.UPDATE";
+    public static String INTENT_ACTION_SALETOPOI_REQUEST = AXISPAY_PACKAGE_NAME + ".action.SaleToPOIRequest";
+    public static String INTENT_ACTION_BROADCAST =  AXISPAY_PACKAGE_NAME + ".Fusion.REQUEST";
+    public static String INTENT_ACTION_BROADCAST_RECEIVER = AXISPAY_PACKAGE_NAME + ".Fusion.RESPONSE";
+    public static String RETURN_TO_PACKAGE = "RETURN_TO_PACKAGE";
+
+    public static String AXIS_PULL_UPDATE = AXISPAY_PACKAGE_NAME =".action.UPDATE";
     public static String AXIS_RESULT_ACTIVITY = "OnUpdateFinishAction";
     public static int INTENT_REQUEST_CODE = 100;
 

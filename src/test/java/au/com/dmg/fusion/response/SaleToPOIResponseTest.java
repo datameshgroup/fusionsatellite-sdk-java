@@ -25,12 +25,13 @@ package au.com.dmg.fusion.response;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.response.paymentresponse.*;
+import au.com.dmg.fusion.response.terminalinformationresponse.AddressLocation;
+import au.com.dmg.fusion.response.terminalinformationresponse.TerminalInformationResponse;
 import org.junit.Test;
 
 import au.com.dmg.fusion.MessageHeader;
@@ -296,6 +297,37 @@ public class SaleToPOIResponseTest {
                                 .result(ResponseResult.Success)
                                 .build())
                         .build())
+                .build();
+
+        System.out.println(response.toJson());
+    }
+
+    @Test
+    public void testTerminalInformationResponse() {
+        AddressLocation addressLocation = new AddressLocation.Builder()
+                .address1("GlobalApplication.config.address1")
+                .address2("GlobalApplication.config.address2")
+                .addressState("GlobalApplication.config.addressState")
+                .location("GlobalApplication.config.location")
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(
+                        new MessageHeader.Builder()
+                                .messageClass(MessageClass.Service)
+                                .messageCategory(MessageCategory.TerminalInformation)
+                                .messageType(MessageType.Response)
+                                .saleID("")
+                                .serviceID("")
+                                .POIID("poid")
+                                .build()
+                )
+                .response(new TerminalInformationResponse.Builder()
+                        .tid("tid")
+                        .mid("mid")
+                        .location(addressLocation)
+                        .build()
+                )
                 .build();
 
         System.out.println(response.toJson());
