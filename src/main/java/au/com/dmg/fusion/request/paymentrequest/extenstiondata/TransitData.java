@@ -8,25 +8,16 @@ import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TransitData {
-    @Json(name = "NSWAllowTSSSubsidy")
-    private final Boolean nswAllowTSSSubsidy;
-    @Json(name = "NSWAllowTSSLift")
-    private final Boolean nswAllowTSSLift;
     @Json(name = "IsWheelchairEnabled")
     private final Boolean isWheelchairEnabled;
     @Json(name = "Trip")
     private final Trip trip;
-
-    @NotNull
-    public Boolean getNswAllowTSSSubsidy(){
-        return nswAllowTSSSubsidy;
-    }
-
-    @NotNull
-    public Boolean getNswAllowTSSLift(){
-        return nswAllowTSSLift;
-    }
+    @Json(name = "Tags")
+    private final List<String> tags;
 
     @NotNull
     public Boolean getIsWheelchairEnabled() { return isWheelchairEnabled; }
@@ -34,30 +25,22 @@ public class TransitData {
     @NotNull
     public Trip getTrip() { return trip; }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
     public static class Builder {
-        Boolean nswAllowTSSSubsidy;
-        Boolean nswAllowTSSLift;
         Boolean isWheelchairEnabled;
         Trip trip;
+        List<String> tags = new ArrayList<>();
 
         public Builder() {
         }
 
-        Builder(Boolean nswAllowTSSSubsidy, Boolean nswAllowTSSLift, Boolean isWheelchairEnabled, Trip trip){
-            this.nswAllowTSSSubsidy = nswAllowTSSSubsidy;
-            this.nswAllowTSSLift = nswAllowTSSLift;
+        Builder(Boolean isWheelchairEnabled, Trip trip, List<String> tags){
             this.isWheelchairEnabled = isWheelchairEnabled;
             this.trip = trip;
-        }
-
-        public Builder nswAllowTSSSubsidy(Boolean nswAllowTSSSubsidy){
-            this.nswAllowTSSSubsidy = nswAllowTSSSubsidy;
-            return Builder.this;
-        }
-
-        public Builder nswAllowTSSLift(Boolean nswAllowTSSLift){
-            this.nswAllowTSSSubsidy = nswAllowTSSLift;
-            return Builder.this;
+            this.tags = tags;
         }
 
         public Builder isWheelchairEnabled(Boolean isWheelchairEnabled){
@@ -70,13 +53,17 @@ public class TransitData {
             return Builder.this;
         }
 
+        public Builder tags(List<String> tags){
+            this.tags = tags;
+            return Builder.this;
+        }
+
+        public Builder addTags(String tag) {
+            this.tags.add(tag);
+            return Builder.this;
+        }
+
         public TransitData build(){
-            if(this.nswAllowTSSSubsidy==null){
-                this.nswAllowTSSSubsidy = false;
-            }
-            if(this.nswAllowTSSLift==null){
-                this.nswAllowTSSLift = false;
-            }
             if(this.isWheelchairEnabled==null){
                 throw new NullPointerException("The property \"isWheelchairEnabled\" is null. "
                         + "Please set the Value by \"isWheelchairEnabled()\". "
@@ -93,10 +80,9 @@ public class TransitData {
     }
 
     private TransitData(Builder builder){
-        this.nswAllowTSSSubsidy = builder.nswAllowTSSSubsidy;
-        this.nswAllowTSSLift = builder.nswAllowTSSLift;
         this.isWheelchairEnabled = builder.isWheelchairEnabled;
         this.trip = builder.trip;
+        this.tags = builder.tags;
     }
 
     public String toJsonString() {
