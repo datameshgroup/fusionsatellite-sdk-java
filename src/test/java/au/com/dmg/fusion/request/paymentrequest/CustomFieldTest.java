@@ -116,7 +116,7 @@ public class CustomFieldTest {
     @Test
     public void testValidTypeObject3(){
         CustomField customField = new CustomField.Builder()
-                .value("{\"a\": \"hello world\"}")
+                .value("{\"DriverID\":123,\"OperatorID\":456,\"ContractID\":\"0f9653cc-a68b-11ed-afa1-0242ac120002\",\"VehicleID\":789,\"RouteVariant\":{\"RouteID\":\"sampleStopID123\",\"RouteName\":\"sampleStopName\"},\"TransactionLocation\":{\"Latitude\":33.8688,\"Longitude\":151.2093},\"Trip\":{\"Boarding\":{\"StopID\":\"sampleStopID123\",\"StopName\":\"sampleStopName\",\"ZoneID\":\"sampleZoneID\"},\"Destination\":{\"StopID\":\"sampleDestinationStopID123\",\"StopName\":\"sampleDestinationStopName\",\"ZoneID\":\"sampleZoneID\"}}}")
                 .type(CustomFieldType.Object)
                 .key("key")
                 .build();

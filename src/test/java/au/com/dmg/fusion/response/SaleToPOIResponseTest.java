@@ -29,7 +29,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import au.com.dmg.fusion.data.*;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.POIInformation;
 import au.com.dmg.fusion.response.paymentresponse.*;
+import au.com.dmg.fusion.response.diagnosisresponse.AddressLocation;
+import au.com.dmg.fusion.response.diagnosisresponse.DiagnosisResponse;
 import org.junit.Test;
 
 import au.com.dmg.fusion.MessageHeader;
@@ -300,6 +304,55 @@ public class SaleToPOIResponseTest {
         System.out.println(response.toJson());
     }
 
+    @Test
+    public void testDiagnosisResponse() {
+        AddressLocation addressLocation = new AddressLocation.Builder()
+                .address1("address1")
+                .address2("address2")
+                .addressState("addressState")
+                .location("location")
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(
+                        new MessageHeader.Builder()
+                                .messageClass(MessageClass.Service)
+                                .messageCategory(MessageCategory.Diagnosis)
+                                .messageType(MessageType.Response)
+                                .saleID("")
+                                .serviceID("")
+                                .POIID("poid")
+                                .build()
+                )
+                .response(new DiagnosisResponse.Builder()
+                        .response(new Response.Builder()
+                                .result(ResponseResult.Success)
+                                .build())
+                        .loggedSaleID("SaleID1")
+                        .poiStatus(new POIStatus.Builder()
+                                .globalStatus("OK")
+                                .build())
+                        .hostStatus(new HostStatus.Builder()
+                                .acquirerID("xxx")
+                                .isReachableFlag(true)
+                                .build())
+                        .extensionData(new ExtensionData.Builder()
+                                .poiInformation(new POIInformation.Builder()
+                                        .tid("xxtid")
+                                        .mid("xxmid")
+                                        .addressLocation(new AddressLocation.Builder()
+                                                .address1("a1xx")
+                                                .address2("a2xx")
+                                                .addressState("NSW")
+                                                .location("locationxx")
+                                                .build())
+                                        .build())
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+    }
 
 
     @Test
@@ -315,6 +368,124 @@ public class SaleToPOIResponseTest {
                         .POIID("x")
                         .build())
                 .response(new AbortTransactionResponse(Instant.ofEpochMilli(System.currentTimeMillis()), "eventToNOt", "eventdetails"))
+                .build();
+
+        System.out.println(response.toJson());
+    }
+
+    @Test
+    public void testPaymentResponseWithCardDataExpiry(){
+        List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
+        receipts.add(new PaymentReceipt.Builder()
+                .integratedPrintFlag(false)
+                .documentQualifier("Title")
+                .requiredSignatureFlag(true)
+                .build());
+
+        PaymentResult paymentResult = new PaymentResult.Builder()
+                .paymentType(PaymentType.Normal)
+                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                        .paymentInstrumentType("TestPaymentInstrumentType")
+                        .cardData(new PaymentResponseCardData.Builder()
+                                .expiry("20/07/2027")
+                                .paymentBrand(PaymentBrand.Card)
+                                .entryMode(EntryMode.Tapped)
+                                .maskedPAN("TestMaskedPAN")
+                                .build())
+                        .build())
+                .onlineFlag(true)
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Login)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build(), "reference")
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentReceipt(receipts)
+                        .paymentResult(paymentResult)
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+    }
+    @Test
+    public void testPaymentResponseWitAdditionalAmounts(){
+        List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
+        receipts.add(new PaymentReceipt.Builder()
+                .integratedPrintFlag(false)
+                .documentQualifier("Title")
+                .requiredSignatureFlag(true)
+                .build());
+
+        AdditionalAmount additionalAmount = new AdditionalAmount.Builder()
+                .name("SurchargeTax")
+                .value(new BigDecimal(123))
+                .build();
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(123))
+                .additionalAmount(additionalAmount)
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Login)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build(), "reference")
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType("Card")
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .paymentBrand(PaymentBrand.VISA)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .build())
+                                        .build())
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .paymentReceipt(receipts)
+                        .build())
                 .build();
 
         System.out.println(response.toJson());

@@ -26,6 +26,8 @@ package au.com.dmg.fusion.response.paymentresponse;
 import com.squareup.moshi.Json;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 public class AmountsResp {
 
@@ -41,6 +43,8 @@ public class AmountsResp {
     private BigDecimal tipAmount;
     @Json(name = "SurchargeAmount")
     private BigDecimal surchargeAmount;
+    @Json(name = "AdditionalAmounts")
+    private List<AdditionalAmount> additionalAmounts;
 
     public String getCurrency() {
         return currency;
@@ -66,6 +70,16 @@ public class AmountsResp {
         return surchargeAmount;
     }
 
+    public List<AdditionalAmount> getAdditionalAmounts() { return additionalAmounts; }
+
+    public BigDecimal getTotalAdditionalAmount(){
+        BigDecimal total = null;
+        for(AdditionalAmount additionalAmount: additionalAmounts){
+            total = total.add(additionalAmount.getValue());
+        }
+        return null;
+    }
+
     public static class Builder {
 
         private String currency;
@@ -74,17 +88,19 @@ public class AmountsResp {
         private BigDecimal cashBackAmount;
         private BigDecimal tipAmount;
         private BigDecimal surchargeAmount;
+        private List<AdditionalAmount> additionalAmounts;
 
         public Builder() {
         }
 
-        Builder(String currency, BigDecimal authorizedAmount, BigDecimal totalFeesAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal surchargeAmount) {
+        Builder(String currency, BigDecimal authorizedAmount, BigDecimal totalFeesAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal surchargeAmount, List<AdditionalAmount> additionalAmounts) {
             this.currency = currency;
             this.authorizedAmount = authorizedAmount;
             this.totalFeesAmount = totalFeesAmount;
             this.cashBackAmount = cashBackAmount;
             this.tipAmount = tipAmount;
             this.surchargeAmount = surchargeAmount;
+            this.additionalAmounts = additionalAmounts;
         }
 
         public Builder currency(String currency){
@@ -117,6 +133,25 @@ public class AmountsResp {
             return Builder.this;
         }
 
+        public Builder additonalAmounts(List<AdditionalAmount> additionalAmounts){
+            this.additionalAmounts = additionalAmounts;
+            return Builder.this;
+        }
+
+        public Builder additionalAmount(AdditionalAmount additionalAmount){
+            if(additionalAmounts==null){
+                this.additionalAmounts = Collections.singletonList(additionalAmount);
+            }else{
+                this.additionalAmounts.add(additionalAmount);
+            }
+            return Builder.this;
+        }
+
+        public Builder addAdditonalAmount(AdditionalAmount additionalAmount){
+            this.additionalAmounts.add(additionalAmount);
+            return Builder.this;
+        }
+
         public AmountsResp build() {
             if(this.authorizedAmount == null){
                 throw new NullPointerException("The property \"authorizedAmount\" is null. "
@@ -135,6 +170,7 @@ public class AmountsResp {
         this.cashBackAmount = builder.cashBackAmount;
         this.tipAmount = builder.tipAmount;
         this.surchargeAmount = builder.surchargeAmount;
+        this.additionalAmounts = builder.additionalAmounts;
     }
 }
 

@@ -23,35 +23,9 @@
 
 package au.com.dmg.fusion.data;
 
-public enum MessageCategory {
-    Abort, 
-    Admin, 
-    BalanceInquiry, 
-    //*Batch,
-    CardAcquisition, 
-    //*CardReaderAPDU, 
-    //*CardReaderInit, 
-    //*CardReaderPowerOff, 
-    Diagnosis,
-    Display, 
-    //*EnableService, 
-    Event, 
-    GetTotals,
-    Input, 
-    //*InputUpdate, 
-    Login, 
-    Logout, 
-    //*Loyalty, 
-    Payment, 
-    //*PIN, 
-    Print, 
-    Reconciliation, 
-    Reversal,
-    //*Sound, 
-    //*StoredValue, 
-    //*TransactionReport, 
-    TransactionStatus, 
-    //*Transmit,
-    Other
+public enum ServiceIdentification {
+    PrintLastCustomerReceipt,
+    PrintLastMerchantReceipt,
+    PrintShiftTotals,
+    Default
 }
-//* These fields are part of the Nexo specification but not currently implemented into the DataMesh host.

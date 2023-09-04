@@ -40,6 +40,8 @@ public class PaymentResponseCardData {
     private String account;
     @Json(name = "PaymentToken")
     private PaymentToken paymentToken;
+    @Json(name = "Expiry")
+    private String expiry;
 
     public EntryMode getEntryMode() {
         return entryMode;
@@ -61,6 +63,8 @@ public class PaymentResponseCardData {
         return paymentToken;
     }
 
+    public String getExpiry(){ return expiry; }
+
     public static class Builder {
 
         private EntryMode entryMode;
@@ -68,16 +72,18 @@ public class PaymentResponseCardData {
         private String maskedPAN;
         private String account;
         private PaymentToken paymentToken;
+        private String expiry;
 
         public Builder() {
         }
 
-        Builder(EntryMode entryMode, PaymentBrand paymentBrand, String maskedPAN, String account, PaymentToken paymentToken) {
+        Builder(EntryMode entryMode, PaymentBrand paymentBrand, String maskedPAN, String account, PaymentToken paymentToken, String expiry) {
             this.entryMode = entryMode;
             this.paymentBrand = paymentBrand;
             this.maskedPAN = maskedPAN;
             this.account = account;
             this.paymentToken = paymentToken;
+            this.expiry = expiry;
         }
 
         public Builder entryMode(EntryMode entryMode){
@@ -102,6 +108,11 @@ public class PaymentResponseCardData {
 
         public Builder paymentToken(PaymentToken paymentToken){
             this.paymentToken = paymentToken;
+            return Builder.this;
+        }
+
+        public Builder expiry(String expiry){
+            this.expiry = expiry;
             return Builder.this;
         }
 
@@ -132,6 +143,7 @@ public class PaymentResponseCardData {
         this.maskedPAN = builder.maskedPAN;
         this.account = builder.account;
         this.paymentToken = builder.paymentToken;
+        this.expiry = builder.expiry;
     }
 }
 

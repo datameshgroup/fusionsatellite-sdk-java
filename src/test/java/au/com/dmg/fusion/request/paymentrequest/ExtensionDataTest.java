@@ -40,6 +40,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ import static org.junit.Assert.assertThrows;
 public class ExtensionDataTest {
 
     @Test
-    public void testValid(){
+    public void testValidTransitData(){
         Trip trip = new Trip.Builder()
                 .totalDistanceTravelled(BigDecimal.valueOf(5.00))
                 .addStop(new Stop.Builder()
@@ -71,6 +72,7 @@ public class ExtensionDataTest {
         TransitData transitData = new TransitData.Builder()
                 .isWheelchairEnabled(true)
                 .trip(trip)
+                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                 .build();
         ExtensionData extensionData = new ExtensionData.Builder()
                 .transitData(transitData)
@@ -143,6 +145,7 @@ public class ExtensionDataTest {
                                                 .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                                                 .build())
                                         .build())
+                                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                                 .build())
                         .build())
                 .build();
@@ -162,6 +165,9 @@ public class ExtensionDataTest {
             e.printStackTrace();
         }
         assert (serializedRequest.getSaleData().getOperatorID().equals("operatorID"));
+        assert(serializedRequest.getExtensionData().getTransitData().getTags().size() == 2);
+        assert(serializedRequest.getExtensionData().getTransitData().getTags().get(0).equals("TransitDataTag1"));
+        assert(serializedRequest.getExtensionData().getTransitData().getTags().get(1).equals("TransitDataTag2"));
     }
 
     @Test //(expected=NullPointerException.class)
@@ -247,5 +253,10 @@ public class ExtensionDataTest {
                     assert (serializedRequest.getSaleData().getOperatorID().equals("operatorID"));
                 });
         assertEquals("The property \"Stops\" is invalid. Please set the Value by \"stops()\". the properties \"Stops\" should contain a minimum of two entries which indicate start and end of the trip.", exception.getMessage());
+    }
+
+    @Test
+    public void testDiagnosisResponse(){
+
     }
 }

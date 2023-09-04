@@ -5,8 +5,8 @@ plugins {
 }
 
 group 'com.datameshgroup.fusion'
-
-version '1.3.6'
+// Update Message.FUSION_SATELLITE_VERSION when you update this
+version '1.3.11.1'
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ compileJava{
 
 dependencies {
     testImplementation 'junit:junit:4.+'
-    api 'org.json:json:20171018'
+    api 'org.json:json:20180813'
     api "com.squareup.moshi:moshi:1.14.0"
     api 'org.jsoup:jsoup:1.15.3'
 }

@@ -41,12 +41,13 @@ import junit.framework.TestCase;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class SaleToPOIRequestTest extends TestCase {
 
 
-    public void testToJson() {
+    public void testPaymentRequestToJson() {
         PaymentRequest paymentRequest = new PaymentRequest.Builder()
                 .saleData(new SaleData.Builder()
                         .saleReferenceID("saleref")
@@ -114,6 +115,7 @@ public class SaleToPOIRequestTest extends TestCase {
                                                         .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                                                         .build())
                                                 .build())
+                                        .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                                         .build())
                         .build())
                 .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
@@ -134,7 +136,7 @@ public class SaleToPOIRequestTest extends TestCase {
         assert (json != null && json != "");
     }
 
-    public void testFromJson() {
+    public void testPaymentRequestFromJson() {
       String jsonString = "{\"SaleToPOIRequest\":{\"MessageHeader\":{\"MessageCategory\":\"Display\",\"MessageClass\":\"Device\",\"MessageType\":\"Notification\",\"ServiceID\":\"ServiceID\"},\"PaymentRequest\":{\"PaymentTransaction\":{\"AmountsReq\":{\"Currency\":\"AUD\",\"RequestedAmount\":\"5.0\"},\"OriginalPOITransactionObject\":{\"POIID\":\"POIID\",\"POITransactionID\":{\"TimeStamp\":\"2021-09-28T01:32:51.262Z\",\"TransactionID\":\"id\"},\"SaleID\":\"saleID\"},\"PaymentData\":{\"PaymentType\":\"Normal\"},\"SaleItem\":[{\"EanUpc\":\"xxx\",\"ImageUrls\":[],\"ItemAmount\":\"1.0\",\"ItemID\":1,\"ProductCode\":\"X\",\"ProductLabel\":\"xx\",\"Quantity\":\"1.0\",\"Restricted\":false,\"SaleChannel\":\"Unknown\",\"Tags\":[],\"TaxCode\":\"GST\",\"UnitOfMeasure\":\"Centilitre\",\"UnitPrice\":\"1\"}],\"TransactionConditions\":{\"AcquirerID\":[],\"AllowedPaymentBrands\":[]}},\"ExtensionData\":{\"TransitData\":{\"IsWheelchairEnabled\":false,\"Trip\":{\"Stops\":[{\"Latitude\":\"3432423\",\"Longitude\":\"-3432423\",\"StopIndex\":0,\"StopName\":\"test0\",\"Timestamp\":\"2023-06-22T01:52:39.625Z\"},{\"Latitude\":\"3432423\",\"Longitude\":\"-3432423\",\"StopIndex\":1,\"StopName\":\"test1\",\"Timestamp\":\"2023-06-22T01:52:39.625Z\"}],\"TotalDistanceTravelled\":\"222.219999999999998863131622783839702606201171875\"}}},\"SaleData\":{\"OperatorID\":\"operatorID\",\"OperatorLanguage\":\"en\",\"SaleReferenceID\":\"saleref\",\"SaleTransactionID\":{\"TimeStamp\":\"2021-09-28T01:32:51.257Z\",\"TransactionID\":\"x\"},\"ShiftNumber\":\"shiftno\",\"TokenRequestedType\":\"todo\"}}}}";
         SaleToPOIRequest request = null;
         try {

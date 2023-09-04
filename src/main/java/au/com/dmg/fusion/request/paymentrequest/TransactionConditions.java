@@ -93,12 +93,18 @@ public class TransactionConditions {
         }
 
         public Builder acquirerID(List<String> acquirerID) {
-            this.acquirerID = acquirerID;
+            if(acquirerID == null){
+                this.acquirerID = new ArrayList<>();
+            } else {
+                this.acquirerID = acquirerID;
+            }
             return Builder.this;
         }
 
         public Builder addAcquirerID(String acquirerID) {
-            this.acquirerID.add(acquirerID);
+            if(acquirerID != null) {
+                this.acquirerID.add(acquirerID);
+            }
             return Builder.this;
         }
 

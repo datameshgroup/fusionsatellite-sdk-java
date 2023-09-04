@@ -35,6 +35,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MessageTest {
@@ -127,6 +128,7 @@ public class MessageTest {
                                                         .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                                                         .build())
                                                 .build())
+                                        .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                                         .build())
                         .build())
                 .build();

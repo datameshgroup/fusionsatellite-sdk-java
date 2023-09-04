@@ -32,38 +32,46 @@ public class ExtensionData {
     @Json(name = "TransitData")
     private final TransitData transitData;
 
-    @NotNull
+    @Json(name = "POIInformation")
+    private final POIInformation poiInformation;
+
     public TransitData getTransitData() {
         return transitData;
+    }
+    public POIInformation getPoiInformation() {
+        return poiInformation;
     }
 
     public static class Builder {
         private TransitData transitData;
+        private POIInformation poiInformation;
 
         public Builder() {
         }
 
-        Builder(TransitData transitData) {
+        Builder(TransitData transitData, POIInformation poiInformation) {
             this.transitData = transitData;
+            this.poiInformation = poiInformation;
         }
+
 
         public Builder transitData(TransitData transitData) {
             this.transitData = transitData;
             return Builder.this;
         }
+        public Builder poiInformation(POIInformation poiInformation) {
+            this.poiInformation = poiInformation;
+            return Builder.this;
+        }
 
         public ExtensionData build() {
-            if (this.transitData == null) {
-                throw new NullPointerException("The property \"transitData\" is null. "
-                        + "Please set the value by \"transitData()\". "
-                        + "The properties \"transitData\", is required.");
-            }
             return new ExtensionData(this);
         }
     }
 
     private ExtensionData(Builder builder) {
         this.transitData = builder.transitData;
+        this.poiInformation = builder.poiInformation;
     }
 
 }
