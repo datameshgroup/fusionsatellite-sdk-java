@@ -1,4 +1,4 @@
-package au.com.dmg.fusion.response.terminalinformationresponse;
+package au.com.dmg.fusion.response.diagnosisresponse;
 
 import com.squareup.moshi.Json;
 
