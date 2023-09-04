@@ -5,7 +5,7 @@ This library is designed for both Java 8+ and Android.
 
 ## How to include
 ```
-    implementation "com.datameshgroup.fusion:fusion-sdk:1.3.11.1"
+    implementation "com.datameshgroup.fusion:fusion-sdk:1.3.12"
 ```
 If you are using Android you will need to add Java 8 syntax desugaring.
 In your app's build.gradle
@@ -57,7 +57,7 @@ in the message object_**.
 
 ## Abort Request
 The terminal uses sendBroadcast to send an Abort request during a payment.</br>
-<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.10*</mark>
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.12*</mark>
 ### Kotlin Example
 ```kotlin
     val abortRequest = Intent(Message.INTENT_ACTION_BROADCAST)
@@ -107,7 +107,7 @@ In the same activity add the following
 ## Sending Broadcast Intent Request
 Requirements:
 - Intent action should be: Message.INTENT_ACTION_BROADCAST
-- Minimum fusion-sdk version 1.3.10
+- Minimum fusion-sdk version 1.3.12
 - Minimum Satellite version: 48D
 ```kotlin
 val intent = Intent(Message.INTENT_ACTION_BROADCAST)
@@ -118,7 +118,7 @@ val intent = Intent(Message.INTENT_ACTION_BROADCAST)
 Requirements:
 - A class that implements BroadcastReceiver
 - An appropriate intent-filter fot the BroadcastReceiver Class and Activity with action: **fusion_broadcast_receiver**
-- Minimum fusion-sdk version 1.3.10
+- Minimum fusion-sdk version 1.3.12
 - Minimum Satellite version: 48D
 
 Sample AndroidManifest.xml snippet:
@@ -143,10 +143,10 @@ android:exported="true" >
 
 ## Satellite Update Request
 If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for update using intent below.
-<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.10*</mark>
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.12*</mark>
 ### Kotlin Example
 ```kotlin
-    val intent = Intent("au.com.dmg.axispay.action.UPDATE")
+    val intent = Intent(Message.AXIS_PULL_UPDATE)
     // AXIS_RESULT_ACTIVITY = Activity to go back to after the update
     intent.putExtra(Message::AXIS_RESULT_ACTIVITY, "<POS Activity here>")
     startActivity(intent)
@@ -160,46 +160,44 @@ If the terminal POS App is on the foreground and user is not able to access the 
     startActivity(intent);
 ```
 
-## Satellite Terminal Information Request
-If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for terminal information using intent below.</br>
-<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.10*</mark>
+## Satellite Terminal Diagnosis Request
+If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for terminal diagnosis using intent below.</br>
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.12*</mark>
 ### Kotlin Example
 ```kotlin
-     val terminalInfoRequest = SaleToPOIRequest.Builder()
+     val terminalDiagnosisRequest = SaleToPOIRequest.Builder()
     .messageHeader(
         MessageHeader.Builder()
             .messageClass(MessageClass.Service)
-            .messageCategory(MessageCategory.TerminalInformation)
+            .messageCategory(MessageCategory.Diagnosis)
             .messageType(MessageType.Request)
             .serviceID("")
             .build()
     )
-    .request(TerminalInformationRequest())
     .build()
 
-val intent = Intent(Message.INTENT_ACTION_BROADCAST)
-val terminalInfoRequestMessage = Message(terminalInfoRequest)
-intent.putExtra(Message.INTENT_EXTRA_MESSAGE, terminalInfoRequestMessage.toJson())
-sendBroadcast(intent)
+    val intent = Intent(Message.INTENT_ACTION_BROADCAST)
+    val terminalDiagnosisRequestMessage = Message(terminalDiagnosisRequest)
+    intent.putExtra(Message.INTENT_EXTRA_MESSAGE, terminalDiagnosisRequestMessage.toJson())
+    sendBroadcast(intent)
 ```   
 
 ### Java Example
 ```java
-    SaleToPOIRequest terminalInfoRequest = new SaleToPOIRequest.Builder()
+        SaleToPOIRequest terminalDiagnosisRequest = new SaleToPOIRequest.Builder()
         .messageHeader(
         new MessageHeader.Builder()
         .messageClass(MessageClass.Service)
-        .messageCategory(MessageCategory.TerminalInformation)
+        .messageCategory(MessageCategory.Diagnosis)
         .messageType(MessageType.Request)
         .serviceID("")
         .build()
         )
-        .request(new TerminalInformationRequest())
         .build();
 
         Intent intent = new Intent(Message.INTENT_ACTION_BROADCAST);
-        Message terminalInfoRequestMessage = new Message(terminalInfoRequest);
-        intent.putExtra(Message.INTENT_EXTRA_MESSAGE, terminalInfoRequestMessage.toJson());
+        Message terminalDiagnosisRequestMessage = new Message(terminalDiagnosisRequest);
+        intent.putExtra(Message.INTENT_EXTRA_MESSAGE, terminalDiagnosisRequestMessage.toJson());
         sendBroadcast(intent);
 ```
 

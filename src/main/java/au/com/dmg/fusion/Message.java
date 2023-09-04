@@ -45,7 +45,7 @@ public class Message implements Serializable {
     @Json(name = "SaleToPOIResponse")
     private SaleToPOIResponse response = null;
     @Json(name = "FusionSatelliteLibraryVersion")
-    public static String FUSION_SATELLITE_VERSION = "1.3.11.1";
+    public static String FUSION_SATELLITE_VERSION = "1.3.12";
 
     public static String AXISPAY_PACKAGE_NAME = "au.com.dmg.axispay";
     public static String AXISPAY_LAUNCH = "au.com.dmg.axispay" + ".MainActivity";
