@@ -41,6 +41,7 @@ public class TransitData {
         Builder(Boolean isWheelchairEnabled, Trip trip, List<String> tags){
             this.isWheelchairEnabled = isWheelchairEnabled;
             this.trip = trip;
+            this.tags = tags;
         }
 
         public Builder isWheelchairEnabled(Boolean isWheelchairEnabled){
@@ -70,7 +71,6 @@ public class TransitData {
         }
 
         public TransitData build(){
-
             if(this.isWheelchairEnabled==null){
                 throw new NullPointerException("The property \"isWheelchairEnabled\" is null. "
                         + "Please set the Value by \"isWheelchairEnabled()\". "
