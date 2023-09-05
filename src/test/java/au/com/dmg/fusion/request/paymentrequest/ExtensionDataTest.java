@@ -71,6 +71,7 @@ public class ExtensionDataTest {
                 .build();
         TransitData transitData = new TransitData.Builder()
                 .isWheelchairEnabled(true)
+                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                 .trip(trip)
                 .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                 .build();
@@ -128,6 +129,7 @@ public class ExtensionDataTest {
                 .extensionData(new ExtensionData.Builder().transitData(
                         new TransitData.Builder()
                                 .isWheelchairEnabled(false)
+                                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                                 .trip(new Trip.Builder()
                                         .totalDistanceTravelled(new BigDecimal(222.22))
                                         .addStop(new Stop.Builder()
