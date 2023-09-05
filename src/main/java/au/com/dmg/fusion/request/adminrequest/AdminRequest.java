@@ -17,18 +17,16 @@ public class AdminRequest implements Request {
 
     public static class Builder{
         private ServiceIdentification serviceIdentification;
+
         public Builder() {
         }
+
         Builder(ServiceIdentification serviceIdentification){
             this.serviceIdentification = serviceIdentification;
         }
 
         public Builder serviceIdentification(ServiceIdentification serviceIdentification){
-            if(serviceIdentification==null){
-                this.serviceIdentification = ServiceIdentification.Default;
-            }else{
-                this.serviceIdentification = serviceIdentification;
-            }
+            this.serviceIdentification = serviceIdentification;
             return Builder.this;
         }
 

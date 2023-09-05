@@ -21,43 +21,45 @@
  *
  */
 
-package au.com.dmg.fusion.request.paymentrequest.extenstiondata;
+package au.com.dmg.fusion.response.responseextensiondata;
 
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.TransitData;
 import com.squareup.moshi.Json;
 
-public class ExtensionData {
+public class ResponseExtensionData {
 
-    @Json(name = "TransitData")
-    private final TransitData transitData;
+    @Json(name = "POIInformation")
+    private final POIInformation poiInformation;
 
-    public TransitData getTransitData() {
-        return transitData;
+    public POIInformation getPoiInformation() {
+        return poiInformation;
     }
 
     public static class Builder {
-        private TransitData transitData;
+        private POIInformation poiInformation;
 
         public Builder() {
         }
 
-        Builder(TransitData transitData) {
-            this.transitData = transitData;
+        Builder(POIInformation poiInformation) {
+            this.poiInformation = poiInformation;
         }
 
-
-        public Builder transitData(TransitData transitData) {
-            this.transitData = transitData;
+        public Builder poiInformation(POIInformation poiInformation) {
+            this.poiInformation = poiInformation;
             return Builder.this;
         }
 
-        public ExtensionData build() {
-            return new ExtensionData(this);
+        public ResponseExtensionData build() {
+            return new ResponseExtensionData(this);
         }
     }
 
-    private ExtensionData(Builder builder) {
-        this.transitData = builder.transitData;
+    private ResponseExtensionData(Builder builder) {
+        this.poiInformation = builder.poiInformation;
     }
+
 }
 
 

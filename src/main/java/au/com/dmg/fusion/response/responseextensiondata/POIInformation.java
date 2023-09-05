@@ -1,8 +1,7 @@
-package au.com.dmg.fusion.request.paymentrequest.extenstiondata;
+package au.com.dmg.fusion.response.responseextensiondata;
 
 import au.com.dmg.fusion.Message;
 import au.com.dmg.fusion.response.diagnosisresponse.AddressLocation;
-import au.com.dmg.fusion.response.diagnosisresponse.DiagnosisResponse;
 import com.squareup.moshi.Json;
 
 public class POIInformation {

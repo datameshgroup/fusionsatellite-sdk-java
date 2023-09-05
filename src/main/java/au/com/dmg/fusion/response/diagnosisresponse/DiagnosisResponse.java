@@ -5,6 +5,7 @@ import au.com.dmg.fusion.response.HostStatus;
 import au.com.dmg.fusion.response.POIStatus;
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.responseextensiondata.ResponseExtensionData;
 import com.squareup.moshi.Json;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,15 +22,15 @@ public class DiagnosisResponse implements ResponseType {
     public POIStatus poiStatus;
     @Json(name = "HostStatus")
     public List<HostStatus> hostStatus;
-    @Json(name = "ExtensionData")
-    public ExtensionData extensionData;
+    @Json(name = "ResponseExtensionData")
+    public ResponseExtensionData responseExtensionData;
 
     public DiagnosisResponse(Builder builder) {
         this.response = builder.response;
         this.loggedSaleID = builder.loggedSaleID;
         this.poiStatus = builder.poiStatus;
         this.hostStatus = builder.hostStatus;
-        this.extensionData = builder.extensionData;
+        this.responseExtensionData = builder.responseExtensionData;
     }
 
     @NotNull
@@ -37,24 +38,24 @@ public class DiagnosisResponse implements ResponseType {
     public List<String> getLoggedSaleID() { return loggedSaleID; }
     public POIStatus getPOIStatus() { return poiStatus; }
     public List<HostStatus> getHostStatus() { return hostStatus; }
-    public ExtensionData getExtensionData() { return extensionData; }
+    public ResponseExtensionData getResponseExtensionData() { return responseExtensionData; }
 
     public static class Builder {
         private Response response;
         private List<String> loggedSaleID;
         private POIStatus poiStatus;
         private List<HostStatus> hostStatus;
-        private ExtensionData extensionData;
+        private ResponseExtensionData responseExtensionData;
 
         public Builder() {
         }
 
-        Builder(Response response,List<String> loggedSaleID, POIStatus poiStatus, List<HostStatus> hostStatus, ExtensionData extensionData){
+        Builder(Response response,List<String> loggedSaleID, POIStatus poiStatus, List<HostStatus> hostStatus, ResponseExtensionData responseExtensionData){
             this.response = response;
             this.loggedSaleID = loggedSaleID;
             this.poiStatus = poiStatus;
             this.hostStatus = hostStatus;
-            this.extensionData = extensionData;
+            this.responseExtensionData = responseExtensionData;
         }
 
         public Builder response(Response response){
@@ -106,8 +107,8 @@ public class DiagnosisResponse implements ResponseType {
             return Builder.this;
         }
 
-        public Builder extensionData(ExtensionData extensionData){
-            this.extensionData = extensionData;
+        public Builder responseExtensionData(ResponseExtensionData responseExtensionData){
+            this.responseExtensionData = responseExtensionData;
             return Builder.this;
         }
 

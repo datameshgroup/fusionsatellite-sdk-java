@@ -254,9 +254,4 @@ public class ExtensionDataTest {
                 });
         assertEquals("The property \"Stops\" is invalid. Please set the Value by \"stops()\". the properties \"Stops\" should contain a minimum of two entries which indicate start and end of the trip.", exception.getMessage());
     }
-
-    @Test
-    public void testDiagnosisResponse(){
-
-    }
 }
