@@ -129,6 +129,7 @@ public class MessageTest {
                                                         .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                                                         .build())
                                                 .build())
+                                        .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                                         .build())
                         .build())
                 .build();

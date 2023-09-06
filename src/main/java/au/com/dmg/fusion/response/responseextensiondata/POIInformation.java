@@ -1,10 +1,10 @@
-package au.com.dmg.fusion.response.terminalinformationresponse;
+package au.com.dmg.fusion.response.responseextensiondata;
 
 import au.com.dmg.fusion.Message;
-import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.diagnosisresponse.AddressLocation;
 import com.squareup.moshi.Json;
 
-public class TerminalInformationResponse implements ResponseType {
+public class POIInformation {
     @Json(name = "TID")
     private final String tid;
     @Json(name = "MID")
@@ -16,7 +16,7 @@ public class TerminalInformationResponse implements ResponseType {
     @Json(name = "AddressLocation")
     private final AddressLocation addressLocation;
 
-    public TerminalInformationResponse(Builder builder) {
+    public POIInformation(Builder builder) {
         this.tid = builder.tid;
         this.mid = builder.mid;
         this.softwareVersion = builder.softwareVersion;
@@ -32,7 +32,7 @@ public class TerminalInformationResponse implements ResponseType {
     }
     public String getSoftwareVersion() { return  softwareVersion; }
     public String getFusionVersion() { return fusionVersion; }
-    public AddressLocation getLocation(){
+    public AddressLocation getAddressLocation(){
         return addressLocation;
     }
 
@@ -52,6 +52,7 @@ public class TerminalInformationResponse implements ResponseType {
             this.softwareVersion = softwareVersion;
             this.addressLocation = addressLocation;
         }
+
         public Builder tid(String tid){
             this.tid = tid;
             return Builder.this;
@@ -65,13 +66,18 @@ public class TerminalInformationResponse implements ResponseType {
             return Builder.this;
         }
 
-        public Builder location(AddressLocation addressLocation){
+        public Builder addressLocation(AddressLocation addressLocation){
             this.addressLocation = addressLocation;
             return Builder.this;
         }
 
-        public TerminalInformationResponse build(){
-            return new TerminalInformationResponse(this);
+        public POIInformation build(){
+            if (this.tid == null|| this.tid.isEmpty()) {
+                throw new NullPointerException("The property \"tid\" is null or empty. "
+                        + "Please set the value by \"tid()\". "
+                        + "The properties \"tid\", is required.");
+            }
+            return new POIInformation(this);
         }
     }
 }

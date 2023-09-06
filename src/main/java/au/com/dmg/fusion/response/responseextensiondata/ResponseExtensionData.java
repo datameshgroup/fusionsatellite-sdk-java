@@ -21,48 +21,48 @@
  *
  */
 
-package au.com.dmg.fusion.request.paymentrequest.extenstiondata;
+package au.com.dmg.fusion.response.responseextensiondata;
 
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.TransitData;
 import com.squareup.moshi.Json;
-import org.jetbrains.annotations.NotNull;
 
-public class ExtensionData {
+public class ResponseExtensionData {
 
-    @Json(name = "TransitData")
-    private final TransitData transitData;
+    @Json(name = "POIInformation")
+    private final POIInformation poiInformation;
 
-    @NotNull
-    public TransitData getTransitData() {
-        return transitData;
+    public POIInformation getPoiInformation() {
+        return poiInformation;
     }
 
     public static class Builder {
-        private TransitData transitData;
+        private POIInformation poiInformation;
 
         public Builder() {
         }
 
-        Builder(TransitData transitData) {
-            this.transitData = transitData;
+        Builder(POIInformation poiInformation) {
+            this.poiInformation = poiInformation;
         }
 
-        public Builder transitData(TransitData transitData) {
-            this.transitData = transitData;
+        public Builder poiInformation(POIInformation poiInformation) {
+            this.poiInformation = poiInformation;
             return Builder.this;
         }
 
-        public ExtensionData build() {
-            if (this.transitData == null) {
-                throw new NullPointerException("The property \"transitData\" is null. "
-                        + "Please set the value by \"transitData()\". "
-                        + "The properties \"transitData\", is required.");
+        public ResponseExtensionData build() {
+            if (this.poiInformation == null) {
+                throw new NullPointerException("The property \"poiInformation\" is null or empty. "
+                        + "Please set the value by \"poiInformation()\". "
+                        + "The properties \"poiInformation\", is required.");
             }
-            return new ExtensionData(this);
+            return new ResponseExtensionData(this);
         }
     }
 
-    private ExtensionData(Builder builder) {
-        this.transitData = builder.transitData;
+    private ResponseExtensionData(Builder builder) {
+        this.poiInformation = builder.poiInformation;
     }
 
 }

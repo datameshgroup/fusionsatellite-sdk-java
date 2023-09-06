@@ -51,7 +51,7 @@ import static org.junit.Assert.assertThrows;
 public class ExtensionDataTest {
 
     @Test
-    public void testValid(){
+    public void testValidTransitData(){
         Trip trip = new Trip.Builder()
                 .totalDistanceTravelled(BigDecimal.valueOf(5.00))
                 .addStop(new Stop.Builder()
@@ -73,6 +73,7 @@ public class ExtensionDataTest {
                 .isWheelchairEnabled(true)
                 .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                 .trip(trip)
+                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                 .build();
         ExtensionData extensionData = new ExtensionData.Builder()
                 .transitData(transitData)
@@ -146,6 +147,7 @@ public class ExtensionDataTest {
                                                 .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                                                 .build())
                                         .build())
+                                .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
                                 .build())
                         .build())
                 .build();

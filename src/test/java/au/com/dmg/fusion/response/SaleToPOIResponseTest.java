@@ -30,8 +30,10 @@ import java.util.List;
 
 import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.response.paymentresponse.*;
-import au.com.dmg.fusion.response.terminalinformationresponse.AddressLocation;
-import au.com.dmg.fusion.response.terminalinformationresponse.TerminalInformationResponse;
+import au.com.dmg.fusion.response.diagnosisresponse.AddressLocation;
+import au.com.dmg.fusion.response.diagnosisresponse.DiagnosisResponse;
+import au.com.dmg.fusion.response.responseextensiondata.POIInformation;
+import au.com.dmg.fusion.response.responseextensiondata.ResponseExtensionData;
 import org.junit.Test;
 
 import au.com.dmg.fusion.MessageHeader;
@@ -301,38 +303,6 @@ public class SaleToPOIResponseTest {
 
         System.out.println(response.toJson());
     }
-
-    @Test
-    public void testTerminalInformationResponse() {
-        AddressLocation addressLocation = new AddressLocation.Builder()
-                .address1("GlobalApplication.config.address1")
-                .address2("GlobalApplication.config.address2")
-                .addressState("GlobalApplication.config.addressState")
-                .location("GlobalApplication.config.location")
-                .build();
-
-        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
-                .messageHeader(
-                        new MessageHeader.Builder()
-                                .messageClass(MessageClass.Service)
-                                .messageCategory(MessageCategory.TerminalInformation)
-                                .messageType(MessageType.Response)
-                                .saleID("")
-                                .serviceID("")
-                                .POIID("poid")
-                                .build()
-                )
-                .response(new TerminalInformationResponse.Builder()
-                        .tid("tid")
-                        .mid("mid")
-                        .location(addressLocation)
-                        .build()
-                )
-                .build();
-
-        System.out.println(response.toJson());
-    }
-
 
     @Test
     public void testAbort() {

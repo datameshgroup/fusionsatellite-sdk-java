@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TransitData {
@@ -58,8 +59,14 @@ public class TransitData {
             return Builder.this;
         }
 
-        public Builder addTags(String tag) {
-            this.tags.add(tag);
+        public Builder addTag(String tag) {
+            if(tag!=null){
+                if(this.tags==null){
+                    this.tags = Collections.singletonList(tag);
+                }else{
+                    this.tags.add(tag);
+                }
+            }
             return Builder.this;
         }
 
@@ -87,8 +94,6 @@ public class TransitData {
 
     public String toJsonString() {
         Moshi moshi = new Moshi.Builder()
-                .add(new BigDecimalAdapter())
-                .add(new InstantAdapter())
                 .build();
         JsonAdapter<TransitData> jsonAdapter = moshi.adapter(TransitData.class);
         return jsonAdapter.toJson(this);
