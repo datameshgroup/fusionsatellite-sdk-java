@@ -1,6 +1,5 @@
 package au.com.dmg.fusion.response.diagnosisresponse;
 
-import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
 import au.com.dmg.fusion.response.HostStatus;
 import au.com.dmg.fusion.response.POIStatus;
 import au.com.dmg.fusion.response.Response;
@@ -16,46 +15,46 @@ public class DiagnosisResponse implements ResponseType {
 
     @Json(name = "Response")
     private final Response response;
-    @Json(name = "LoggedSaleID")
-    public List<String> loggedSaleID;
+    @Json(name = "LoggedSaleIDs")
+    public List<String> loggedSaleIDs;
     @Json(name = "POIStatus")
     public POIStatus poiStatus;
     @Json(name = "HostStatus")
     public List<HostStatus> hostStatus;
-    @Json(name = "ResponseExtensionData")
-    public ResponseExtensionData responseExtensionData;
+    @Json(name = "ExtensionData")
+    public ResponseExtensionData extensionData;
 
     public DiagnosisResponse(Builder builder) {
         this.response = builder.response;
-        this.loggedSaleID = builder.loggedSaleID;
+        this.loggedSaleIDs = builder.loggedSaleID;
         this.poiStatus = builder.poiStatus;
         this.hostStatus = builder.hostStatus;
-        this.responseExtensionData = builder.responseExtensionData;
+        this.extensionData = builder.extensionData;
     }
 
     @NotNull
     public Response getResponse() { return response; }
-    public List<String> getLoggedSaleID() { return loggedSaleID; }
+    public List<String> getLoggedSaleIDs() { return loggedSaleIDs; }
     public POIStatus getPOIStatus() { return poiStatus; }
     public List<HostStatus> getHostStatus() { return hostStatus; }
-    public ResponseExtensionData getResponseExtensionData() { return responseExtensionData; }
+    public ResponseExtensionData getExtensionData() { return extensionData; }
 
     public static class Builder {
         private Response response;
         private List<String> loggedSaleID;
         private POIStatus poiStatus;
         private List<HostStatus> hostStatus;
-        private ResponseExtensionData responseExtensionData;
+        private ResponseExtensionData extensionData;
 
         public Builder() {
         }
 
-        Builder(Response response,List<String> loggedSaleID, POIStatus poiStatus, List<HostStatus> hostStatus, ResponseExtensionData responseExtensionData){
+        Builder(Response response,List<String> loggedSaleID, POIStatus poiStatus, List<HostStatus> hostStatus, ResponseExtensionData extensionData){
             this.response = response;
             this.loggedSaleID = loggedSaleID;
             this.poiStatus = poiStatus;
             this.hostStatus = hostStatus;
-            this.responseExtensionData = responseExtensionData;
+            this.extensionData = extensionData;
         }
 
         public Builder response(Response response){
@@ -107,12 +106,17 @@ public class DiagnosisResponse implements ResponseType {
             return Builder.this;
         }
 
-        public Builder responseExtensionData(ResponseExtensionData responseExtensionData){
-            this.responseExtensionData = responseExtensionData;
+        public Builder responseExtensionData(ResponseExtensionData extensionData){
+            this.extensionData = extensionData;
             return Builder.this;
         }
 
         public DiagnosisResponse build() {
+            if (this.extensionData == null) {
+                throw new NullPointerException("The property \"extensionData\" is null. "
+                        + "Please set the value by \"extensionData()\". "
+                        + "The properties \"extensionData\", is required.");
+            }
             return new DiagnosisResponse(this);
         }
     }

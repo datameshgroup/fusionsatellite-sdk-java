@@ -52,6 +52,11 @@ public class ResponseExtensionData {
         }
 
         public ResponseExtensionData build() {
+            if (this.poiInformation == null) {
+                throw new NullPointerException("The property \"poiInformation\" is null or empty. "
+                        + "Please set the value by \"poiInformation()\". "
+                        + "The properties \"poiInformation\", is required.");
+            }
             return new ResponseExtensionData(this);
         }
     }

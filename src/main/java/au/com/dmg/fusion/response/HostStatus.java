@@ -39,6 +39,11 @@ public class HostStatus {
         }
 
         public HostStatus build(){
+            if (this.acquirerID == null|| this.acquirerID.isEmpty()) {
+                throw new NullPointerException("The property \"acquirerID\" is null or empty. "
+                        + "Please set the value by \"acquirerID()\". "
+                        + "The properties \"acquirerID\", is required.");
+            }
             return new HostStatus(this);
         }
     }

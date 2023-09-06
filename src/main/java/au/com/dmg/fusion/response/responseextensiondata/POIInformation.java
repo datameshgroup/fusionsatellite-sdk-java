@@ -72,6 +72,11 @@ public class POIInformation {
         }
 
         public POIInformation build(){
+            if (this.tid == null|| this.tid.isEmpty()) {
+                throw new NullPointerException("The property \"tid\" is null or empty. "
+                        + "Please set the value by \"tid()\". "
+                        + "The properties \"tid\", is required.");
+            }
             return new POIInformation(this);
         }
     }

@@ -24,12 +24,14 @@
 package au.com.dmg.fusion.request.paymentrequest.extenstiondata;
 
 import com.squareup.moshi.Json;
+import org.jetbrains.annotations.NotNull;
 
 public class ExtensionData {
 
     @Json(name = "TransitData")
     private final TransitData transitData;
 
+    @NotNull
     public TransitData getTransitData() {
         return transitData;
     }
@@ -44,13 +46,17 @@ public class ExtensionData {
             this.transitData = transitData;
         }
 
-
         public Builder transitData(TransitData transitData) {
             this.transitData = transitData;
             return Builder.this;
         }
 
         public ExtensionData build() {
+            if (this.transitData == null) {
+                throw new NullPointerException("The property \"transitData\" is null. "
+                        + "Please set the value by \"transitData()\". "
+                        + "The properties \"transitData\", is required.");
+            }
             return new ExtensionData(this);
         }
     }
@@ -58,6 +64,7 @@ public class ExtensionData {
     private ExtensionData(Builder builder) {
         this.transitData = builder.transitData;
     }
+
 }
 
 
