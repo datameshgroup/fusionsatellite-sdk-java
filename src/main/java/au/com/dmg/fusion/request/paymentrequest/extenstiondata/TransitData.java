@@ -94,6 +94,8 @@ public class TransitData {
 
     public String toJsonString() {
         Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
                 .build();
         JsonAdapter<TransitData> jsonAdapter = moshi.adapter(TransitData.class);
         return jsonAdapter.toJson(this);

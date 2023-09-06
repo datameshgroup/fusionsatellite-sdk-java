@@ -5,7 +5,7 @@ This library is designed for both Java 8+ and Android.
 
 ## How to include
 ```
-    implementation "com.datameshgroup.fusion:fusion-sdk:1.3.12"
+    implementation "com.datameshgroup.fusion:fusion-sdk:1.3.13"
 ```
 If you are using Android you will need to add Java 8 syntax desugaring.
 In your app's build.gradle
@@ -107,7 +107,7 @@ In the same activity add the following
 ## Sending Broadcast Intent Request
 Requirements:
 - Intent action should be: Message.INTENT_ACTION_BROADCAST
-- Minimum fusion-sdk version 1.3.12
+- Minimum fusion-sdk version 1.3.13
 - Minimum Satellite version: 48D
 ```kotlin
 val intent = Intent(Message.INTENT_ACTION_BROADCAST)
@@ -118,7 +118,7 @@ val intent = Intent(Message.INTENT_ACTION_BROADCAST)
 Requirements:
 - A class that implements BroadcastReceiver
 - An appropriate intent-filter fot the BroadcastReceiver Class and Activity with action: **fusion_broadcast_receiver**
-- Minimum fusion-sdk version 1.3.12
+- Minimum fusion-sdk version 1.3.13
 - Minimum Satellite version: 48D
 
 Sample AndroidManifest.xml snippet:
@@ -143,7 +143,7 @@ android:exported="true" >
 
 ## Satellite Update Request
 If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for update using intent below.
-<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.12*</mark>
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.13*</mark>
 ### Kotlin Example
 ```kotlin
     val intent = Intent(Message.AXIS_PULL_UPDATE)
@@ -162,7 +162,7 @@ If the terminal POS App is on the foreground and user is not able to access the 
 
 ## Satellite Terminal Diagnosis Request
 If the terminal POS App is on the foreground and user is not able to access the Satellite app directly, the POS App can request for terminal diagnosis using intent below.</br>
-<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.12*</mark>
+<mark style="background: #00ced1!important">*Minimum requirement:Satellite v48D, fusion-sdk 1.3.13*</mark>
 ### Kotlin Example
 ```kotlin
      val terminalDiagnosisRequest = SaleToPOIRequest.Builder()
