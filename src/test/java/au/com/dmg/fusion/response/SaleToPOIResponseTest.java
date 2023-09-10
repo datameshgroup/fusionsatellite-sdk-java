@@ -23,25 +23,21 @@
 
 package au.com.dmg.fusion.response;
 
+import au.com.dmg.fusion.MessageHeader;
+import au.com.dmg.fusion.data.*;
+import au.com.dmg.fusion.request.paymentrequest.POIData;
+import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
+import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
+import au.com.dmg.fusion.response.adminresponse.AdminResponse;
+import au.com.dmg.fusion.response.inputresponse.InputResponse;
+import au.com.dmg.fusion.response.inputresponse.InputResult;
+import au.com.dmg.fusion.response.paymentresponse.*;
+import org.junit.Test;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
-
-import au.com.dmg.fusion.data.*;
-import au.com.dmg.fusion.response.paymentresponse.*;
-import au.com.dmg.fusion.response.diagnosisresponse.AddressLocation;
-import au.com.dmg.fusion.response.diagnosisresponse.DiagnosisResponse;
-import au.com.dmg.fusion.response.responseextensiondata.POIInformation;
-import au.com.dmg.fusion.response.responseextensiondata.ResponseExtensionData;
-import org.junit.Test;
-
-import au.com.dmg.fusion.MessageHeader;
-import au.com.dmg.fusion.request.paymentrequest.POIData;
-import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
-import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
-import au.com.dmg.fusion.response.inputresponse.InputResponse;
-import au.com.dmg.fusion.response.inputresponse.InputResult;
 
 public class SaleToPOIResponseTest {
     @Test
@@ -69,7 +65,7 @@ public class SaleToPOIResponseTest {
                                         .poiProfile(new POIProfile("profile"))
                                         .poiSerialNumber("x")
                                         .build())
-                                .poiStatus(new POIStatus("globalstatus", true, true, true, "status", true, true))
+                                .poiStatus(new POIStatus("globalstatus", true, true, true, PrinterStatus.OK, true, true))
                                 .build()
                         )
                         .build()
@@ -321,6 +317,33 @@ public class SaleToPOIResponseTest {
 
         System.out.println(response.toJson());
     }
+
+    @Test
+    public void testAdminResponse(){
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Admin)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new AdminResponse.Builder()
+                        .response(new Response.Builder()
+                                .result(ResponseResult.Failure)
+                                .additionalResponse(PrinterStatus.NoPaper.toString())
+                                .errorCondition(ErrorCondition.Aborted)
+                                        .build()
+                                )
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+    }
+
+
 
     @Test
     public void testPaymentResponseWithCardDataExpiry(){
