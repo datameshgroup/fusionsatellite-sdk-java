@@ -23,6 +23,7 @@
 
 package au.com.dmg.fusion.response;
 
+import au.com.dmg.fusion.response.adminresponse.AdminResponse;
 import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
 import au.com.dmg.fusion.response.diagnosisresponse.DiagnosisResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
@@ -71,6 +72,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private EventNotification eventNotification;    
     @Json(name = "SecurityTrailer")
     private SecurityTrailer securityTrailer;
+    @Json(name = "AdminResponse")
+    private AdminResponse adminResponse;
 
     @NotNull
     @Override
@@ -147,6 +150,9 @@ public class SaleToPOIResponse implements SaleToPOI {
     public GetTotalsResponse getGetTotalsResponse(){ return getTotalsResponse; }
 
     @Nullable
+    public AdminResponse getAdminResponse() { return adminResponse; }
+
+    @Nullable
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -170,6 +176,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private EventNotification eventNotification;
         private DiagnosisResponse diagnosisResponse;
         private SecurityTrailer securityTrailer;
+        private AdminResponse adminResponse;
 
         public MessageHeader getMessageHeader() {
             return messageHeader;
@@ -203,6 +210,11 @@ public class SaleToPOIResponse implements SaleToPOI {
         Builder(MessageHeader messageHeader, DiagnosisResponse diagnosisResponse){
             this.messageHeader = messageHeader;
             this.diagnosisResponse = diagnosisResponse;
+        }
+
+        Builder(MessageHeader messageHeader, AdminResponse adminResponse){
+            this.messageHeader = messageHeader;
+            this.adminResponse = adminResponse;
         }
 
         public Builder messageHeader(MessageHeader messageHeader) {
@@ -239,6 +251,8 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.diagnosisResponse = (DiagnosisResponse) response;
             } else if (response instanceof EventNotification){
                 this.eventNotification = (EventNotification) response;
+            } else if (response instanceof AdminResponse){
+                this.adminResponse = (AdminResponse) response;
             } else {
                 throw new IllegalArgumentException("Error Response not identified.");
             }
@@ -277,6 +291,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         this.reversalResponse = builder.reversalResponse;
         this.eventNotification = builder.eventNotification;
         this.diagnosisResponse = builder.diagnosisResponse;
+        this.adminResponse = builder.adminResponse;
         this.securityTrailer = builder.securityTrailer;
     }
 

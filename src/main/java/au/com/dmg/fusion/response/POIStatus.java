@@ -23,6 +23,7 @@
 
 package au.com.dmg.fusion.response;
 
+import au.com.dmg.fusion.data.PrinterStatus;
 import com.squareup.moshi.Json;
 
 public class POIStatus {
@@ -35,13 +36,13 @@ public class POIStatus {
     @Json(name = "CardReaderOKFlag")
     private final boolean cardReaderOkFlag;
     @Json(name = "PrinterStatus")
-    private final String printerStatus;
+    private final PrinterStatus printerStatus;
     @Json(name = "CommunicationOKFlag")
     private final boolean communicationOkFlag;
     @Json(name = "FraudPreventionFlag")
     private final boolean fraudPreventionFlag;
 
-    public POIStatus(String globalStatus, boolean securityOkFlag, boolean pedOkFlag, boolean cardReaderOkFlag, String printerStatus, Boolean communicationOkFlag, Boolean fraudPreventionFlag) {
+    public POIStatus(String globalStatus, boolean securityOkFlag, boolean pedOkFlag, boolean cardReaderOkFlag, PrinterStatus printerStatus, Boolean communicationOkFlag, Boolean fraudPreventionFlag) {
         this.globalStatus = globalStatus;
         this.securityOkFlag = securityOkFlag;
         this.pedOkFlag = pedOkFlag;
@@ -67,7 +68,7 @@ public class POIStatus {
         return cardReaderOkFlag;
     }
 
-    public String getPrinterStatus() {
+    public PrinterStatus getPrinterStatus() {
         return printerStatus;
     }
 
@@ -84,14 +85,14 @@ public class POIStatus {
         private boolean securityOkFlag;
         private boolean pedOkFlag;
         private boolean cardReaderOkFlag;
-        private String printerStatus;
+        private PrinterStatus printerStatus;
         private boolean communicationOkFlag;
         private boolean fraudPreventionFlag;
 
         public Builder() {
         }
 
-        Builder(String globalStatus, boolean securityOkFlag, boolean pedOkFlag, boolean cardReaderOkFlag, String printerStatus, boolean communicationOkFlag, boolean fraudPreventionFlag){
+        Builder(String globalStatus, boolean securityOkFlag, boolean pedOkFlag, boolean cardReaderOkFlag, PrinterStatus printerStatus, boolean communicationOkFlag, boolean fraudPreventionFlag){
             this.globalStatus = globalStatus;
             this.securityOkFlag = securityOkFlag;
             this.pedOkFlag = pedOkFlag;
@@ -121,7 +122,7 @@ public class POIStatus {
             return Builder.this;
         }
 
-        public Builder printerStatus(String printerStatus){
+        public Builder printerStatus(PrinterStatus printerStatus){
             this.printerStatus = printerStatus;
             return Builder.this;
         }
