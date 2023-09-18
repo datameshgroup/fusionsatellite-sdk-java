@@ -25,8 +25,10 @@ package au.com.dmg.fusion.response;
 
 import au.com.dmg.fusion.MessageHeader;
 import au.com.dmg.fusion.data.*;
+import au.com.dmg.fusion.request.SaleTerminalData;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
+import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
 import au.com.dmg.fusion.response.adminresponse.AdminResponse;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
@@ -97,10 +99,19 @@ public class SaleToPOIResponseTest {
                 .response(new PaymentResponse.Builder()
                         .response(new Response.Builder().result(ResponseResult.Success).build())
                         .saleData(
-                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
-                                        .transactionID("x")
-                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
-                                        .build(), "reference")
+                                new PaymentResponseSaleData.Builder()
+                                        .operatorID("opID")
+                                        .operatorLanguage("en")
+                                        .shiftNumber("shift1")
+                                        .saleReferenceID("salesref1")
+                                        .saleTerminalData(new SaleTerminalData.Builder()
+                                                .deviceID("deviceId1")
+                                                .build())
+                                        .saleTransactionID(new SaleTransactionID.Builder()
+                                                .transactionID("x")
+                                                .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                .build()
+                                        ).build()
                         )
                         .POIData(
                                 new POIData.Builder()
@@ -158,10 +169,19 @@ public class SaleToPOIResponseTest {
                 .response(new PaymentResponse.Builder()
                         .response(new Response.Builder().result(ResponseResult.Success).build())
                         .saleData(
-                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
-                                        .transactionID("x")
-                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
-                                        .build(), "reference")
+                                new PaymentResponseSaleData.Builder()
+                                        .operatorID("opID")
+                                        .operatorLanguage("en")
+                                        .shiftNumber("shift1")
+                                        .saleReferenceID("salesref1")
+                                        .saleTerminalData(new SaleTerminalData.Builder()
+                                                .deviceID("deviceId1")
+                                                .build())
+                                        .saleTransactionID(new SaleTransactionID.Builder()
+                                                .transactionID("x")
+                                                .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                .build()
+                                        ).build()
                         )
                         .POIData(
                                 new POIData.Builder()
@@ -381,10 +401,19 @@ public class SaleToPOIResponseTest {
                 .response(new PaymentResponse.Builder()
                         .response(new Response.Builder().result(ResponseResult.Success).build())
                         .saleData(
-                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
-                                        .transactionID("x")
-                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
-                                        .build(), "reference")
+                                new PaymentResponseSaleData.Builder()
+                                        .operatorID("opID")
+                                        .operatorLanguage("en")
+                                        .shiftNumber("shift1")
+                                        .saleReferenceID("salesref1")
+                                        .saleTerminalData(new SaleTerminalData.Builder()
+                                                .deviceID("deviceId1")
+                                                .build())
+                                        .saleTransactionID(new SaleTransactionID.Builder()
+                                                .transactionID("x")
+                                                .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                .build()
+                                        ).build()
                         )
                         .POIData(
                                 new POIData.Builder()
@@ -435,7 +464,7 @@ public class SaleToPOIResponseTest {
                                 new PaymentResponseSaleData(new SaleTransactionID.Builder()
                                         .transactionID("x")
                                         .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
-                                        .build(), "reference")
+                                        .build())
                         )
                         .POIData(
                                 new POIData.Builder()
