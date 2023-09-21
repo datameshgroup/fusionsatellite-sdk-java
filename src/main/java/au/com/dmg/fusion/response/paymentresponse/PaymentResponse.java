@@ -24,6 +24,7 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import au.com.dmg.fusion.request.paymentrequest.POIData;
+import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseType;
 import com.squareup.moshi.Json;
@@ -115,8 +116,8 @@ public class PaymentResponse implements ResponseType {
             return Builder.this;
         }
 
-        public Builder saleData(PaymentResponseSaleData saleData) {
-            this.saleData = saleData;
+        public Builder saleData(SaleData saleData) {
+            this.saleData = (PaymentResponseSaleData) saleData;
             return Builder.this;
         }
 

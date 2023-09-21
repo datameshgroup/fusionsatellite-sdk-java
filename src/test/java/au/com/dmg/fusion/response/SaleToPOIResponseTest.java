@@ -28,7 +28,6 @@ import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.request.SaleTerminalData;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
-import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
 import au.com.dmg.fusion.response.adminresponse.AdminResponse;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
