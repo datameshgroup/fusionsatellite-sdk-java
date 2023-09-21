@@ -23,12 +23,9 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
-import au.com.dmg.fusion.response.paymentresponse.PaymentResponseSaleData;
-import org.jetbrains.annotations.NotNull;
-
-import com.squareup.moshi.Json;
-
 import au.com.dmg.fusion.request.SaleTerminalData;
+import com.squareup.moshi.Json;
+import org.jetbrains.annotations.NotNull;
 
 public class SaleData {
 
