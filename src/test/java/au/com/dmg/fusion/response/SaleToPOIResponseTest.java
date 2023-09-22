@@ -548,7 +548,7 @@ public class SaleToPOIResponseTest {
                 .build();
 
         System.out.println(response.toJson());
-        if ((!response.getPaymentResponse().getResponse().getResponseResult().equals(ResponseResult.Partial)))
+        if ((!response.getPaymentResponse().getResponse().getResult().equals(ResponseResult.Partial)))
             throw new AssertionError();
 
     }
@@ -606,7 +606,7 @@ public class SaleToPOIResponseTest {
 
         System.out.println(response.toJson());
 
-        if ((!response.getPaymentResponse().getResponse().getResponseResult().equals(ResponseResult.Success)))
+        if ((!response.getPaymentResponse().getResponse().getResult().equals(ResponseResult.Success)))
             throw new AssertionError();
     }
 
@@ -662,7 +662,7 @@ public class SaleToPOIResponseTest {
 
         System.out.println(response.toJson());
 
-        if ((!response.getPaymentResponse().getResponse().getResponseResult().equals(ResponseResult.Partial)))
+        if ((!response.getPaymentResponse().getResponse().getResult().equals(ResponseResult.Partial)))
             throw new AssertionError();
     }
 }

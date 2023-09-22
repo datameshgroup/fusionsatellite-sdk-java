@@ -198,7 +198,7 @@ public class PaymentResponse implements ResponseType {
                         + "The properties \"response\", \"saleData\" and \"poiData\" are required.");
             }
             //PartialPayment Logic
-            if (this.response.getResponseResult() == ResponseResult.Success
+            if (this.response.getResult() == ResponseResult.Success
             && !(this.paymentResult == null)
             && !(this.paymentResult.getAmountsResp() == null)){
                 AmountsResp amountsResp = this.paymentResult.getAmountsResp();
