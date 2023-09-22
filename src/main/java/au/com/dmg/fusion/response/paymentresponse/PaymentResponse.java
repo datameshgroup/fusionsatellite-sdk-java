@@ -71,7 +71,6 @@ public class PaymentResponse implements ResponseType {
 
     @Nullable
     public PaymentResult getPaymentResult() {
-        //
         return paymentResult;
     }
 

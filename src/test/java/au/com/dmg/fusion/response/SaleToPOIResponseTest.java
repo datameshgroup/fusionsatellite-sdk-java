@@ -113,8 +113,7 @@ public class SaleToPOIResponseTest {
                                                 .transactionID("x")
                                                 .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                                                 .build()
-                                        )
-                                        .build()
+                                        ).build()
                         )
                         .POIData(
                                 new POIData.Builder()
