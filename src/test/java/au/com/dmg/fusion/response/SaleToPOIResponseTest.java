@@ -23,11 +23,13 @@
 
 package au.com.dmg.fusion.response;
 
+import au.com.dmg.fusion.Message;
 import au.com.dmg.fusion.MessageHeader;
 import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.request.SaleTerminalData;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
+import au.com.dmg.fusion.request.paymentrequest.PaymentRequestTest;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
 import au.com.dmg.fusion.response.adminresponse.AdminResponse;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
@@ -35,6 +37,7 @@ import au.com.dmg.fusion.response.inputresponse.InputResult;
 import au.com.dmg.fusion.response.paymentresponse.*;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedList;
@@ -110,7 +113,8 @@ public class SaleToPOIResponseTest {
                                                 .transactionID("x")
                                                 .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                                                 .build()
-                                        ).build()
+                                        )
+                                        .build()
                         )
                         .POIData(
                                 new POIData.Builder()
@@ -192,7 +196,7 @@ public class SaleToPOIResponseTest {
                                 new PaymentResult.Builder()
                                         .paymentType(PaymentType.Normal)
                                         .paymentInstrumentData(new PaymentInstrumentData.Builder()
-                                                .paymentInstrumentType("Card")
+                                                .paymentInstrumentType(PaymentInstrumentType.Card)
                                                 .cardData(new PaymentResponseCardData.Builder()
                                                 .entryMode(EntryMode.Tapped)
                                                 .paymentBrand(PaymentBrand.VISA)
@@ -376,7 +380,7 @@ public class SaleToPOIResponseTest {
         PaymentResult paymentResult = new PaymentResult.Builder()
                 .paymentType(PaymentType.Normal)
                 .paymentInstrumentData(new PaymentInstrumentData.Builder()
-                        .paymentInstrumentType("TestPaymentInstrumentType")
+                        .paymentInstrumentType(PaymentInstrumentType.Card)
                         .cardData(new PaymentResponseCardData.Builder()
                                 .expiry("20/07/2027")
                                 .paymentBrand(PaymentBrand.Card)
@@ -474,7 +478,7 @@ public class SaleToPOIResponseTest {
                         .paymentResult(new PaymentResult.Builder()
                                 .paymentType(PaymentType.Normal)
                                 .paymentInstrumentData(new PaymentInstrumentData.Builder()
-                                        .paymentInstrumentType("Card")
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
                                         .cardData(new PaymentResponseCardData.Builder()
                                                 .entryMode(EntryMode.Tapped)
                                                 .paymentBrand(PaymentBrand.VISA)
@@ -489,5 +493,177 @@ public class SaleToPOIResponseTest {
                 .build();
 
         System.out.println(response.toJson());
+    }
+
+    @Test
+    public void testPartialPaymentResponse(){ //TODO test null amounts and other amounts
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(2))
+                .partialAuthorizedAmount(new BigDecimal(2))
+                .requestedAmount(new BigDecimal(5))
+                .surchargeAmount(new BigDecimal(0))
+                .cashBackAmount(new BigDecimal(0))
+                .tipAmount(new BigDecimal(0))
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .paymentBrand(PaymentBrand.VISA)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .build())
+                                        .build())
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+        if ((!response.getPaymentResponse().getResponse().getResponseResult().equals(ResponseResult.Partial)))
+            throw new AssertionError();
+
+    }
+
+    @Test
+    public void testPartialPaymentResponseWithTip(){ //TODO test null amounts and other amounts
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(2))
+                .partialAuthorizedAmount(new BigDecimal(2))
+                .requestedAmount(new BigDecimal(5))
+                .tipAmount(new BigDecimal(1))
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .paymentBrand(PaymentBrand.VISA)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .build())
+                                        .build())
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+
+        if ((!response.getPaymentResponse().getResponse().getResponseResult().equals(ResponseResult.Success)))
+            throw new AssertionError();
+    }
+
+    @Test
+    public void testPartialPaymentResponseWithNulls(){ //TODO test null amounts and other amounts
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(2))
+                .partialAuthorizedAmount(new BigDecimal(2))
+                .requestedAmount(new BigDecimal(5))
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .paymentBrand(PaymentBrand.VISA)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .build())
+                                        .build())
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+
+        if ((!response.getPaymentResponse().getResponse().getResponseResult().equals(ResponseResult.Partial)))
+            throw new AssertionError();
     }
 }

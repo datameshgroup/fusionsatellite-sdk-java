@@ -39,6 +39,14 @@ public class PaymentResponseSaleData extends SaleData {
 
         public PaymentResponseSaleData build()
         {
+            if (this.operatorLanguage == null) {
+                operatorLanguage = "en";
+            }
+            if (this.saleTransactionID == null) {
+                throw new NullPointerException("The property \"saleTransactionID\" is null. "
+                        + "Please set the value by \"saleTransactionID()\". "
+                        + "The property \"saleTransactionID\" is required.");
+            }
             return new PaymentResponseSaleData(this);
         }
 

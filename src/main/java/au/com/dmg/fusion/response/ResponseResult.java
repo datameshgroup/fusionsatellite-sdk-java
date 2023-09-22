@@ -25,5 +25,6 @@ package au.com.dmg.fusion.response;
 
 public enum ResponseResult {
     Success,
-    Failure
+    Failure,
+    Partial
 }
