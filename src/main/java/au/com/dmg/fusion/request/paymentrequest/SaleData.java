@@ -23,11 +23,9 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
-import org.jetbrains.annotations.NotNull;
-
-import com.squareup.moshi.Json;
-
 import au.com.dmg.fusion.request.SaleTerminalData;
+import com.squareup.moshi.Json;
+import org.jetbrains.annotations.NotNull;
 
 public class SaleData {
 
@@ -159,7 +157,7 @@ public class SaleData {
 		}
 	}
 
-	private SaleData(Builder builder) {
+	protected SaleData(Builder builder) {
 		this.operatorID = builder.operatorID;
 		this.operatorLanguage = builder.operatorLanguage;
 		this.shiftNumber = builder.shiftNumber;

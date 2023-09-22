@@ -22,35 +22,29 @@
  */
 
 package au.com.dmg.fusion.response.paymentresponse;
-
+import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
-import com.squareup.moshi.Json;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class PaymentResponseSaleData {
-    @Json(name = "SaleTransactionID")
-    private final SaleTransactionID saleTransactionID;
-    @Json(name = "SaleReferenceID")
-    private final String saleReferenceID;
+public class PaymentResponseSaleData extends SaleData {
 
     public PaymentResponseSaleData(SaleTransactionID saleTransactionID) {
-        this.saleTransactionID = saleTransactionID;
-        this.saleReferenceID = null;
+        super(new SaleData.Builder()
+                .saleTransactionID(saleTransactionID));
     }
 
-    public PaymentResponseSaleData(SaleTransactionID saleTransactionID, String saleReferenceID) {
-        this.saleTransactionID = saleTransactionID;
-        this.saleReferenceID = saleReferenceID;
+    public static class Builder extends SaleData.Builder {
+
+        public Builder() {
+        }
+
+        public PaymentResponseSaleData build()
+        {
+            return new PaymentResponseSaleData(this);
+        }
+
+    }
+    protected PaymentResponseSaleData(Builder builder) {
+        super(builder);
     }
 
-    @NotNull
-    public SaleTransactionID getSaleTransactionID() {
-        return saleTransactionID;
-    }
-
-    @Nullable
-    public String getSaleReferenceID() {
-        return saleReferenceID;
-    }
 }
