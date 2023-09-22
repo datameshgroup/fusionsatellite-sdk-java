@@ -36,7 +36,7 @@ public class Response {
     @Json(name = "AdditionalResponse")
     private final String additionalResponse;
 
-    public ResponseResult getResponseResult() {
+    public ResponseResult getResult() {
         return result;
     }
 
