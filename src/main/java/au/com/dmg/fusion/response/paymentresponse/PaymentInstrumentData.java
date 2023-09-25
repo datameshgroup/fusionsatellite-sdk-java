@@ -23,16 +23,17 @@
 
 package au.com.dmg.fusion.response.paymentresponse;
 
+import au.com.dmg.fusion.data.PaymentInstrumentType;
 import com.squareup.moshi.Json;
 
 public class PaymentInstrumentData {
 
     @Json(name = "PaymentInstrumentType")
-    private final String paymentInstrumentType;
+    private final PaymentInstrumentType paymentInstrumentType;
     @Json(name = "CardData")
     private final PaymentResponseCardData cardData;
 
-    public String getPaymentInstrumentType() {
+    public PaymentInstrumentType getPaymentInstrumentType() {
         return paymentInstrumentType;
     }
 
@@ -43,18 +44,18 @@ public class PaymentInstrumentData {
 
     public static class Builder {
 
-        private String paymentInstrumentType;
+        private PaymentInstrumentType paymentInstrumentType;
         private PaymentResponseCardData cardData;
 
         public Builder() {
         }
 
-        Builder(String paymentInstrumentType, PaymentResponseCardData cardData) {
+        Builder(PaymentInstrumentType paymentInstrumentType, PaymentResponseCardData cardData) {
             this.paymentInstrumentType = paymentInstrumentType;
             this.cardData = cardData;
         }
 
-        public Builder paymentInstrumentType(String paymentInstrumentType) {
+        public Builder paymentInstrumentType(PaymentInstrumentType paymentInstrumentType) {
             this.paymentInstrumentType = paymentInstrumentType;
             return Builder.this;
         }

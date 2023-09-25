@@ -59,6 +59,7 @@ public class Response {
 
         @NotNull
         public ResponseResult getResult() {
+
             return result;
         }
 

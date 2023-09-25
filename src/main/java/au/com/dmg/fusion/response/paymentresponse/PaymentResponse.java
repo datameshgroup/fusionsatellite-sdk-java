@@ -23,17 +23,18 @@
 
 package au.com.dmg.fusion.response.paymentresponse;
 
+import au.com.dmg.fusion.data.PaymentInstrumentType;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.response.Response;
+import au.com.dmg.fusion.response.ResponseResult;
 import au.com.dmg.fusion.response.ResponseType;
 import com.squareup.moshi.Json;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class PaymentResponse implements ResponseType {
 
@@ -195,6 +196,39 @@ public class PaymentResponse implements ResponseType {
                 throw new NullPointerException("The property \"poiData\" is null. "
                         + "Please set the value by \"poiData()\". "
                         + "The properties \"response\", \"saleData\" and \"poiData\" are required.");
+            }
+            //PartialPayment Logic
+            if (this.response.getResult() == ResponseResult.Success
+            && !(this.paymentResult == null)
+            && !(this.paymentResult.getAmountsResp() == null)){
+                AmountsResp amountsResp = this.paymentResult.getAmountsResp();
+
+                // Check for nulls, there's logic for some amounts being null, we don't want to change that
+                BigDecimal surcharge = Optional.ofNullable(amountsResp.getSurchargeAmount())
+                        .orElse(BigDecimal.ZERO);
+                BigDecimal tip = Optional.ofNullable(amountsResp.getTipAmount())
+                        .orElse(BigDecimal.ZERO);
+                BigDecimal cashback = Optional.ofNullable(amountsResp.getCashBackAmount())
+                        .orElse(BigDecimal.ZERO);
+                BigDecimal reqAmt = Optional.ofNullable(amountsResp.getRequestedAmount())
+                        .orElse(BigDecimal.ZERO);
+                BigDecimal authPartialAmt = Optional.ofNullable(amountsResp.getPartialAuthorizedAmount())
+                        .orElse(BigDecimal.ZERO);
+
+                if((surcharge.intValue() == 0)
+                        && (tip.intValue() == 0)
+                        && (cashback.intValue() == 0)
+                        && this.paymentResult.getPaymentInstrumentData().getPaymentInstrumentType() == PaymentInstrumentType.Card
+                        && (reqAmt.intValue() > 0)
+                        && (authPartialAmt.intValue() > 0)
+                        && (reqAmt.compareTo(authPartialAmt) > 0 )
+                ){
+                    this.response = new Response.Builder()
+                            .result(ResponseResult.Partial)
+                            .additionalResponse(this.response.getAdditionalResponse())
+                            .errorCondition(this.response.getErrorCondition())
+                            .build();
+                }
             }
 
             return new PaymentResponse(this);

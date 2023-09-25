@@ -43,6 +43,10 @@ public class AmountsResp {
     private BigDecimal tipAmount;
     @Json(name = "SurchargeAmount")
     private BigDecimal surchargeAmount;
+    @Json(name = "PartialAuthorizedAmount")
+    private BigDecimal partialAuthorizedAmount;
+    @Json(name = "RequestedAmount")
+    private BigDecimal requestedAmount;
     @Json(name = "AdditionalAmounts")
     private List<AdditionalAmount> additionalAmounts;
 
@@ -70,6 +74,14 @@ public class AmountsResp {
         return surchargeAmount;
     }
 
+    public BigDecimal getPartialAuthorizedAmount(){
+        return partialAuthorizedAmount;
+    }
+
+    public BigDecimal getRequestedAmount(){
+        return requestedAmount;
+    }
+
     public List<AdditionalAmount> getAdditionalAmounts() { return additionalAmounts; }
 
     public BigDecimal getTotalAdditionalAmount(){
@@ -88,18 +100,22 @@ public class AmountsResp {
         private BigDecimal cashBackAmount;
         private BigDecimal tipAmount;
         private BigDecimal surchargeAmount;
+        private BigDecimal partialAuthorizedAmount;
+        private BigDecimal requestedAmount;
         private List<AdditionalAmount> additionalAmounts;
 
         public Builder() {
         }
 
-        Builder(String currency, BigDecimal authorizedAmount, BigDecimal totalFeesAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal surchargeAmount, List<AdditionalAmount> additionalAmounts) {
+        Builder(String currency, BigDecimal authorizedAmount, BigDecimal totalFeesAmount, BigDecimal cashBackAmount, BigDecimal tipAmount, BigDecimal surchargeAmount, BigDecimal partialAuthorizedAmount, BigDecimal requestedAmount, List<AdditionalAmount> additionalAmounts) {
             this.currency = currency;
             this.authorizedAmount = authorizedAmount;
             this.totalFeesAmount = totalFeesAmount;
             this.cashBackAmount = cashBackAmount;
             this.tipAmount = tipAmount;
             this.surchargeAmount = surchargeAmount;
+            this.partialAuthorizedAmount = partialAuthorizedAmount;
+            this.requestedAmount = requestedAmount;
             this.additionalAmounts = additionalAmounts;
         }
 
@@ -133,6 +149,15 @@ public class AmountsResp {
             return Builder.this;
         }
 
+        public Builder partialAuthorizedAmount(BigDecimal partialAuthorizedAmount){
+            this.partialAuthorizedAmount = partialAuthorizedAmount;
+            return Builder.this;
+        }
+        public Builder requestedAmount(BigDecimal requestedAmount){
+            this.requestedAmount = requestedAmount;
+            return Builder.this;
+        }
+
         public Builder additonalAmounts(List<AdditionalAmount> additionalAmounts){
             this.additionalAmounts = additionalAmounts;
             return Builder.this;
@@ -158,8 +183,9 @@ public class AmountsResp {
                         + "Please set the value by \"authorizedAmount()\". "
                         + "The property \"authorizedAmount\" is required.");
             }
-
             return new AmountsResp(this);
+
+
         }
     }
 
@@ -170,6 +196,8 @@ public class AmountsResp {
         this.cashBackAmount = builder.cashBackAmount;
         this.tipAmount = builder.tipAmount;
         this.surchargeAmount = builder.surchargeAmount;
+        this.partialAuthorizedAmount = builder.partialAuthorizedAmount;
+        this.requestedAmount = builder.requestedAmount;
         this.additionalAmounts = builder.additionalAmounts;
     }
 }

@@ -80,12 +80,12 @@ public class SaleData {
 	public static class Builder {
 
 		private String operatorID;
-		private String operatorLanguage;
+		protected String operatorLanguage;
 		private String shiftNumber;
 		private String saleReferenceID;
 		private SaleTerminalData saleTerminalData;
 		private String tokenRequestedType;
-		private SaleTransactionID saleTransactionID;
+		protected SaleTransactionID saleTransactionID;
 		private SponsoredMerchant sponsoredMerchant;
 
 		public Builder() {
