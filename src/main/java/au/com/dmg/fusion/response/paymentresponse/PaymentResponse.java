@@ -215,12 +215,12 @@ public class PaymentResponse implements ResponseType {
                 BigDecimal authPartialAmt = Optional.ofNullable(amountsResp.getPartialAuthorizedAmount())
                         .orElse(BigDecimal.ZERO);
 
-                if((surcharge.signum() == 0)
-                        && (tip.signum() == 0)
-                        && (cashback.signum() == 0)
+                if((surcharge.intValue() == 0)
+                        && (tip.intValue() == 0)
+                        && (cashback.intValue() == 0)
                         && this.paymentResult.getPaymentInstrumentData().getPaymentInstrumentType() == PaymentInstrumentType.Card
-                        && (reqAmt.signum() > 0)
-                        && (authPartialAmt.signum() > 0)
+                        && (reqAmt.intValue() > 0)
+                        && (authPartialAmt.intValue() > 0)
                         && (reqAmt.compareTo(authPartialAmt) > 0 )
                 ){
                     this.response = new Response.Builder()
