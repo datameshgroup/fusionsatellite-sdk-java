@@ -665,4 +665,68 @@ public class SaleToPOIResponseTest {
         if ((!response.getPaymentResponse().getResponse().getResult().equals(ResponseResult.Partial)))
             throw new AssertionError();
     }
+
+    @Test
+    public void testPaymentResponseClosedLoopPaymentBrand(){
+        List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
+        receipts.add(new PaymentReceipt.Builder()
+                .integratedPrintFlag(false)
+                .documentQualifier("Title")
+                .requiredSignatureFlag(true)
+                .build());
+
+        AdditionalAmount additionalAmount = new AdditionalAmount.Builder()
+                .name("SurchargeTax")
+                .value(new BigDecimal(123))
+                .build();
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(123))
+                .additionalAmount(additionalAmount)
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Login)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .paymentBrand(PaymentBrand.ACTTSS)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .build())
+                                        .build())
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .paymentReceipt(receipts)
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+    }
 }
