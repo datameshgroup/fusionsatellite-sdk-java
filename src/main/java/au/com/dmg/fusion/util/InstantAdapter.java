@@ -28,8 +28,14 @@ import com.squareup.moshi.*;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class InstantAdapter extends JsonAdapter<Instant> {
+    private DateTimeFormatter formatter = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd'T'hh:mm:ssxxx")
+            .withZone(ZoneId.systemDefault());
+
     @Override
     public Instant fromJson(JsonReader reader) throws IOException {
         return OffsetDateTime.parse(reader.nextString()).toInstant();
@@ -47,6 +53,7 @@ public class InstantAdapter extends JsonAdapter<Instant> {
 
     @ToJson
     public String toJson2(Instant value) {
-        return value.toString();
+//        return value.toString();
+        return formatter.format(value);
     }
 }
