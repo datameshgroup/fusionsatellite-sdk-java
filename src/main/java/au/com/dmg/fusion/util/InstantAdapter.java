@@ -53,7 +53,6 @@ public class InstantAdapter extends JsonAdapter<Instant> {
 
     @ToJson
     public String toJson2(Instant value) {
-//        return value.toString();
-        return formatter.format(value);
+        return formatter.format(value); // sample formatted value: 2023-07-16T19:20:30+10:00
     }
 }
