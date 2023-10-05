@@ -44,9 +44,9 @@ public enum PaymentBrand {
     @Json(name = "DRCDollars") DRCDollars,
     @Json(name = "Cash") Cash,
 
-    @Json(name = "Fastcard") Fastcard, //Cabcharge Fast Card
+    @Json(name = "Fastcard") Fastcard,
     @Json(name = "eTicket") eTicket,
-    @Json(name = "Digital Product") DigitalProduct, //CabCharge DigitalPass, Digital Fast Card
+    @Json(name = "Digital Product") DigitalProduct,
     @Json(name = "ACT TSS") ACTTSS,
     @Json(name = "NSW TSS") NSWTSS,
     @Json(name = "NT TSS") NTTSS,
