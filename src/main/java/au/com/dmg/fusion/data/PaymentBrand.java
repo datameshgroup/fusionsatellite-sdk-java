@@ -47,13 +47,14 @@ public enum PaymentBrand {
     @Json(name = "Fastcard") Fastcard,
     @Json(name = "eTicket") eTicket,
     @Json(name = "Digital Product") DigitalProduct,
-    @Json(name = "TSS (ACT TSS)") ACTTSS,
-    @Json(name = "TSS (NSW TSS)") NSWTSS,
-    @Json(name = "TSS (NT TSS)") NTTSS,
-    @Json(name = "TSS (QLD TSS)") QLDTSS,
-    @Json(name = "TSS (SA TSS)") SATSS,
-    @Json(name = "TSS (TAS TSS)") TASTSS,
-    @Json(name = "TSS (VIC TSS)") VICTSS,
-    @Json(name = "TSS (WA TSS)") WATSS,
+    @Json(name = "ACT TSS") ACTTSS,
+    @Json(name = "NSW TSS") NSWTSS,
+    @Json(name = "NT TSS") NTTSS,
+    @Json(name = "QLD TSS") QLDTSS,
+    @Json(name = "SA TSS") SATSS,
+    @Json(name = "TAS TSS") TASTSS,
+    @Json(name = "VIC TSS") VICTSS,
+    @Json(name = "WA TSS") WATSS,
+
     Other
 }
