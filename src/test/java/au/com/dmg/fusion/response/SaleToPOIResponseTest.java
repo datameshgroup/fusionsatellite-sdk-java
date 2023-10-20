@@ -729,4 +729,156 @@ public class SaleToPOIResponseTest {
 
         System.out.println(response.toJson());
     }
+
+    @Test
+    public void testPaymentPaymentClassificationWithEnumValues(){
+        List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
+        receipts.add(new PaymentReceipt.Builder()
+                .integratedPrintFlag(false)
+                .documentQualifier("Title")
+                .requiredSignatureFlag(true)
+                .build());
+
+        AdditionalAmount additionalAmount = new AdditionalAmount.Builder()
+                .name("SurchargeTax")
+                .value(new BigDecimal(123))
+                .build();
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(123))
+                .additionalAmount(additionalAmount)
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .paymentBrand(PaymentBrand.DinersClub)
+                                                .account("Savings")
+                                                .mapPaymentClassification(new PaymentClassification.Builder()
+                                                        .productId("0204")
+                                                        .productName("ACT TSS")
+                                                        .productLabel("ACT TSS label")
+                                                        .method("Swipe")
+                                                        .account("Cheque")
+                                                        .countryCode("036")
+                                                        .build())
+                                                .build())
+                                        .build())
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .paymentReceipt(receipts)
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+
+        assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getPaymentBrand().equals(PaymentBrand.DinersClub));
+        assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getEntryMode().equals(EntryMode.Tapped));
+        assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getAccount().equals("Savings"));
+    }
+
+    @Test
+    public void testPaymentPaymentClassificationWithoutEnumValues(){
+        List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
+        receipts.add(new PaymentReceipt.Builder()
+                .integratedPrintFlag(false)
+                .documentQualifier("Title")
+                .requiredSignatureFlag(true)
+                .build());
+
+        AdditionalAmount additionalAmount = new AdditionalAmount.Builder()
+                .name("SurchargeTax")
+                .value(new BigDecimal(123))
+                .build();
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(123))
+                .additionalAmount(additionalAmount)
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .mapPaymentClassification(new PaymentClassification.Builder()
+                                                        .productId("0204")
+                                                        .productName("ACT TSS")
+                                                        .productLabel("ACT TSS label")
+                                                        .method("Swipe")
+                                                        .account("Cheque")
+                                                        .countryCode("036")
+                                                        .build())
+                                                .build())
+                                        .build())
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .paymentReceipt(receipts)
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+
+        assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getPaymentBrand().equals(PaymentBrand.ACTTSS));
+        assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getEntryMode().equals(EntryMode.MagStripe));
+        assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getAccount().equals("Cheque"));
+    }
 }
+
