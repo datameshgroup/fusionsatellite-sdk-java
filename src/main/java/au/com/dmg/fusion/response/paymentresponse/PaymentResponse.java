@@ -25,7 +25,9 @@ package au.com.dmg.fusion.response.paymentresponse;
 
 import au.com.dmg.fusion.data.PaymentInstrumentType;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
+import au.com.dmg.fusion.request.paymentrequest.PaymentRequest;
 import au.com.dmg.fusion.request.paymentrequest.SaleData;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseResult;
 import au.com.dmg.fusion.response.ResponseType;
@@ -53,6 +55,8 @@ public class PaymentResponse implements ResponseType {
     @Json(name = "LoyaltyResult")
     @Nullable
     private final List<LoyaltyResult> loyaltyResult;
+    @Json(name = "ExtensionData")
+    private final PaymentResponseExtensionData extensionData;
 
     @NotNull
     public Response getResponse() {
@@ -89,6 +93,9 @@ public class PaymentResponse implements ResponseType {
         return loyaltyResult;
     }
 
+    @Nullable
+    public PaymentResponseExtensionData getExtensionData() {return extensionData; }
+
     public static class Builder {
 
         private Response response;
@@ -98,11 +105,12 @@ public class PaymentResponse implements ResponseType {
         private List<String> allowedProductCodes;
         private List<PaymentReceipt> paymentReceipt;
         private List<LoyaltyResult> loyaltyResult;
+        private PaymentResponseExtensionData extensionData;
 
         public Builder() {
         }
 
-        Builder(Response response, PaymentResponseSaleData saleData, POIData poiData, PaymentResult paymentResult, List<String> allowedProductCodes, List<PaymentReceipt> paymentReceipt, List<LoyaltyResult> loyaltyResult) {
+        Builder(Response response, PaymentResponseSaleData saleData, POIData poiData, PaymentResult paymentResult, List<String> allowedProductCodes, List<PaymentReceipt> paymentReceipt, List<LoyaltyResult> loyaltyResult, PaymentResponseExtensionData extensionData) {
             this.response = response;
             this.saleData = saleData;
             this.poiData = poiData;
@@ -110,6 +118,7 @@ public class PaymentResponse implements ResponseType {
             this.allowedProductCodes = allowedProductCodes;
             this.paymentReceipt = paymentReceipt;
             this.loyaltyResult = loyaltyResult;
+            this.extensionData = extensionData;
         }
 
         public Builder response(Response response) {
@@ -181,6 +190,11 @@ public class PaymentResponse implements ResponseType {
             return Builder.this;
         }
 
+        public Builder extensionData(PaymentResponseExtensionData extensionData){
+            this.extensionData = extensionData;
+            return Builder.this;
+        }
+
         public PaymentResponse build() {
             if (this.response == null) {
                 throw new NullPointerException("The property \"response\" is null. "
@@ -243,6 +257,7 @@ public class PaymentResponse implements ResponseType {
         this.allowedProductCodes = builder.allowedProductCodes;
         this.paymentReceipt = builder.paymentReceipt;
         this.loyaltyResult = builder.loyaltyResult;
+        this.extensionData = builder.extensionData;
     }
 }
 
