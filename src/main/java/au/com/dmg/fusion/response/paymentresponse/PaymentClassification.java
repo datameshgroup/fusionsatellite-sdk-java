@@ -100,19 +100,19 @@ public class PaymentClassification {
         }
 
         public PaymentClassification build() {
-            if (this.productId == null) {
-                throw new NullPointerException("The property \"productId\" is null. "
+            if (this.productId == null || this.productId.isEmpty()) {
+                throw new NullPointerException("The property \"productId\" is null or empty. "
                         + "Please set the value by \"productId()\". "
                         + "The properties \"productId\", \"productName\" and \"method\" are required.");
             }
-            if (this.productName == null) {
-                throw new NullPointerException("The property \"timestamp\" is null. "
-                        + "Please set the value by \"timestamp()\". "
+            if (this.productName == null || this.productName.isEmpty()) {
+                throw new NullPointerException("The property \"timestamp\" is null or empty. "
+                        + "Please set the value by \"productName()\". "
                         + "The properties \"productId\", \"productName\" and \"method\" are required.");
             }
 
-            if (this.method == null) {
-                throw new NullPointerException("The property \"method\" is null. "
+            if (this.method == null || this.method.isEmpty()) {
+                throw new NullPointerException("The property \"method\" is null or empty. "
                         + "Please set the value by \"method()\". "
                         + "The properties \"productId\", \"productName\" and \"method\" are required.");
             }
