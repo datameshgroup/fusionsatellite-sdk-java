@@ -34,6 +34,12 @@ public class PaymentResponseCardData {
     private EntryMode entryMode;
     @Json(name = "PaymentBrand")
     private PaymentBrand paymentBrand;
+    @Json(name = "PaymentBrandId")
+    private String paymentBrandId;
+    @Json(name = "PaymentBrandLabel")
+    private String paymentBrandLabel;
+    @Json(name = "CardCountryCode")
+    private String cardCountryCode;
     @Json(name = "MaskedPAN")
     private String maskedPAN;
     @Json(name = "Account")
@@ -50,6 +56,15 @@ public class PaymentResponseCardData {
     public PaymentBrand getPaymentBrand() {
         return paymentBrand;
     }
+
+    public String getPaymentBrandId() {
+        return paymentBrandId;
+    }
+
+    public String getPaymentBrandLabel() {
+        return paymentBrandLabel;
+    }
+    public String getCardCountryCode(){ return cardCountryCode; }
 
     public String getMaskedPAN() {
         return maskedPAN;
@@ -69,6 +84,9 @@ public class PaymentResponseCardData {
 
         private EntryMode entryMode;
         private PaymentBrand paymentBrand;
+        private String paymentBrandId;
+        private String paymentBrandLabel;
+        private String cardCountryCode;
         private String maskedPAN;
         private String account;
         private PaymentToken paymentToken;
@@ -77,13 +95,43 @@ public class PaymentResponseCardData {
         public Builder() {
         }
 
-        Builder(EntryMode entryMode, PaymentBrand paymentBrand, String maskedPAN, String account, PaymentToken paymentToken, String expiry) {
+        Builder(EntryMode entryMode, PaymentBrand paymentBrand, String paymentBrandId, String paymentBrandLabel, String cardCountryCode, String maskedPAN, String account, PaymentToken paymentToken, String expiry) {
             this.entryMode = entryMode;
             this.paymentBrand = paymentBrand;
+            this.paymentBrandId = paymentBrandId;
+            this.paymentBrandLabel = paymentBrandLabel;
+            this.cardCountryCode = cardCountryCode;
             this.maskedPAN = maskedPAN;
             this.account = account;
             this.paymentToken = paymentToken;
             this.expiry = expiry;
+        }
+
+        public Builder mapPaymentClassification(PaymentClassification paymentClassification){
+            if(this.entryMode==null){
+                this.entryMode = PaymentClassification.mapEntryMode(paymentClassification.method);
+            }
+
+            if(this.paymentBrand==null){
+                this.paymentBrand = PaymentClassification.mapPaymentBrand(paymentClassification.productName);
+            }
+
+            this.paymentBrandId = paymentClassification.productId;
+
+            if(paymentClassification.productLabel==null){
+                this.paymentBrandLabel = paymentClassification.productName;
+            }else{
+                this.paymentBrandLabel = paymentClassification.productLabel;
+            }
+
+            if(this.account==null && !(paymentClassification.account==null)){
+                this.account = paymentClassification.account;
+            }
+
+            this.cardCountryCode = paymentClassification.countryCode;
+
+
+            return Builder.this;
         }
 
         public Builder entryMode(EntryMode entryMode){
@@ -93,6 +141,21 @@ public class PaymentResponseCardData {
 
         public Builder paymentBrand(PaymentBrand paymentBrand){
             this.paymentBrand = paymentBrand;
+            return Builder.this;
+        }
+
+        public Builder paymentBrandId(String paymentBrandId){
+            this.paymentBrandId = paymentBrandId;
+            return Builder.this;
+        }
+
+        public Builder paymentBrandLabel(String paymentBrandLabel){
+            this.paymentBrandLabel = paymentBrandLabel;
+            return Builder.this;
+        }
+
+        public Builder cardCountryCode(String cardCountryCode){
+            this.cardCountryCode = cardCountryCode;
             return Builder.this;
         }
 
@@ -117,20 +180,10 @@ public class PaymentResponseCardData {
         }
 
         public PaymentResponseCardData build() {
-            if(this.entryMode == null){
-                throw new NullPointerException("The property \"entryMode\" is null. "
-                        + "Please set the value by \"entryMode()\". "
-                        + "The properties \"entryMode\", \"paymentBrand\" and \"maskedPAN\" are required.");
-            }
-            if(this.paymentBrand == null){
-                throw new NullPointerException("The property \"paymentBrand\" is null. "
-                        + "Please set the value by \"paymentBrand()\". "
-                        + "The properties \"entryMode\", \"paymentBrand\" and \"maskedPAN\" are required.");
-            }
             if(this.maskedPAN == null){
                 throw new NullPointerException("The property \"maskedPAN\" is null. "
                         + "Please set the value by \"maskedPAN()\". "
-                        + "The properties \"entryMode\", \"paymentBrand\" and \"maskedPAN\" are required.");
+                        + "The property \"maskedPAN\" is required.");
             }
 
             return new PaymentResponseCardData(this);
@@ -140,6 +193,9 @@ public class PaymentResponseCardData {
     private PaymentResponseCardData(Builder builder) {
         this.entryMode = builder.entryMode;
         this.paymentBrand = builder.paymentBrand;
+        this.paymentBrandId = builder.paymentBrandId;
+        this.paymentBrandLabel = builder.paymentBrandLabel;
+        this.cardCountryCode = builder.cardCountryCode;
         this.maskedPAN = builder.maskedPAN;
         this.account = builder.account;
         this.paymentToken = builder.paymentToken;
@@ -156,4 +212,12 @@ class CardData
 @Required String maskedPAN
 String account
 PaymentToken paymentToken
+
+PaymentClassification Pairing
+EntryMode <-> Method
+Account <-> Account
+CountryCode <-> cardCountryCode
+PaymentBrandId <-> ProductID
+PaymentBrandName <-> ProductName
+PaymentBrandLabel <-> ProductLabel
 * */
