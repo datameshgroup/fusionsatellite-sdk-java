@@ -189,7 +189,7 @@ public class LoginRequest implements Request {
         this.operatorID = builder.operatorID;
         this.shiftNumber = builder.shiftNumber;
         this.POISerialNumber = builder.POISerialNumber;
-        this.pairing = builder.pairing;
+        this.pairing = builder.pairing != null && builder.pairing;
     }
 
     @Override

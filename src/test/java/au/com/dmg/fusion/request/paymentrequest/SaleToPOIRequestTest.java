@@ -248,6 +248,7 @@ public class SaleToPOIRequestTest extends TestCase {
                 .build();
 
         System.out.println(request.toJson());
+        assert(!request.getLoginRequest().getPairing());
     }
 
     @Test
@@ -259,7 +260,7 @@ public class SaleToPOIRequestTest extends TestCase {
                 .messageType(MessageType.Request)
                 .serviceID("myserviceid")
                 .saleID("mysaleid")
-                .POIID("mypoid")
+                .POIID("PairingPOIID")
                 .build();
         LoginRequest loginRequest = new LoginRequest.Builder()
                 .dateTime("date")
@@ -277,7 +278,6 @@ public class SaleToPOIRequestTest extends TestCase {
                 .operatorLanguage("lang")
                 .operatorID("wd")
                 .shiftNumber("x")
-                .POISerialNumber("POISERIALNUMBER")
                 .pairing(true)
                 .build();
 
@@ -287,6 +287,46 @@ public class SaleToPOIRequestTest extends TestCase {
                 .build();
 
         System.out.println(request.toJson());
+        System.out.println(request.getLoginRequest().getPairing());
+        assert(request.getLoginRequest().getPairing());
+    }
+
+    @Test
+    public void testLoginRequestwithPairingNotSet() {
+        MessageHeader header = new MessageHeader.Builder()
+                .protocolVersion("3.1-dmg")
+                .messageClass(MessageClass.Service)
+                .messageCategory(MessageCategory.Login)
+                .messageType(MessageType.Request)
+                .serviceID("myserviceid")
+                .saleID("mysaleid")
+                .POIID("PairingPOIID")
+                .build();
+        LoginRequest loginRequest = new LoginRequest.Builder()
+                .dateTime("date")
+                .saleSoftware(new SaleSoftware.Builder()
+                        .providerIdentification("provider")
+                        .applicationName("appname")
+                        .softwareVersion("fef")
+                        .certificationCode("efe")
+                        .build()
+                )
+                .saleTerminalData(new SaleTerminalData.Builder()
+                        .terminalEnvironment(TerminalEnvironment.Unknown)
+                        .addSaleCapabilities(SaleCapability.Unknown)
+                        .totalsGroupID("totalgroup").build())
+                .operatorLanguage("lang")
+                .operatorID("wd")
+                .shiftNumber("x")
+                .build();
+
+        SaleToPOIRequest request = new SaleToPOIRequest.Builder()
+                .messageHeader(header)
+                .request(loginRequest)
+                .build();
+        System.out.println(request.toJson());
+        System.out.println(request.getLoginRequest().getPairing());
+        assert(!request.getLoginRequest().getPairing());
     }
 
     @Test
