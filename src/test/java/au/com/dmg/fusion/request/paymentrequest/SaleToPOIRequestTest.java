@@ -36,7 +36,10 @@ import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Stop;
 import au.com.dmg.fusion.request.paymentrequest.extenstiondata.TransitData;
 import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Trip;
 import au.com.dmg.fusion.request.transactionstatusrequest.MessageReference;
+import au.com.dmg.fusion.util.PairingData;
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -208,5 +211,88 @@ public class SaleToPOIRequestTest extends TestCase {
         System.out.println(request.toJson());
     }
 
+    @Test
+    public void testLoginRequestwithPairingFalse() {
+        MessageHeader header = new MessageHeader.Builder()
+                .protocolVersion("3.1-dmg")
+                .messageClass(MessageClass.Service)
+                .messageCategory(MessageCategory.Login)
+                .messageType(MessageType.Request)
+                .serviceID("myserviceid")
+                .saleID("mysaleid")
+                .POIID("mypoid")
+                .build();
+        LoginRequest loginRequest = new LoginRequest.Builder()
+                .dateTime("date")
+                .saleSoftware(new SaleSoftware.Builder()
+                        .providerIdentification("provider")
+                        .applicationName("appname")
+                        .softwareVersion("fef")
+                        .certificationCode("efe")
+                        .build()
+                )
+                .saleTerminalData(new SaleTerminalData.Builder()
+                        .terminalEnvironment(TerminalEnvironment.Unknown)
+                        .addSaleCapabilities(SaleCapability.Unknown)
+                        .totalsGroupID("totalgroup").build())
+                .operatorLanguage("lang")
+                .operatorID("wd")
+                .shiftNumber("x")
+                .POISerialNumber("POISERIALNUMBER")
+                .pairing(false)
+                .build();
 
+        SaleToPOIRequest request = new SaleToPOIRequest.Builder()
+                .messageHeader(header)
+                .request(loginRequest)
+                .build();
+
+        System.out.println(request.toJson());
+    }
+
+    @Test
+    public void testLoginRequestwithPairingTrue() {
+        MessageHeader header = new MessageHeader.Builder()
+                .protocolVersion("3.1-dmg")
+                .messageClass(MessageClass.Service)
+                .messageCategory(MessageCategory.Login)
+                .messageType(MessageType.Request)
+                .serviceID("myserviceid")
+                .saleID("mysaleid")
+                .POIID("mypoid")
+                .build();
+        LoginRequest loginRequest = new LoginRequest.Builder()
+                .dateTime("date")
+                .saleSoftware(new SaleSoftware.Builder()
+                        .providerIdentification("provider")
+                        .applicationName("appname")
+                        .softwareVersion("fef")
+                        .certificationCode("efe")
+                        .build()
+                )
+                .saleTerminalData(new SaleTerminalData.Builder()
+                        .terminalEnvironment(TerminalEnvironment.Unknown)
+                        .addSaleCapabilities(SaleCapability.Unknown)
+                        .totalsGroupID("totalgroup").build())
+                .operatorLanguage("lang")
+                .operatorID("wd")
+                .shiftNumber("x")
+                .POISerialNumber("POISERIALNUMBER")
+                .pairing(true)
+                .build();
+
+        SaleToPOIRequest request = new SaleToPOIRequest.Builder()
+                .messageHeader(header)
+                .request(loginRequest)
+                .build();
+
+        System.out.println(request.toJson());
+    }
+
+    @Test
+    public void testCreateKEK() {
+        String kek = PairingData.CreateKEK();
+        System.out.println(kek);
+        assert(kek.length() == 48);
+    }
 }
