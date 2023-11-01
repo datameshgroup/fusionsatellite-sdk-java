@@ -47,6 +47,8 @@ public class LoginRequest implements Request {
     private final String shiftNumber;
     @Json(name = "POISerialNumber")
     private final String POISerialNumber;
+    @Json(name = "Pairing")
+    private final Boolean pairing;
 
     public String getDateTime() {
         return dateTime;
@@ -76,6 +78,8 @@ public class LoginRequest implements Request {
         return POISerialNumber;
     }
 
+    public Boolean getPairing(){ return pairing; }
+
     public static class Builder {
 
         private String dateTime;
@@ -85,6 +89,7 @@ public class LoginRequest implements Request {
         private String operatorID;
         private String shiftNumber;
         private String POISerialNumber;
+        private Boolean pairing;
 
         public Builder() {
         }
@@ -97,6 +102,17 @@ public class LoginRequest implements Request {
             this.operatorID = operatorID;
             this.shiftNumber = shiftNumber;
             this.POISerialNumber = POISerialNumber;
+        }
+
+        Builder(String dateTime, SaleSoftware saleSoftware, SaleTerminalData saleTerminalData, String operatorLanguage, String operatorID, String shiftNumber, String POISerialNumber, Boolean pairing) {
+            this.dateTime = dateTime;
+            this.saleSoftware = saleSoftware;
+            this.saleTerminalData = saleTerminalData;
+            this.operatorLanguage = operatorLanguage;
+            this.operatorID = operatorID;
+            this.shiftNumber = shiftNumber;
+            this.POISerialNumber = POISerialNumber;
+            this.pairing = pairing;
         }
 
         public Builder dateTime(String dateTime) {
@@ -134,6 +150,11 @@ public class LoginRequest implements Request {
             return Builder.this;
         }
 
+        public Builder pairing(Boolean pairing){
+            this.pairing = pairing;
+            return Builder.this;
+        }
+
         public LoginRequest build() {
             if (this.dateTime == null) {
                 throw new NullPointerException("The property \"dateTime\" is null. "
@@ -168,6 +189,7 @@ public class LoginRequest implements Request {
         this.operatorID = builder.operatorID;
         this.shiftNumber = builder.shiftNumber;
         this.POISerialNumber = builder.POISerialNumber;
+        this.pairing = builder.pairing != null && builder.pairing;
     }
 
     @Override
