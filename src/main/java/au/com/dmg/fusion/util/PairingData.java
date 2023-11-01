@@ -45,27 +45,27 @@ public class PairingData {
             this.version = version;
         }
 
-        private Builder saleID(String saleID){
+        public Builder saleID(String saleID){
             this.saleID = saleID;
             return Builder.this;
         }
-        private Builder pairingPOIID(String pairingPOIID){
+        public Builder pairingPOIID(String pairingPOIID){
             this.pairingPOIID = pairingPOIID;
             return Builder.this;
         }
-        private Builder kek(String kek){
+        public Builder kek(String kek){
             this.kek = kek;
             return Builder.this;
         }
-        private Builder certificationCode(String certificationCode){
+        public Builder certificationCode(String certificationCode){
             this.certificationCode = certificationCode;
             return Builder.this;
         }
-        private Builder posName(String posName){
+        public Builder posName(String posName){
             this.posName = posName;
             return Builder.this;
         }
-        private Builder version(Integer version){
+        public Builder version(Integer version){
             this.version = version;
             return Builder.this;
         }
@@ -76,28 +76,28 @@ public class PairingData {
                         + "Please set the value by \"saleID()\". "
                         + "The properties \"saleID\", \"pairingPOIID\", \"kek\", \"certificationCode\", \"posName\" and \"version\" are required.");
             }
-            if (this.pairingPOIID == null) {
+            if (this.pairingPOIID == null || this.pairingPOIID.isEmpty()) {
                 throw new NullPointerException("The property \"pairingPOIID\" is null or empty. "
                         + "Please set the value by \"pairingPOIID()\". "
                         + "The properties \"saleID\", \"pairingPOIID\", \"kek\", \"certificationCode\", \"posName\" and \"version\" are required.");
             }
-            if (this.kek == null) {
+            if (this.kek == null || this.kek.isEmpty()) {
                 throw new NullPointerException("The property \"kek\" is null or empty. "
                         + "Please set the value by \"kek()\". "
                         + "The properties \"saleID\", \"pairingPOIID\", \"kek\", \"certificationCode\", \"posName\" and \"version\" are required.");
             }
-            if (this.certificationCode == null) {
+            if (this.certificationCode == null || this.certificationCode.isEmpty()) {
                 throw new NullPointerException("The property \"certificationCode\" is null or empty. "
                         + "Please set the value by \"certificationCode()\". "
                         + "The properties \"saleID\", \"pairingPOIID\", \"kek\", \"certificationCode\", \"posName\" and \"version\" are required.");
             }
-            if (this.posName == null) {
+            if (this.posName == null || this.posName.isEmpty()) {
                 throw new NullPointerException("The property \"posName\" is null or empty. "
                         + "Please set the value by \"posName()\". "
                         + "The properties \"saleID\", \"pairingPOIID\", \"kek\", \"certificationCode\", \"posName\" and \"version\" are required.");
             }
             if (this.version == null) {
-                throw new NullPointerException("The property \"version\" is null or empty. "
+                throw new NullPointerException("The property \"version\" is null. "
                         + "Please set the value by \"version()\". "
                         + "The properties \"saleID\", \"pairingPOIID\", \"kek\", \"certificationCode\", \"posName\" and \"version\" are required.");
             }
