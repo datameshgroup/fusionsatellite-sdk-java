@@ -25,9 +25,7 @@ package au.com.dmg.fusion.response.paymentresponse;
 
 import au.com.dmg.fusion.data.PaymentInstrumentType;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
-import au.com.dmg.fusion.request.paymentrequest.PaymentRequest;
 import au.com.dmg.fusion.request.paymentrequest.SaleData;
-import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseResult;
 import au.com.dmg.fusion.response.ResponseType;
@@ -36,7 +34,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 public class PaymentResponse implements ResponseType {
 
@@ -57,6 +58,9 @@ public class PaymentResponse implements ResponseType {
     private final List<LoyaltyResult> loyaltyResult;
     @Json(name = "ExtensionData")
     private final PaymentResponseExtensionData extensionData;
+    @Json(name = "IsSplitPayment")
+    private final Boolean isSplitPayment;
+
 
     @NotNull
     public Response getResponse() {
@@ -96,6 +100,8 @@ public class PaymentResponse implements ResponseType {
     @Nullable
     public PaymentResponseExtensionData getExtensionData() {return extensionData; }
 
+    @Nullable Boolean getIsSplitPayment(){ return isSplitPayment; }
+
     public static class Builder {
 
         private Response response;
@@ -106,6 +112,7 @@ public class PaymentResponse implements ResponseType {
         private List<PaymentReceipt> paymentReceipt;
         private List<LoyaltyResult> loyaltyResult;
         private PaymentResponseExtensionData extensionData;
+        private Boolean isSplitPayment;
 
         public Builder() {
         }
@@ -195,6 +202,11 @@ public class PaymentResponse implements ResponseType {
             return Builder.this;
         }
 
+        public Builder isSplitPayment(Boolean isSplitPayment){
+            this.isSplitPayment = isSplitPayment;
+            return Builder.this;
+        }
+
         public PaymentResponse build() {
             if (this.response == null) {
                 throw new NullPointerException("The property \"response\" is null. "
@@ -232,7 +244,7 @@ public class PaymentResponse implements ResponseType {
                 if((surcharge.intValue() == 0)
                         && (tip.intValue() == 0)
                         && (cashback.intValue() == 0)
-                        && this.paymentResult.getPaymentInstrumentData().getPaymentInstrumentType() == PaymentInstrumentType.Card
+                        && (this.paymentResult.getPaymentInstrumentData().getPaymentInstrumentType() == PaymentInstrumentType.Card || isSplitPayment)
                         && (reqAmt.intValue() > 0)
                         && (authPartialAmt.intValue() > 0)
                         && (reqAmt.compareTo(authPartialAmt) > 0 )
@@ -258,6 +270,7 @@ public class PaymentResponse implements ResponseType {
         this.paymentReceipt = builder.paymentReceipt;
         this.loyaltyResult = builder.loyaltyResult;
         this.extensionData = builder.extensionData;
+        this.isSplitPayment = builder.isSplitPayment;
     }
 }
 
