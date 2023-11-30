@@ -39,6 +39,8 @@ public class PaymentResult {
     private final Boolean onlineFlag;
     @Json(name = "PaymentAcquirerData")
     private final PaymentAcquirerData paymentAcquirerData;
+    @Json(name = "SplitPaymentFlag")
+    private final Boolean splitPaymentFlag;
 
     @Nullable
     public PaymentType getPaymentType() {
@@ -65,6 +67,9 @@ public class PaymentResult {
         return paymentAcquirerData;
     }
 
+    @Nullable
+    public Boolean getSplitPaymentFlag(){ return splitPaymentFlag; }
+
     public static class Builder {
 
         private PaymentType paymentType;
@@ -72,6 +77,7 @@ public class PaymentResult {
         private AmountsResp amountsResp;
         private Boolean onlineFlag;
         private PaymentAcquirerData paymentAcquirerData;
+        private Boolean splitPaymentFlag = false;
 
         public Builder() {
         }
@@ -82,6 +88,15 @@ public class PaymentResult {
             this.amountsResp = amountsResp;
             this.onlineFlag = onlineFlag;
             this.paymentAcquirerData = paymentAcquirerData;
+        }
+
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, Boolean splitPaymentFlag) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.amountsResp = amountsResp;
+            this.onlineFlag = onlineFlag;
+            this.paymentAcquirerData = paymentAcquirerData;
+            this.splitPaymentFlag = splitPaymentFlag;
         }
 
         public Builder paymentType(PaymentType paymentType) {
@@ -109,6 +124,11 @@ public class PaymentResult {
             return Builder.this;
         }
 
+        public Builder splitPaymentFlag(Boolean splitPaymentFlag) {
+            this.splitPaymentFlag = splitPaymentFlag;
+            return Builder.this;
+        }
+
         public PaymentResult build() {
             if (this.onlineFlag == null) {
                 throw new NullPointerException("The property \"onlineFlag\" is null. "
@@ -126,6 +146,7 @@ public class PaymentResult {
         this.amountsResp = builder.amountsResp;
         this.onlineFlag = builder.onlineFlag;
         this.paymentAcquirerData = builder.paymentAcquirerData;
+        this.splitPaymentFlag = builder.splitPaymentFlag;
     }
 }
 

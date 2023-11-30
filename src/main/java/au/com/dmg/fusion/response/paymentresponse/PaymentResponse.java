@@ -58,8 +58,6 @@ public class PaymentResponse implements ResponseType {
     private final List<LoyaltyResult> loyaltyResult;
     @Json(name = "ExtensionData")
     private final PaymentResponseExtensionData extensionData;
-    @Json(name = "IsSplitPayment")
-    private final Boolean isSplitPayment;
 
 
     @NotNull
@@ -99,8 +97,6 @@ public class PaymentResponse implements ResponseType {
 
     @Nullable
     public PaymentResponseExtensionData getExtensionData() {return extensionData; }
-
-    @Nullable Boolean getIsSplitPayment(){ return isSplitPayment; }
 
     public static class Builder {
 
@@ -202,11 +198,6 @@ public class PaymentResponse implements ResponseType {
             return Builder.this;
         }
 
-        public Builder isSplitPayment(Boolean isSplitPayment){
-            this.isSplitPayment = isSplitPayment;
-            return Builder.this;
-        }
-
         public PaymentResponse build() {
             if (this.response == null) {
                 throw new NullPointerException("The property \"response\" is null. "
@@ -223,10 +214,15 @@ public class PaymentResponse implements ResponseType {
                         + "Please set the value by \"poiData()\". "
                         + "The properties \"response\", \"saleData\" and \"poiData\" are required.");
             }
-            //PartialPayment Logic
+
+            // PartialPayment Logic:
+            // (1) Partial Payment when Split Payment is tapped on Satellite
+            // (2) Partial Payment for using TSS Cards
+
             if (this.response.getResult() == ResponseResult.Success
             && !(this.paymentResult == null)
-            && !(this.paymentResult.getAmountsResp() == null)){
+            && !(this.paymentResult.getAmountsResp() == null)) {
+
                 AmountsResp amountsResp = this.paymentResult.getAmountsResp();
 
                 // Check for nulls, there's logic for some amounts being null, we don't want to change that
@@ -241,10 +237,18 @@ public class PaymentResponse implements ResponseType {
                 BigDecimal authPartialAmt = Optional.ofNullable(amountsResp.getPartialAuthorizedAmount())
                         .orElse(BigDecimal.ZERO);
 
-                if((surcharge.intValue() == 0)
+//                (1) Partial Payment when Split Payment is tapped on Satellite
+                if((paymentResult.getSplitPaymentFlag() == true
+                    && (reqAmt.intValue() > 0)
+                    && (authPartialAmt.intValue() > 0)
+                    && (reqAmt.compareTo(authPartialAmt) > 0 ))
+
+//                (2) Partial Payment for using TSS Cards
+                ||
+                        (surcharge.intValue() == 0)
                         && (tip.intValue() == 0)
                         && (cashback.intValue() == 0)
-                        && (this.paymentResult.getPaymentInstrumentData().getPaymentInstrumentType() == PaymentInstrumentType.Card || isSplitPayment)
+                        && (this.paymentResult.getPaymentInstrumentData().getPaymentInstrumentType() == PaymentInstrumentType.Card)
                         && (reqAmt.intValue() > 0)
                         && (authPartialAmt.intValue() > 0)
                         && (reqAmt.compareTo(authPartialAmt) > 0 )
@@ -270,7 +274,6 @@ public class PaymentResponse implements ResponseType {
         this.paymentReceipt = builder.paymentReceipt;
         this.loyaltyResult = builder.loyaltyResult;
         this.extensionData = builder.extensionData;
-        this.isSplitPayment = builder.isSplitPayment;
     }
 }
 

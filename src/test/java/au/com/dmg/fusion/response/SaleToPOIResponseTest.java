@@ -495,7 +495,7 @@ public class SaleToPOIResponseTest {
     }
 
     @Test
-    public void testPartialPaymentResponse(){ //TODO test null amounts and other amounts
+    public void testPartialPaymentResponse(){
 
         AmountsResp amountsResp = new AmountsResp.Builder()
                 .currency("AUD")
@@ -879,6 +879,176 @@ public class SaleToPOIResponseTest {
         assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getPaymentBrand().equals(PaymentBrand.ACTTSS));
         assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getEntryMode().equals(EntryMode.MagStripe));
         assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getAccount().equals("Cheque"));
+    }
+
+    @Test
+    public void testSplitPaymentResponseCard(){
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(53))
+                .partialAuthorizedAmount(new BigDecimal(50))
+                .requestedAmount(new BigDecimal(100))
+                .surchargeAmount(new BigDecimal(1))
+                .cashBackAmount(new BigDecimal(0))
+                .tipAmount(new BigDecimal(2))
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Card)
+                                        .cardData(new PaymentResponseCardData.Builder()
+                                                .entryMode(EntryMode.Tapped)
+                                                .paymentBrand(PaymentBrand.VISA)
+                                                .maskedPAN("464516XXXXXX1111")
+                                                .build())
+                                        .build())
+                                .splitPaymentFlag(true)
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+        if ((!response.getPaymentResponse().getResponse().getResult().equals(ResponseResult.Partial)))
+            throw new AssertionError();
+
+    }
+
+    @Test
+    public void testSplitPaymentResponseCash(){
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(53))
+                .partialAuthorizedAmount(new BigDecimal(50))
+                .requestedAmount(new BigDecimal(100))
+                .surchargeAmount(new BigDecimal(1))
+                .cashBackAmount(new BigDecimal(0))
+                .tipAmount(new BigDecimal(2))
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Cash)
+                                        .build())
+                                .splitPaymentFlag(true)
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+        if ((!response.getPaymentResponse().getResponse().getResult().equals(ResponseResult.Partial)))
+            throw new AssertionError();
+
+    }
+
+    @Test
+    public void testSplitPaymentResponseFinal(){
+
+        AmountsResp amountsResp = new AmountsResp.Builder()
+                .currency("AUD")
+                .authorizedAmount(new BigDecimal(53))
+                .partialAuthorizedAmount(new BigDecimal(50))
+                .requestedAmount(new BigDecimal(50))
+                .surchargeAmount(new BigDecimal(1))
+                .cashBackAmount(new BigDecimal(0))
+                .tipAmount(new BigDecimal(2))
+                .build();
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Payment)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData(new SaleTransactionID.Builder()
+                                        .transactionID("x")
+                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                        .build())
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis())))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentResult(new PaymentResult.Builder()
+                                .paymentType(PaymentType.Normal)
+                                .paymentInstrumentData(new PaymentInstrumentData.Builder()
+                                        .paymentInstrumentType(PaymentInstrumentType.Cash)
+                                        .build())
+                                .splitPaymentFlag(true)
+                                .amountsResp(amountsResp)
+                                .onlineFlag(true)
+                                .build())
+                        .build())
+                .build();
+
+        System.out.println(response.toJson());
+        if ((!response.getPaymentResponse().getResponse().getResult().equals(ResponseResult.Success)))
+            throw new AssertionError();
+
     }
 }
 
