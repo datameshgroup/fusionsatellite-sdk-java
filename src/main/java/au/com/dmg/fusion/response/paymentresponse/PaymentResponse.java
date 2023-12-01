@@ -215,44 +215,19 @@ public class PaymentResponse implements ResponseType {
                         + "The properties \"response\", \"saleData\" and \"poiData\" are required.");
             }
 
-            // PartialPayment Logic:
-            // (1) Partial Payment when Split Payment is tapped on Satellite
-            // (2) Partial Payment for using TSS Cards
-
             if (this.response.getResult() == ResponseResult.Success
             && !(this.paymentResult == null)
             && !(this.paymentResult.getAmountsResp() == null)) {
 
                 AmountsResp amountsResp = this.paymentResult.getAmountsResp();
-
-                // Check for nulls, there's logic for some amounts being null, we don't want to change that
-                BigDecimal surcharge = Optional.ofNullable(amountsResp.getSurchargeAmount())
-                        .orElse(BigDecimal.ZERO);
-                BigDecimal tip = Optional.ofNullable(amountsResp.getTipAmount())
-                        .orElse(BigDecimal.ZERO);
-                BigDecimal cashback = Optional.ofNullable(amountsResp.getCashBackAmount())
-                        .orElse(BigDecimal.ZERO);
                 BigDecimal reqAmt = Optional.ofNullable(amountsResp.getRequestedAmount())
                         .orElse(BigDecimal.ZERO);
                 BigDecimal authPartialAmt = Optional.ofNullable(amountsResp.getPartialAuthorizedAmount())
                         .orElse(BigDecimal.ZERO);
 
-//                (1) Partial Payment when Split Payment is tapped on Satellite
-                if((paymentResult.getSplitPaymentFlag() == true
-                    && (reqAmt.intValue() > 0)
+                if((reqAmt.intValue() > 0)
                     && (authPartialAmt.intValue() > 0)
-                    && (reqAmt.compareTo(authPartialAmt) > 0 ))
-
-//                (2) Partial Payment for using TSS Cards
-                ||
-                        (surcharge.intValue() == 0)
-                        && (tip.intValue() == 0)
-                        && (cashback.intValue() == 0)
-                        && (this.paymentResult.getPaymentInstrumentData().getPaymentInstrumentType() == PaymentInstrumentType.Card)
-                        && (reqAmt.intValue() > 0)
-                        && (authPartialAmt.intValue() > 0)
-                        && (reqAmt.compareTo(authPartialAmt) > 0 )
-                ){
+                    && (reqAmt.compareTo(authPartialAmt) > 0)){
                     this.response = new Response.Builder()
                             .result(ResponseResult.Partial)
                             .additionalResponse(this.response.getAdditionalResponse())
