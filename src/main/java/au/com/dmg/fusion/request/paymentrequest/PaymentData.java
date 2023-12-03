@@ -32,6 +32,8 @@ public class PaymentData {
     private final PaymentType paymentType;
     @Json(name = "PaymentInstrumentData")
     private final PaymentInstrumentData paymentInstrumentData;
+    @Json(name = "SplitPaymentFlag")
+    private final Boolean splitPaymentFlag;
 
     public PaymentType getPaymentType() {
         return paymentType;
@@ -41,9 +43,12 @@ public class PaymentData {
         return paymentInstrumentData;
     }
 
+    public Boolean getSplitPaymentFlag(){ return splitPaymentFlag; }
+
     public static class Builder {
         private PaymentType paymentType = PaymentType.Normal;
         private PaymentInstrumentData paymentInstrumentData;
+        private Boolean splitPaymentFlag = false;
 
         public Builder() {
         }
@@ -53,6 +58,12 @@ public class PaymentData {
             this.paymentInstrumentData = paymentInstrumentData;
         }
 
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, Boolean splitPaymentFlag) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.splitPaymentFlag = splitPaymentFlag;
+        }
+
         public Builder paymentType(PaymentType paymentType) {
             this.paymentType = paymentType;
             return Builder.this;
@@ -60,6 +71,11 @@ public class PaymentData {
 
         public Builder paymentInstrumentData(PaymentInstrumentData paymentInstrumentData) {
             this.paymentInstrumentData = paymentInstrumentData;
+            return Builder.this;
+        }
+
+        public Builder splitPaymentFlag(Boolean splitPaymentFlag) {
+            this.splitPaymentFlag = splitPaymentFlag;
             return Builder.this;
         }
 
@@ -77,6 +93,7 @@ public class PaymentData {
     private PaymentData(Builder builder) {
         this.paymentType = builder.paymentType;
         this.paymentInstrumentData = builder.paymentInstrumentData;
+        this.splitPaymentFlag = builder.splitPaymentFlag;
     }
 }
 
