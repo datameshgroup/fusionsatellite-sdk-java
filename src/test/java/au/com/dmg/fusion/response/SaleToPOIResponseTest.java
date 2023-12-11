@@ -886,12 +886,12 @@ public class SaleToPOIResponseTest {
 
         AmountsResp amountsResp = new AmountsResp.Builder()
                 .currency("AUD")
-                .authorizedAmount(new BigDecimal(53))
-                .partialAuthorizedAmount(new BigDecimal(50))
-                .requestedAmount(new BigDecimal(100))
-                .surchargeAmount(new BigDecimal(1))
+                .authorizedAmount(new BigDecimal(0.61))
+                .partialAuthorizedAmount(new BigDecimal(0.61))
+                .requestedAmount(new BigDecimal(59.32))
+                .surchargeAmount(new BigDecimal(0.03))
                 .cashBackAmount(new BigDecimal(0))
-                .tipAmount(new BigDecimal(2))
+                .tipAmount(new BigDecimal(0))
                 .build();
 
         SaleToPOIResponse response = new SaleToPOIResponse.Builder()
