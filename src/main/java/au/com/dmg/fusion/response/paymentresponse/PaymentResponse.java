@@ -225,9 +225,7 @@ public class PaymentResponse implements ResponseType {
                 BigDecimal authPartialAmt = Optional.ofNullable(amountsResp.getPartialAuthorizedAmount())
                         .orElse(BigDecimal.ZERO);
 
-                if((reqAmt.compareTo(BigDecimal.ZERO) > 0)
-                    && (authPartialAmt.compareTo(BigDecimal.ZERO) > 0)
-                    && (reqAmt.compareTo(authPartialAmt) > 0)){
+                if(reqAmt.compareTo(authPartialAmt) > 0){
                     this.response = new Response.Builder()
                             .result(ResponseResult.Partial)
                             .additionalResponse(this.response.getAdditionalResponse())
