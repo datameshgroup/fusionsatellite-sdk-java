@@ -56,5 +56,20 @@ public enum PaymentBrand {
     @Json(name = "VIC TSS") VICTSS,
     @Json(name = "WA TSS") WATSS,
 
+    @Json(name = "BP Fuel Card") BPFuelCard,
+    @Json(name = "Fleet Card") FleetCard,
+    @Json(name = "Shell Card") ShellCard,
+    @Json(name = "Motorpass") Motorpass,
+    @Json(name = "Motorcharge") Motorcharge,
+    @Json(name = "AmpolCard") AmpolCard,
+    @Json(name = "Freedom Fuel Card") FreedomFuelCard,
+    @Json(name = "Trinity Fuel Card") TrinityFuelCard,
+    @Json(name = "Liberty Card") LibertyCard,
+    @Json(name = "Caltex StarCard") CaltexStarCard,
+    @Json(name = "United Fuel Card") UnitedFuelCard,
+    @Json(name = "CPVV MPTP") CPVVMPTP,
+    @Json(name = "Qantas") Qantas,
+    @Json(name = "DRC") DRC,
+
     Other
 }

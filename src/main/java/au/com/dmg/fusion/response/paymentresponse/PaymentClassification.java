@@ -2,6 +2,7 @@ package au.com.dmg.fusion.response.paymentresponse;
 
 import au.com.dmg.fusion.data.EntryMode;
 import au.com.dmg.fusion.data.PaymentBrand;
+import au.com.dmg.fusion.util.PaymentMapping;
 import com.squareup.moshi.Json;
 
 public class PaymentClassification {
@@ -20,34 +21,11 @@ public class PaymentClassification {
 
 
 
-    static PaymentBrand mapPaymentBrand(String productName) {
-       for (final PaymentBrand value : PaymentBrand.values()) {
-            if (value.toString().equals(productName.replaceAll("\\s", ""))) {
-                return value;
-            }
-        }
-        return PaymentBrand.Other;
+    static PaymentBrand mapPaymentBrand(String productId) {
+        return PaymentMapping.getPaymentBrand(productId);
     }
     static EntryMode mapEntryMode(String method) {
-        switch (method){
-            case "Swipe":
-                return EntryMode.MagStripe;
-            case "Insert":
-                return EntryMode.ICC;
-            case "Tap":
-                return  EntryMode.Tapped;
-            case "Manual Entry":
-                return EntryMode.Manual;
-            //TODO: Confirm this
-            case "MOTO":
-            case "Online":
-                return EntryMode.File;
-            case "Scanned":
-                return EntryMode.Scanned;
-            case "Cash":
-            default:
-                return EntryMode.Unknown;
-        }
+        return PaymentMapping.getMethodEntryMode(method);
     }
 
     public static class Builder {
