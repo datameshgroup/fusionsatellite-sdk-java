@@ -858,9 +858,9 @@ public class SaleToPOIResponseTest {
                                         .cardData(new PaymentResponseCardData.Builder()
                                                 .maskedPAN("464516XXXXXX1111")
                                                 .mapPaymentClassification(new PaymentClassification.Builder()
-                                                        .productId("0204")
-                                                        .productName("ACT TSS")
-                                                        .productLabel("ACT TSS label")
+                                                        .productId("0204") //PaymentBrand.ACTTSS when mapped
+                                                        .productName("Test ProductName")
+                                                        .productLabel("Test Product label")
                                                         .method("Swipe")
                                                         .account("Cheque")
                                                         .countryCode("036")

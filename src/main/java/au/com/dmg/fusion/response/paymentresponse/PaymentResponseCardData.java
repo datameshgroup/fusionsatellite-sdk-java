@@ -113,7 +113,7 @@ public class PaymentResponseCardData {
             }
 
             if(this.paymentBrand==null){
-                this.paymentBrand = PaymentClassification.mapPaymentBrand(paymentClassification.productName);
+                this.paymentBrand = PaymentClassification.mapPaymentBrand(paymentClassification.productId);
             }
 
             this.paymentBrandId = paymentClassification.productId;
