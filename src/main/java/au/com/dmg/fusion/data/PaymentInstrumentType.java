@@ -28,5 +28,6 @@ public enum PaymentInstrumentType {
     Check,
     Cash,
     Mobile,
+    PayOnOtherTerminal,
     Other
 }
