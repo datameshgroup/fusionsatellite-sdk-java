@@ -70,6 +70,7 @@ public enum PaymentBrand {
     @Json(name = "CPVV MPTP") CPVVMPTP,
     @Json(name = "Qantas") Qantas,
     @Json(name = "DRC") DRC,
+    @Json(name = "Pay On Other Terminal") PayOnOtherTerminal,
 
     Other
 }
