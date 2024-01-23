@@ -8,6 +8,7 @@ import au.com.dmg.fusion.data.MessageType;
 import au.com.dmg.fusion.data.ServiceIdentification;
 import au.com.dmg.fusion.request.adminrequest.AdminRequest;
 import au.com.dmg.fusion.request.adminrequest.PrintShiftTotalsRequest;
+import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import org.junit.Test;
@@ -32,6 +33,7 @@ public class AdminRequestTest {
                 .serviceIdentification(ServiceIdentification.PrintLastCustomerReceipt)
                 .build();
         Moshi moshi = new Moshi.Builder()
+                .add(new InstantAdapter())
                 .build();
         JsonAdapter<AdminRequest> jsonAdapter = moshi.adapter(AdminRequest.class);
         String json = jsonAdapter.toJson(adminRequest);
