@@ -66,7 +66,7 @@ public class AdminRequestTest {
     }
 
     @Test
-    public void PrintShiftTotalsRequest(){
+    public void testNullPrintShiftTotalsRequest(){
         AdminRequest adminRequest = new AdminRequest.Builder()
                 .serviceIdentification(ServiceIdentification.PrintShiftTotals)
                 .build();
