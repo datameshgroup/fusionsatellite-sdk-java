@@ -66,6 +66,12 @@ public class PrintShiftTotalsRequest implements Request {
                         + "The properties \"shiftNumber\", \"shiftStartTime\", and \"shiftEndTime\" are required.");
             }
 
+            if (shiftStartTime.compareTo(shiftEndTime) >= 0) {
+                throw new IllegalArgumentException
+                        ("PrintShiftTotalsRequest - \"shiftEndTime\" should not be greater than \"shiftStartTime\".");
+
+            }
+
             return new PrintShiftTotalsRequest(this);
         }
     }
