@@ -6,17 +6,25 @@ import au.com.dmg.fusion.request.Request;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import org.jetbrains.annotations.Nullable;
 
 public class AdminRequest implements Request {
     @Json(name = "ServiceIdentification")
     private final ServiceIdentification serviceIdentification;
+    @Nullable
+    @Json(name = "PrintShiftTotalsRequest")
+    private final PrintShiftTotalsRequest printShiftTotalsRequest;
 
     public ServiceIdentification getServiceIdentification() {
         return serviceIdentification;
     }
+    public PrintShiftTotalsRequest getPrintShiftTotalsRequest() {
+        return printShiftTotalsRequest;
+    }
 
     public static class Builder{
         private ServiceIdentification serviceIdentification;
+        private PrintShiftTotalsRequest printShiftTotalsRequest;
 
         public Builder() {
         }
@@ -25,8 +33,18 @@ public class AdminRequest implements Request {
             this.serviceIdentification = serviceIdentification;
         }
 
+        Builder(ServiceIdentification serviceIdentification, PrintShiftTotalsRequest printShiftTotalsRequest){
+            this.serviceIdentification = serviceIdentification;
+            this.printShiftTotalsRequest = printShiftTotalsRequest;
+        }
+
         public Builder serviceIdentification(ServiceIdentification serviceIdentification){
             this.serviceIdentification = serviceIdentification;
+            return Builder.this;
+        }
+
+        public Builder printShiftTotalsRequest(PrintShiftTotalsRequest printShiftTotalsRequest){
+            this.printShiftTotalsRequest = printShiftTotalsRequest;
             return Builder.this;
         }
 
@@ -42,6 +60,7 @@ public class AdminRequest implements Request {
     }
     private AdminRequest(Builder builder) {
         this.serviceIdentification = builder.serviceIdentification;
+        this.printShiftTotalsRequest = builder.printShiftTotalsRequest;
     }
 
     @Override
