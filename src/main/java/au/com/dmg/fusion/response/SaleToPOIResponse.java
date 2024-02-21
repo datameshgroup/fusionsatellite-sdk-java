@@ -26,6 +26,7 @@ package au.com.dmg.fusion.response;
 import au.com.dmg.fusion.response.adminresponse.AdminResponse;
 import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
 import au.com.dmg.fusion.response.diagnosisresponse.DiagnosisResponse;
+import au.com.dmg.fusion.response.storevalueresponse.StoredValueResponse;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.MessageHeader;
 import au.com.dmg.fusion.SaleToPOI;
@@ -74,6 +75,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private SecurityTrailer securityTrailer;
     @Json(name = "AdminResponse")
     private AdminResponse adminResponse;
+    @Json(name = "StoredValueResponse")
+    private StoredValueResponse storedValueResponse;
 
     @NotNull
     @Override
@@ -153,6 +156,9 @@ public class SaleToPOIResponse implements SaleToPOI {
     public AdminResponse getAdminResponse() { return adminResponse; }
 
     @Nullable
+    public StoredValueResponse getStoredValueResponse() { return storedValueResponse; }
+
+    @Nullable
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -177,6 +183,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private DiagnosisResponse diagnosisResponse;
         private SecurityTrailer securityTrailer;
         private AdminResponse adminResponse;
+        private StoredValueResponse storedValueResponse;
 
         public MessageHeader getMessageHeader() {
             return messageHeader;
@@ -192,6 +199,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         public SecurityTrailer getSecurityTrailer() {
             return securityTrailer;
         }
+        public StoredValueResponse getStoredValueResponse(){ return storedValueResponse; }
 
         public Builder() {
         }
@@ -253,6 +261,8 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.eventNotification = (EventNotification) response;
             } else if (response instanceof AdminResponse){
                 this.adminResponse = (AdminResponse) response;
+            } else if (response instanceof StoredValueResponse){
+                this.storedValueResponse = (StoredValueResponse) response;
             } else {
                 throw new IllegalArgumentException("Error Response not identified.");
             }
@@ -293,6 +303,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         this.diagnosisResponse = builder.diagnosisResponse;
         this.adminResponse = builder.adminResponse;
         this.securityTrailer = builder.securityTrailer;
+        this.storedValueResponse = builder.storedValueResponse;
     }
 
     @Override

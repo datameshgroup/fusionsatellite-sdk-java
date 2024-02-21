@@ -38,6 +38,7 @@ import au.com.dmg.fusion.request.printrequest.PrintRequest;
 import au.com.dmg.fusion.request.reconciliationrequest.ReconciliationRequest;
 import au.com.dmg.fusion.request.reversalrequest.ReversalRequest;
 import au.com.dmg.fusion.request.diagnosisrequest.DiagnosisRequest;
+import au.com.dmg.fusion.request.storedvaluerequest.StoredValueRequest;
 import au.com.dmg.fusion.request.transactionstatusrequest.TransactionStatusRequest;
 import au.com.dmg.fusion.securitytrailer.SecurityTrailer;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
@@ -80,6 +81,8 @@ public class SaleToPOIRequest implements SaleToPOI {
     private GetTotalsRequest getGetTotalsRequest;
     @Json(name = "SecurityTrailer")
     private SecurityTrailer securityTrailer;
+    @Json(name = "StoredValueRequest")
+    private StoredValueRequest storedValueRequest;
 
     @Override
     public MessageHeader getMessageHeader() {
@@ -141,6 +144,10 @@ public class SaleToPOIRequest implements SaleToPOI {
         return securityTrailer;
     }
 
+    public StoredValueRequest getStoredValueRequest(){
+        return storedValueRequest;
+    }
+
     public static class Builder {
 
         private MessageHeader messageHeader;
@@ -159,6 +166,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         private DiagnosisRequest diagnosisRequest;
         private AdminRequest adminRequest;
         private SecurityTrailer securityTrailer;
+        private StoredValueRequest storedValueRequest;
 
         public Builder() {
         }
@@ -197,6 +205,11 @@ public class SaleToPOIRequest implements SaleToPOI {
             return Builder.this;
         }
 
+        public Builder storedValueRequest(StoredValueRequest storedValueRequest){
+            this.storedValueRequest = storedValueRequest;
+            return Builder.this;
+        }
+
         public Builder request(Request request) {
             if (request instanceof PaymentRequest) {
                 this.paymentRequest = (PaymentRequest) request;
@@ -226,7 +239,10 @@ public class SaleToPOIRequest implements SaleToPOI {
                 this.diagnosisRequest = (DiagnosisRequest) request;
             } else if (request instanceof AdminRequest) {
                 this.adminRequest = (AdminRequest) request;
-            } else {
+            } else if (request instanceof StoredValueRequest) {
+                this.storedValueRequest = (StoredValueRequest) request;
+            }
+            else {
                 throw new IllegalArgumentException("Error Request not identified.");
             }
 
@@ -291,6 +307,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         this.diagnosisRequest = builder.diagnosisRequest;
         this.adminRequest = builder.adminRequest;
         this.securityTrailer = builder.securityTrailer;
+        this.storedValueRequest = builder.storedValueRequest;
     }
 
     public String toJson() {
