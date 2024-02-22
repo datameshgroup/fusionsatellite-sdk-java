@@ -24,7 +24,7 @@ public class StoredValueAccountID implements Request {
     @Json(name = "StoredValueID")
     private final String storedValueID;
 
-    public StoredValueAccountType getStoredValueTransactionType() {
+    public StoredValueAccountType getStoredValueAccountType() {
         return storedValueAccountType;
     }
 
