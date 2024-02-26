@@ -1,14 +1,28 @@
 package au.com.dmg.fusion.response.storevalueresponse;
 
 import au.com.dmg.fusion.data.StoredValueInformation;
+import com.squareup.moshi.Json;
 
 
 public class StoredValueResult extends StoredValueInformation {
+    @Json(name = "StoredValueAccountStatus")
+    private final StoredValueAccountStatus storedValueAccountStatus;
 
+    public StoredValueAccountStatus getStoredValueAccountStatus(){ return storedValueAccountStatus; }
 
     public static class Builder extends StoredValueInformation.Builder {
+        private StoredValueAccountStatus storedValueAccountStatus;
+
         public Builder() {
-            super();
+        }
+
+        Builder(StoredValueAccountStatus storedValueAccountStatus){
+            this.storedValueAccountStatus = storedValueAccountStatus;
+        }
+
+        public Builder storedValueAccountStatus(StoredValueAccountStatus storedValueAccountStatus){
+            this.storedValueAccountStatus = storedValueAccountStatus;
+            return Builder.this;
         }
 
         public StoredValueResult build() {
@@ -22,5 +36,6 @@ public class StoredValueResult extends StoredValueInformation {
     }
     protected StoredValueResult(Builder builder) {
         super(builder);
+        this.storedValueAccountStatus = builder.storedValueAccountStatus;
     }
 }

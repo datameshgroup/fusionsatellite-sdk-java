@@ -1,14 +1,11 @@
-package au.com.dmg.fusion.request.storedvaluerequest;
+package au.com.dmg.fusion.response.storevalueresponse;
 
-import au.com.dmg.fusion.request.Request;
-import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.request.storedvaluerequest.StoredValueAccountID;
 import com.squareup.moshi.Json;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 
 import java.math.BigDecimal;
 
-public class StoredValueAccountStatus implements Request {
+public class StoredValueAccountStatus {
     @Json(name = "StoredValueAccountID")
     private final StoredValueAccountID storedValueAccountID;
     @Json(name = "CurrentBalance")
@@ -52,15 +49,5 @@ public class StoredValueAccountStatus implements Request {
         this.storedValueAccountID = builder.storedValueAccountID;
         this.currentBalance = builder.currentBalance;
     }
-
-    @Override
-    public String toJson() {
-        Moshi moshi = new Moshi.Builder()
-                .add(new BigDecimalAdapter())
-                .build();
-        JsonAdapter<StoredValueAccountStatus> jsonAdapter = moshi.adapter(StoredValueAccountStatus.class);
-        return jsonAdapter.toJson(this);
-    }
-
 
 }

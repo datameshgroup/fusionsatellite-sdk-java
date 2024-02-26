@@ -18,16 +18,6 @@ public class StoredValueInformation {
     @Json(name = "Currency")
     private final String currency; //Three character(ISO 4217 formatted) currency code.
 
-//    public StoredValueInformation(StoredValueTransactionType storedValueTransactionType, String productCode, String eanUpc, BigDecimal itemAmount, BigDecimal totalFeesAmount, String currency) {
-//        this.storedValueTransactionType = storedValueTransactionType;
-//        this.productCode = productCode;
-//        this.eanUpc = eanUpc;
-//        this.itemAmount = itemAmount;
-//        this.totalFeesAmount = totalFeesAmount;
-//        this.currency = currency;
-//    }
-
-
     public StoredValueTransactionType getStoredValueTransactionType() {
         return storedValueTransactionType;
     }
@@ -55,7 +45,7 @@ public class StoredValueInformation {
     public static class Builder{
         protected StoredValueTransactionType storedValueTransactionType;
         private String productCode;
-        private String eanUpc;
+        protected String eanUpc;
         private BigDecimal itemAmount;
         private BigDecimal totalFeesAmount;
         private String currency;
@@ -102,13 +92,6 @@ public class StoredValueInformation {
             return Builder.this;
         }
 
-//        protected StoredValueResult buildResult(){
-//            return new StoredValueResult((StoredValueResult.Builder) this);
-//        }
-//
-//        public StoredValueData build(){
-//            return new StoredValueData((StoredValueData.Builder) this);
-//        }
     public StoredValueInformation build() {
         return new StoredValueInformation(this);
     }

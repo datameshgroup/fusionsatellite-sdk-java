@@ -3,6 +3,7 @@ package au.com.dmg.fusion.response.storevalueresponse;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.response.Response;
+import au.com.dmg.fusion.response.ResponseResult;
 import au.com.dmg.fusion.response.ResponseType;
 import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponseSaleData;
@@ -132,6 +133,14 @@ public class StoredValueResponse implements ResponseType {
                         + "Please set the value by \"response()\". "
                         + "The properties \"response\", \"saleData\" and \"poiData\" are required.");
             }
+            else{
+                if (this.response.getResult() == ResponseResult.Success){
+                    if (this.storedValueResult == null || this.storedValueResult.size() != 1) {
+                        throw new NullPointerException("The property \"storedValueResult\" is required if \"response.getResult() == Success\".");
+                    }
+                }
+            }
+
             if (this.saleData == null) {
                 throw new NullPointerException("The property \"saleData\" is null. "
                         + "Please set the value by \"saleData()\". "

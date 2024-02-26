@@ -7,6 +7,7 @@ import com.squareup.moshi.Json;
 public class StoredValueData extends StoredValueInformation {
     @Json(name = "StoredValueProvider")
     private final String storedValueProvider;
+    @Json(name = "StoredValueAccountID")
     private final StoredValueAccountID storedValueAccountID;
     @Json(name = "OriginalPOITransaction")
     private final OriginalPOITransaction originalPOITransaction;
@@ -57,7 +58,12 @@ public class StoredValueData extends StoredValueInformation {
             if (this.storedValueTransactionType == null) {
                 throw new NullPointerException("The property \"storedValueTransactionType\" is null. "
                         + "Please set the value by \"storedValueTransactionType()\". "
-                        + "The property \"storedValueTransactionType\" is required.");
+                        + "The properties \"storedValueTransactionType\" and \"eanUpc\" are required.");
+            }
+            if (this.eanUpc == null) {
+                throw new NullPointerException("The property \"eanUpc\" is null. "
+                        + "Please set the value by \"eanUpc()\". "
+                        + "The properties \"storedValueTransactionType\" and \"eanUpc\" are required.");
             }
             return new StoredValueData(this);
         }

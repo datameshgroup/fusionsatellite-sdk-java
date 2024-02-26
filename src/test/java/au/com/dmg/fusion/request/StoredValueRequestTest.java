@@ -136,7 +136,9 @@ public class StoredValueRequestTest extends TestCase {
                                         .build())
                                 .build());
         System.out.println("StoredValueRequestTest - testInvalidStoredValueData");
-        assertEquals("The property \"storedValueTransactionType\" is null. Please set the value by \"storedValueTransactionType()\". The property \"storedValueTransactionType\" is required.", exception.getMessage());
+        assertEquals("The property \"storedValueTransactionType\" is null. "
+                + "Please set the value by \"storedValueTransactionType()\". "
+                + "The properties \"storedValueTransactionType\" and \"eanUpc\" are required.", exception.getMessage());
     }
 
     public void testValidStoredValueRequest() {
@@ -186,5 +188,38 @@ public class StoredValueRequestTest extends TestCase {
                 + "The properties \"saleData\" and \"storedValueData\" are required.", exceptionStoredValueData.getMessage());
     }
 
+    public void testNullEanUPC() {
+
+        NullPointerException exceptionSaleData =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueRequest.Builder()
+                                .storedValueData((StoredValueData) new StoredValueData.Builder()
+                                        .storedValueProvider("x")
+                                        .storedValueAccountID(storedValueAccountID)
+                                        .originalPOITransaction(originalPOITransaction)
+                                        .storedValueTransactionType(StoredValueTransactionType.Activate)
+                                        .productCode("xxx")
+                                        .itemAmount(new BigDecimal(100))
+                                        .totalFeesAmount(new BigDecimal(101))
+                                        .currency("AUD")
+                                        .build())
+                                .saleData(validSaleData)
+                                .build()
+                        );
+        System.out.println("StoredValueRequestTest - testInvalidStoredValueData");
+        assertEquals("The property \"eanUpc\" is null. "
+                + "Please set the value by \"eanUpc()\". "
+                + "The properties \"storedValueTransactionType\" and \"eanUpc\" are required.", exceptionSaleData.getMessage());
+
+        NullPointerException exceptionStoredValueData =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueRequest.Builder()
+                                .saleData(validSaleData)
+                                .build());
+        System.out.println("StoredValueRequestTest - testInvalidStoredValueData");
+        assertEquals("The property \"storedValueData\" is null. "
+                + "Please set the value by \"storedValueData() or addStoredValueData()\". "
+                + "The properties \"saleData\" and \"storedValueData\" are required.", exceptionStoredValueData.getMessage());
+    }
 
 }

@@ -148,4 +148,94 @@ public class StoredValueResponseTest extends TestCase {
 
 
     }
+
+    public void testFailureNullStoredValueResult(){
+        StoredValueResponse storedValueResponse =
+                new StoredValueResponse.Builder()
+                        .response(failureResponse)
+                        .saleData(validSaleData)
+                        .poiData(validPOIData)
+                        .build();
+
+        SaleToPOIResponse res = new SaleToPOIResponse.Builder()
+                .messageHeader(messageHeader)
+                .response(storedValueResponse)
+                .build();
+
+        String json = new Message(res).toJson();
+
+        System.out.println("StoredValueResponseTest - testFailureNullStoredValueResult");
+        System.out.println(json);
+
+        try {
+            message = Message.fromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert (message.getResponse().getStoredValueResponse().getSaleData().getOperatorID().equals("opID"));
+    }
+
+    public void testSuccessNullStoredValueResult(){
+        NullPointerException exceptionResponse =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .saleData(validSaleData)
+                                .poiData(validPOIData)
+                                .build());
+        System.out.println("StoredValueResponseTest - testSuccessNullStoredValueResult");
+        assertEquals("The property \"storedValueResult\" is required if \"response.getResult() == Success\".", exceptionResponse.getMessage());
+
+        NullPointerException exceptionSaleData =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .poiData(validPOIData)
+                                .storedValueResult(validStoredValueResult)
+                                .build());
+        System.out.println("StoredValueResponseTest - testInvalidStoredValueResponse - saleData");
+        assertEquals("The property \"saleData\" is null. "
+                + "Please set the value by \"saleData()\". "
+                + "The properties \"response\", \"saleData\" and \"poiData\" are required.", exceptionSaleData.getMessage());
+
+        NullPointerException exceptionPOIData =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .saleData(validSaleData)
+                                .storedValueResult(validStoredValueResult)
+                                .build());
+        System.out.println("StoredValueResponseTest - testInvalidStoredValueResponse - poiData");
+        assertEquals("The property \"poiData\" is null. "
+                + "Please set the value by \"poiData()\". "
+                + "The properties \"response\", \"saleData\" and \"poiData\" are required.", exceptionPOIData.getMessage());
+
+
+    }
+    public void testSuccessWithStoredValueResult(){
+        StoredValueResponse storedValueResponse =
+                new StoredValueResponse.Builder()
+                        .response(failureResponse)
+                        .saleData(validSaleData)
+                        .poiData(validPOIData)
+                        .storedValueResult(validStoredValueResult)
+                        .build();
+
+        SaleToPOIResponse res = new SaleToPOIResponse.Builder()
+                .messageHeader(messageHeader)
+                .response(storedValueResponse)
+                .build();
+
+        String json = new Message(res).toJson();
+
+        System.out.println("StoredValueResponseTest - testFailureNullStoredValueResult");
+        System.out.println(json);
+
+        try {
+            message = Message.fromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert (message.getResponse().getStoredValueResponse().getSaleData().getOperatorID().equals("opID"));
+    }
 }

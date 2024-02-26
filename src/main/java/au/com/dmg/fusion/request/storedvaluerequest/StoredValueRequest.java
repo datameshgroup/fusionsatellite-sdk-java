@@ -27,7 +27,6 @@ public class StoredValueRequest implements Request {
         private SaleData saleData;
         private List<StoredValueData> storedValueData;
 
-
         public Builder(){}
 
         Builder(SaleData saleData, List<StoredValueData> storedValueData){
