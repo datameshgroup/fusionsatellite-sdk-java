@@ -23,6 +23,8 @@ public class StoredValueAccountStatus {
         private StoredValueAccountID storedValueAccountID;
         private BigDecimal currentBalance;
 
+        public Builder(){}
+
         public Builder(StoredValueAccountID storedValueAccountID, BigDecimal currentBalance){
             this.storedValueAccountID = storedValueAccountID;
             this.currentBalance = currentBalance;
@@ -39,8 +41,6 @@ public class StoredValueAccountStatus {
         }
 
         public StoredValueAccountStatus build(){
-            //TODO validate
-
             return new StoredValueAccountStatus(this);
         }
     }

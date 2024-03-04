@@ -8,7 +8,9 @@ import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
 import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
+import au.com.dmg.fusion.request.storedvaluerequest.StoredValueAccountID;
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponseSaleData;
+import au.com.dmg.fusion.response.storevalueresponse.StoredValueAccountStatus;
 import au.com.dmg.fusion.response.storevalueresponse.StoredValueResponse;
 import au.com.dmg.fusion.response.storevalueresponse.StoredValueResult;
 import junit.framework.TestCase;
@@ -59,6 +61,18 @@ public class StoredValueResponseTest extends TestCase {
 
     StoredValueResult validStoredValueResult =
             (StoredValueResult) new StoredValueResult.Builder()
+            .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
+                            .storedValueAccountID(new StoredValueAccountID.Builder()
+                            .storedValueAccountType(StoredValueAccountType.GiftCard)
+                            .storedValueProvider("testProvider")
+                            .ownerName("testOwnerName")
+                            .expiryDate("MMYY")
+                            .entryMode(EntryMode.Tapped)
+                            .identificationType(IdentificationType.ISOTrack2)
+                            .storedValueID("testID")
+                            .build())
+                            .currentBalance(BigDecimal.valueOf(0))
+                            .build())
             .storedValueTransactionType(StoredValueTransactionType.Activate)
             .productCode("xxx")
             .eanUpc("XXX")
@@ -77,9 +91,10 @@ public class StoredValueResponseTest extends TestCase {
                                 .totalFeesAmount(new BigDecimal(101))
                                 .currency("AUD")
                                 .build());
-        System.out.println("The property \"storedValueTransactionType\" is null. "
+        System.out.println("StoredValueResponseTest - testInvalidStoredValueResponse - storedValueTransactionType");
+        assertEquals("The property \"storedValueTransactionType\" is null. "
                 + "Please set the value by \"storedValueTransactionType()\". "
-                + "The property \"storedValueTransactionType\" is required.");
+                + "The property \"storedValueTransactionType\" is required.", exception.getMessage());
     }
 
     public void testValidStoredValueResponse(){
@@ -146,6 +161,101 @@ public class StoredValueResponseTest extends TestCase {
                 + "Please set the value by \"poiData()\". "
                 + "The properties \"response\", \"saleData\" and \"poiData\" are required.", exceptionPOIData.getMessage());
 
+        NullPointerException exceptionIdentificationType =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .poiData(validPOIData)
+                                .saleData(validSaleData)
+                                .storedValueResult((StoredValueResult) new StoredValueResult.Builder()
+                                                .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
+                                                        .storedValueAccountID(new StoredValueAccountID.Builder()
+                                                        .storedValueAccountType(StoredValueAccountType.GiftCard)
+                                                        .storedValueProvider("testProvider")
+                                                        .ownerName("testOwnerName")
+                                                        .expiryDate("MMYY")
+                                                        .entryMode(EntryMode.Tapped)
+                                                        .storedValueID("testID")
+                                                        .build())
+                                                        .currentBalance(BigDecimal.valueOf(0))
+                                                        .build())
+                                                .storedValueTransactionType(StoredValueTransactionType.Activate)
+                                                .productCode("xxx")
+                                                .eanUpc("XXX")
+                                                .itemAmount(new BigDecimal(100))
+                                                .totalFeesAmount(new BigDecimal(101))
+                                                .currency("AUD")
+                                                .build()
+                                )
+                                .build());
+        System.out.println("StoredValueResponseTest - testInvalidStoredValueResponse - poiData");
+        assertEquals("The property \"identificationType\" is null. "
+                + "Please set the value by \"identificationType()\" under StoredValueAccountID. "
+                + "The properties \"storedValueAccountType\", \"identificationType\", and \"storedValueID\" are required.", exceptionIdentificationType.getMessage());
+
+        NullPointerException exStoredValueAccountType =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .poiData(validPOIData)
+                                .saleData(validSaleData)
+                                .storedValueResult((StoredValueResult) new StoredValueResult.Builder()
+                                                .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
+                                                        .storedValueAccountID(new StoredValueAccountID.Builder()
+                                                                .storedValueProvider("testProvider")
+                                                                .ownerName("testOwnerName")
+                                                                .expiryDate("MMYY")
+                                                                .entryMode(EntryMode.Tapped)
+                                                                .identificationType(IdentificationType.ISOTrack2)
+                                                                .storedValueID("testID")
+                                                                .build())
+                                                        .currentBalance(BigDecimal.valueOf(0))
+                                                        .build())
+                                                .storedValueTransactionType(StoredValueTransactionType.Activate)
+                                                .productCode("xxx")
+                                                .eanUpc("XXX")
+                                                .itemAmount(new BigDecimal(100))
+                                                .totalFeesAmount(new BigDecimal(101))
+                                                .currency("AUD")
+                                                .build()
+                                )
+                                .build());
+        System.out.println("StoredValueResponseTest - testInvalidStoredValueResponse - storedValueAccountType");
+        assertEquals("The property \"storedValueAccountType\" is null. "
+                + "Please set the value by \"storedValueAccountType()\" under StoredValueAccountID. "
+                + "The properties \"storedValueAccountType\", \"identificationType\", and \"storedValueID\" are required.", exStoredValueAccountType.getMessage());
+
+        NullPointerException exStoredValueID =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .poiData(validPOIData)
+                                .saleData(validSaleData)
+                                .storedValueResult((StoredValueResult) new StoredValueResult.Builder()
+                                        .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
+                                                .storedValueAccountID(new StoredValueAccountID.Builder()
+                                                        .storedValueAccountType(StoredValueAccountType.GiftCard)
+                                                        .storedValueProvider("testProvider")
+                                                        .ownerName("testOwnerName")
+                                                        .expiryDate("MMYY")
+                                                        .entryMode(EntryMode.Tapped)
+                                                        .identificationType(IdentificationType.ISOTrack2)
+                                                        .build())
+                                                .currentBalance(BigDecimal.valueOf(0))
+                                                .build())
+                                        .storedValueTransactionType(StoredValueTransactionType.Activate)
+                                        .productCode("xxx")
+                                        .eanUpc("XXX")
+                                        .itemAmount(new BigDecimal(100))
+                                        .totalFeesAmount(new BigDecimal(101))
+                                        .currency("AUD")
+                                        .build()
+                                )
+                                .build());
+        System.out.println("StoredValueResponseTest - testInvalidStoredValueResponse - poiData");
+        assertEquals("The property \"storedValueID\" is null or empty. "
+                + "Please set the value by \"storedValueID()\" under StoredValueAccountID. "
+                + "The properties \"storedValueAccountType\", \"identificationType\", and \"storedValueID\" are required.", exStoredValueID.getMessage());
 
     }
 
