@@ -61,25 +61,25 @@ public class StoredValueResponseTest extends TestCase {
 
     StoredValueResult validStoredValueResult =
             (StoredValueResult) new StoredValueResult.Builder()
-            .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
+                    .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
                             .storedValueAccountID(new StoredValueAccountID.Builder()
-                            .storedValueAccountType(StoredValueAccountType.GiftCard)
-                            .storedValueProvider("testProvider")
-                            .ownerName("testOwnerName")
-                            .expiryDate("MMYY")
-                            .entryMode(EntryMode.Tapped)
-                            .identificationType(IdentificationType.ISOTrack2)
-                            .storedValueID("testID")
-                            .build())
+                                    .storedValueAccountType(StoredValueAccountType.GiftCard)
+                                    .storedValueProvider("testProvider")
+                                    .ownerName("testOwnerName")
+                                    .expiryDate("MMYY")
+                                    .entryMode(EntryMode.Tapped)
+                                    .identificationType(IdentificationType.ISOTrack2)
+                                    .storedValueID("testID")
+                                    .build())
                             .currentBalance(BigDecimal.valueOf(0))
                             .build())
-            .storedValueTransactionType(StoredValueTransactionType.Activate)
-            .productCode("xxx")
-            .eanUpc("XXX")
-            .itemAmount(new BigDecimal(100))
-            .totalFeesAmount(new BigDecimal(101))
-            .currency("AUD")
-            .build();
+                    .storedValueTransactionType(StoredValueTransactionType.Activate)
+                    .productCode("xxx")
+                    .eanUpc("XXX")
+                    .itemAmount(new BigDecimal(100))
+                    .totalFeesAmount(new BigDecimal(101))
+                    .currency("AUD")
+                    .build();
 
     public void testInvalidStoredValueResult() {
         NullPointerException exception =
@@ -168,24 +168,26 @@ public class StoredValueResponseTest extends TestCase {
                                 .poiData(validPOIData)
                                 .saleData(validSaleData)
                                 .storedValueResult((StoredValueResult) new StoredValueResult.Builder()
-                                                .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
-                                                        .storedValueAccountID(new StoredValueAccountID.Builder()
-                                                        .storedValueAccountType(StoredValueAccountType.GiftCard)
-                                                        .storedValueProvider("testProvider")
-                                                        .ownerName("testOwnerName")
-                                                        .expiryDate("MMYY")
-                                                        .entryMode(EntryMode.Tapped)
-                                                        .storedValueID("testID")
-                                                        .build())
-                                                        .currentBalance(BigDecimal.valueOf(0))
-                                                        .build())
-                                                .storedValueTransactionType(StoredValueTransactionType.Activate)
-                                                .productCode("xxx")
-                                                .eanUpc("XXX")
-                                                .itemAmount(new BigDecimal(100))
-                                                .totalFeesAmount(new BigDecimal(101))
-                                                .currency("AUD")
-                                                .build()
+                                                    .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
+                                                                            .storedValueAccountID(new StoredValueAccountID.Builder()
+                                                                                                    .storedValueAccountType(StoredValueAccountType.GiftCard)
+                                                                                                    .storedValueProvider("testProvider")
+                                                                                                    .ownerName("testOwnerName")
+                                                                                                    .expiryDate("MMYY")
+                                                                                                    .entryMode(EntryMode.Tapped)
+                                                                                                    .storedValueID("testID")
+                                                                                                    .build()
+                                                                            )
+                                                    .currentBalance(BigDecimal.valueOf(0))
+                                                    .build()
+                                                    )
+                                        .storedValueTransactionType(StoredValueTransactionType.Activate)
+                                        .productCode("xxx")
+                                        .eanUpc("XXX")
+                                        .itemAmount(new BigDecimal(100))
+                                        .totalFeesAmount(new BigDecimal(101))
+                                        .currency("AUD")
+                                        .build()
                                 )
                                 .build());
         System.out.println("StoredValueResponseTest - testInvalidStoredValueResponse - poiData");
@@ -295,6 +297,49 @@ public class StoredValueResponseTest extends TestCase {
                                 .build());
         System.out.println("StoredValueResponseTest - testSuccessNullStoredValueResult");
         assertEquals("The property \"storedValueResult\" is required if \"response.getResult() == Success\".", exceptionResponse.getMessage());
+
+        NullPointerException exceptionStoredValueAccountStatus =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .saleData(validSaleData)
+                                .poiData(validPOIData)
+                                .storedValueResult((StoredValueResult) new StoredValueResult.Builder()
+                                                .storedValueTransactionType(StoredValueTransactionType.Activate)
+                                                .productCode("xxx")
+                                                .eanUpc("XXX")
+                                                .itemAmount(new BigDecimal(100))
+                                                .totalFeesAmount(new BigDecimal(101))
+                                                .currency("AUD")
+                                        .build())
+                                .build());
+        System.out.println("StoredValueResponseTest - testNullStoredValueAccountStatus + Successful ");
+        assertEquals("The property \"storedValueAccountStatus\" is null. "
+                + "Please set the value by \"storedValueAccountStatus()\". "
+                + "The property \"storedValueAccountStatus\" is required.", exceptionStoredValueAccountStatus.getMessage());
+
+        NullPointerException exceptionStoredValueAccountID =
+                assertThrows(NullPointerException.class,
+                        ()-> new StoredValueResponse.Builder()
+                                .response(successResponse)
+                                .saleData(validSaleData)
+                                .poiData(validPOIData)
+                                .storedValueResult((StoredValueResult) new StoredValueResult.Builder()
+                                        .storedValueAccountStatus(new StoredValueAccountStatus.Builder()
+                                                .currentBalance(BigDecimal.valueOf(0))
+                                                .build())
+                                        .storedValueTransactionType(StoredValueTransactionType.Activate)
+                                        .productCode("xxx")
+                                        .eanUpc("XXX")
+                                        .itemAmount(new BigDecimal(100))
+                                        .totalFeesAmount(new BigDecimal(101))
+                                        .currency("AUD")
+                                        .build())
+                                .build());
+        System.out.println("StoredValueResponseTest - testNullStoredValueAccountID + Successful ");
+        assertEquals("The property \"storedValueAccountID\" is null. "
+                + "Please set the value by \"storedValueAccountID()\". "
+                + "The property \"storedValueAccountID\" is required.", exceptionStoredValueAccountID.getMessage());
 
         NullPointerException exceptionSaleData =
                 assertThrows(NullPointerException.class,

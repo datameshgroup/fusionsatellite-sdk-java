@@ -31,6 +31,11 @@ public class StoredValueResult extends StoredValueInformation {
                         + "Please set the value by \"storedValueTransactionType()\". "
                         + "The property \"storedValueTransactionType\" is required.");
             }
+            if(this.storedValueAccountStatus == null){
+                throw new NullPointerException("The property \"storedValueAccountStatus\" is null. "
+                        + "Please set the value by \"storedValueAccountStatus()\". "
+                        + "The property \"storedValueAccountStatus\" is required.");
+            }
             return new StoredValueResult(this);
         }
     }

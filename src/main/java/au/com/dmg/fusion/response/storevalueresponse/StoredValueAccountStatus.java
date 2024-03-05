@@ -41,6 +41,11 @@ public class StoredValueAccountStatus {
         }
 
         public StoredValueAccountStatus build(){
+            if(this.storedValueAccountID == null){
+                throw new NullPointerException("The property \"storedValueAccountID\" is null. "
+                        + "Please set the value by \"storedValueAccountID()\". "
+                        + "The property \"storedValueAccountID\" is required.");
+            }
             return new StoredValueAccountStatus(this);
         }
     }
