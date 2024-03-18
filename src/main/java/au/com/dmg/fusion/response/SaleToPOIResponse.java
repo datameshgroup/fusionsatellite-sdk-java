@@ -24,6 +24,7 @@
 package au.com.dmg.fusion.response;
 
 import au.com.dmg.fusion.response.adminresponse.AdminResponse;
+import au.com.dmg.fusion.response.balanceinquiryresponse.BalanceInquiryResponse;
 import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
 import au.com.dmg.fusion.response.diagnosisresponse.DiagnosisResponse;
 import au.com.dmg.fusion.response.storevalueresponse.StoredValueResponse;
@@ -77,6 +78,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private AdminResponse adminResponse;
     @Json(name = "StoredValueResponse")
     private StoredValueResponse storedValueResponse;
+    @Json(name = "BalanceInquiryResponse")
+    private BalanceInquiryResponse balanceInquiryResponse;
 
     @NotNull
     @Override
@@ -159,6 +162,9 @@ public class SaleToPOIResponse implements SaleToPOI {
     public StoredValueResponse getStoredValueResponse() { return storedValueResponse; }
 
     @Nullable
+    public BalanceInquiryResponse getBalanceInquiryResponse() { return balanceInquiryResponse; }
+
+    @Nullable
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -184,6 +190,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private SecurityTrailer securityTrailer;
         private AdminResponse adminResponse;
         private StoredValueResponse storedValueResponse;
+        private BalanceInquiryResponse balanceInquiryResponse;
 
         public MessageHeader getMessageHeader() {
             return messageHeader;
@@ -200,6 +207,7 @@ public class SaleToPOIResponse implements SaleToPOI {
             return securityTrailer;
         }
         public StoredValueResponse getStoredValueResponse(){ return storedValueResponse; }
+        public BalanceInquiryResponse getBalanceInquiryResponse(){ return balanceInquiryResponse; }
 
         public Builder() {
         }
@@ -223,6 +231,12 @@ public class SaleToPOIResponse implements SaleToPOI {
         Builder(MessageHeader messageHeader, AdminResponse adminResponse){
             this.messageHeader = messageHeader;
             this.adminResponse = adminResponse;
+        }
+
+
+        Builder(MessageHeader messageHeader, BalanceInquiryResponse balanceInquiryResponse){
+            this.messageHeader = messageHeader;
+            this.balanceInquiryResponse = balanceInquiryResponse;
         }
 
         public Builder messageHeader(MessageHeader messageHeader) {
@@ -263,6 +277,8 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.adminResponse = (AdminResponse) response;
             } else if (response instanceof StoredValueResponse){
                 this.storedValueResponse = (StoredValueResponse) response;
+            } else if (response instanceof BalanceInquiryResponse){
+                this.balanceInquiryResponse = (BalanceInquiryResponse) response;
             } else {
                 throw new IllegalArgumentException("Error Response not identified.");
             }
@@ -304,6 +320,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         this.adminResponse = builder.adminResponse;
         this.securityTrailer = builder.securityTrailer;
         this.storedValueResponse = builder.storedValueResponse;
+        this.balanceInquiryResponse = builder.balanceInquiryResponse;
     }
 
     @Override

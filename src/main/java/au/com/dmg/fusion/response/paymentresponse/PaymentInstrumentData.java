@@ -24,6 +24,7 @@
 package au.com.dmg.fusion.response.paymentresponse;
 
 import au.com.dmg.fusion.data.PaymentInstrumentType;
+import au.com.dmg.fusion.request.storedvaluerequest.StoredValueAccountID;
 import com.squareup.moshi.Json;
 
 public class PaymentInstrumentData {
@@ -32,6 +33,8 @@ public class PaymentInstrumentData {
     private final PaymentInstrumentType paymentInstrumentType;
     @Json(name = "CardData")
     private final PaymentResponseCardData cardData;
+    @Json(name = "StoredValueAccountID")
+    private final StoredValueAccountID storedValueAccountID;
 
     public PaymentInstrumentType getPaymentInstrumentType() {
         return paymentInstrumentType;
@@ -41,11 +44,13 @@ public class PaymentInstrumentData {
         return cardData;
     }
 
+    public StoredValueAccountID getStoredValueAccountID() { return storedValueAccountID; }
 
     public static class Builder {
 
         private PaymentInstrumentType paymentInstrumentType;
         private PaymentResponseCardData cardData;
+        private StoredValueAccountID storedValueAccountID;
 
         public Builder() {
         }
@@ -53,6 +58,12 @@ public class PaymentInstrumentData {
         Builder(PaymentInstrumentType paymentInstrumentType, PaymentResponseCardData cardData) {
             this.paymentInstrumentType = paymentInstrumentType;
             this.cardData = cardData;
+        }
+
+        Builder(PaymentInstrumentType paymentInstrumentType, PaymentResponseCardData cardData, StoredValueAccountID storedValueAccountID) {
+            this.paymentInstrumentType = paymentInstrumentType;
+            this.cardData = cardData;
+            this.storedValueAccountID = storedValueAccountID;
         }
 
         public Builder paymentInstrumentType(PaymentInstrumentType paymentInstrumentType) {
@@ -65,6 +76,11 @@ public class PaymentInstrumentData {
             return Builder.this;
         }
 
+        public Builder storedValueAccountID(StoredValueAccountID storedValueAccountID) {
+            this.storedValueAccountID = storedValueAccountID;
+            return Builder.this;
+        }
+
         public PaymentInstrumentData build() {
             return new PaymentInstrumentData(this);
         }
@@ -73,6 +89,7 @@ public class PaymentInstrumentData {
     private PaymentInstrumentData(Builder builder) {
         this.paymentInstrumentType = builder.paymentInstrumentType;
         this.cardData = builder.cardData;
+        this.storedValueAccountID = builder.storedValueAccountID;
     }
 }
 
