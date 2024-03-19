@@ -64,11 +64,6 @@ public class PaymentAccountStatus {
                         + "Please set the value by \"currency()\". "
                         + "The property \"currency\" is required.");
             }
-            if(this.paymentInstrumentData.getStoredValueAccountID() == null){
-                throw new NullPointerException("The property \"storedValueAccountID\" is null. "
-                        + "Please set the value by \"storedValueAccountID()\" under paymentInstrumentData. "
-                        + "The property \"storedValueAccountID\" is required.");
-            }
             if(this.paymentInstrumentData != null){
                 if(this.paymentInstrumentData.getCardData().getEntryMode() == null){
                     throw new NullPointerException("The property \"entryMode\" is null. "
@@ -80,7 +75,6 @@ public class PaymentAccountStatus {
                             + "Please set the value by \"paymentBrand()\" under paymentInstrumentData.cardData. "
                             + "The properties \"entryMode\", \"paymentBrand\", \"paymentBrandId\", \"paymentBrandLabel\", and \"maskedPAN\" are required.");
                 }
-
                 if(this.paymentInstrumentData.getCardData().getPaymentBrandId() == null){
                     throw new NullPointerException("The property \"paymentBrandId\" is null. "
                             + "Please set the value by \"paymentBrandId()\" under paymentInstrumentData.cardData. "
@@ -89,6 +83,11 @@ public class PaymentAccountStatus {
                 if(this.paymentInstrumentData.getCardData().getPaymentBrandLabel() == null){
                     throw new NullPointerException("The property \"paymentBrandLabel\" is null. "
                             + "Please set the value by \"paymentBrandLabel()\" under paymentInstrumentData.cardData. "
+                            + "The properties \"entryMode\", \"paymentBrand\", \"paymentBrandId\", \"paymentBrandLabel\", and \"maskedPAN\" are required.");
+                }
+                if(this.paymentInstrumentData.getCardData().getMaskedPAN() == null){
+                    throw new NullPointerException("The property \"getMaskedPAN\" is null. "
+                            + "Please set the value by \"getMaskedPAN()\" under paymentInstrumentData.cardData. "
                             + "The properties \"entryMode\", \"paymentBrand\", \"paymentBrandId\", \"paymentBrandLabel\", and \"maskedPAN\" are required.");
                 }
             }

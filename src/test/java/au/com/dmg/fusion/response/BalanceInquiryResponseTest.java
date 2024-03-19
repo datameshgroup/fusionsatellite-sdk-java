@@ -109,6 +109,7 @@ public class BalanceInquiryResponseTest extends TestCase {
         assert (message.getResponse().getBalanceInquiryResponse().getPaymentAccountStatus().getCurrentBalance().equals(new BigDecimal(100)));
     }
 
+
     public void testBalanceInquiryResponseNulls() {
         NullPointerException exceptionEntryMode =
                 assertThrows(NullPointerException.class,
