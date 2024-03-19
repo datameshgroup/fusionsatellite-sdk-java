@@ -27,6 +27,7 @@ import au.com.dmg.fusion.MessageHeader;
 import au.com.dmg.fusion.SaleToPOI;
 import au.com.dmg.fusion.request.aborttransactionrequest.AbortTransactionRequest;
 import au.com.dmg.fusion.request.adminrequest.AdminRequest;
+import au.com.dmg.fusion.request.balanceinquiryrequest.BalanceInquiryRequest;
 import au.com.dmg.fusion.request.cardacquisitionrequest.CardAcquisitionRequest;
 import au.com.dmg.fusion.request.displayrequest.DisplayRequest;
 import au.com.dmg.fusion.request.gettotalsrequest.GetTotalsRequest;
@@ -83,6 +84,8 @@ public class SaleToPOIRequest implements SaleToPOI {
     private SecurityTrailer securityTrailer;
     @Json(name = "StoredValueRequest")
     private StoredValueRequest storedValueRequest;
+    @Json(name = "BalanceInquiryRequest")
+    private BalanceInquiryRequest balanceInquiryRequest;
 
     @Override
     public MessageHeader getMessageHeader() {
@@ -139,6 +142,8 @@ public class SaleToPOIRequest implements SaleToPOI {
 
     public AdminRequest getAdminRequest(){ return adminRequest; }
 
+    public BalanceInquiryRequest getBalanceInquiryRequest(){ return balanceInquiryRequest; }
+
     @Override
     public SecurityTrailer getSecurityTrailer() {
         return securityTrailer;
@@ -167,6 +172,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         private AdminRequest adminRequest;
         private SecurityTrailer securityTrailer;
         private StoredValueRequest storedValueRequest;
+        private BalanceInquiryRequest balanceInquiryRequest;
 
         public Builder() {
         }
@@ -210,6 +216,11 @@ public class SaleToPOIRequest implements SaleToPOI {
             return Builder.this;
         }
 
+        public Builder balanceInquiryRequest(BalanceInquiryRequest balanceInquiryRequest){
+            this.balanceInquiryRequest = balanceInquiryRequest;
+            return Builder.this;
+        }
+
         public Builder request(Request request) {
             if (request instanceof PaymentRequest) {
                 this.paymentRequest = (PaymentRequest) request;
@@ -241,6 +252,8 @@ public class SaleToPOIRequest implements SaleToPOI {
                 this.adminRequest = (AdminRequest) request;
             } else if (request instanceof StoredValueRequest) {
                 this.storedValueRequest = (StoredValueRequest) request;
+            } else if (request instanceof BalanceInquiryRequest) {
+                this.balanceInquiryRequest = (BalanceInquiryRequest) request;
             }
             else {
                 throw new IllegalArgumentException("Error Request not identified.");
@@ -308,6 +321,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         this.adminRequest = builder.adminRequest;
         this.securityTrailer = builder.securityTrailer;
         this.storedValueRequest = builder.storedValueRequest;
+        this.balanceInquiryRequest = builder.balanceInquiryRequest;
     }
 
     public String toJson() {
