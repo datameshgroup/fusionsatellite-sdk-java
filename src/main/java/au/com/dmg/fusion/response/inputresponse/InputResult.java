@@ -23,7 +23,10 @@
 
 package au.com.dmg.fusion.response.inputresponse;
 
+import au.com.dmg.fusion.data.InputCommand;
+import au.com.dmg.fusion.response.OutputResult;
 import au.com.dmg.fusion.response.Response;
+import au.com.dmg.fusion.response.ResponseResult;
 import com.squareup.moshi.Json;
 
 public class InputResult {
@@ -33,12 +36,8 @@ public class InputResult {
     private final String infoQualify;
     @Json(name = "Response")
     private final Response response;
-
-    public InputResult(String device, String infoQualify, Response response) {
-        this.device = device;
-        this.infoQualify = infoQualify;
-        this.response = response;
-    }
+    @Json(name = "Input")
+    private final Input input;
 
     public String getDevice() {
         return device;
@@ -51,4 +50,85 @@ public class InputResult {
     public Response getResponse() {
         return response;
     }
+
+    public Input getInput() {return input; }
+
+    public static class Builder {
+
+        private String device;
+        private String infoQualify;
+        private Response response;
+        private Input input;
+
+        public Builder() {
+        }
+
+        Builder(String device, String infoQualify, Response response, Input input) {
+            this.device = device;
+            this.infoQualify = infoQualify;
+            this.response = response;
+            this.input = input;
+        }
+
+        public Builder device(String device) {
+            this.device = device;
+            return Builder.this;
+        }
+
+        public Builder infoQualify(String infoQualify) {
+            this.infoQualify = infoQualify;
+            return Builder.this;
+        }
+
+        public Builder response(Response response) {
+            this.response = response;
+            return Builder.this;
+        }
+
+        public Builder input(Input input) {
+            this.input = input;
+            return Builder.this;
+        }
+
+        public InputResult build() {
+            if (this.device == null) {
+                throw new NullPointerException("The property \"device\" is null. "
+                        + "Please set the value by \"device()\". "
+                        + "The property \"device\" is required.");
+            }
+            if (this.infoQualify == null) {
+                throw new NullPointerException("The property \"infoQualify\" is null. "
+                        + "Please set the value by \"infoQualify()\". "
+                        + "The property \"infoQualify\" is required.");
+            }
+            if (this.response == null) {
+                throw new NullPointerException("The property \"response\" is null. "
+                        + "Please set the value by \"response()\". "
+                        + "The property \"response\" is required.");
+            }
+            if ((this.input == null) && (this.response.getResult() != ResponseResult.Failure)) {
+                throw new NullPointerException("The property \"input\" is null. "
+                        + "Please set the value by \"input()\". "
+                        + "The property \"input\" is required when result is not failure.");
+            }
+
+            return new InputResult(this);
+        }
+    }
+
+    private InputResult(Builder builder) {
+        this.device = builder.device;
+        this.infoQualify = builder.infoQualify;
+        this.response = builder.response;
+        this.input = builder.input;
+    }
 }
+
+/*
+package au.com.dmg.fusionsatellite.response.inputresponse
+class InputResult
+@Required String device
+@Required String infoQualify
+@Required Response response
+Input input
+* */

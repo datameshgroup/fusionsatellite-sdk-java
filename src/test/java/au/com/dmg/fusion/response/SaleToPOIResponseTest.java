@@ -23,25 +23,27 @@
 
 package au.com.dmg.fusion.response;
 
-import au.com.dmg.fusion.Message;
+
 import au.com.dmg.fusion.MessageHeader;
 import au.com.dmg.fusion.data.*;
 import au.com.dmg.fusion.request.SaleTerminalData;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
-import au.com.dmg.fusion.request.paymentrequest.PaymentRequestTest;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
 import au.com.dmg.fusion.response.adminresponse.AdminResponse;
+import au.com.dmg.fusion.response.inputresponse.Input;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
 import au.com.dmg.fusion.response.inputresponse.InputResult;
 import au.com.dmg.fusion.response.paymentresponse.*;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class SaleToPOIResponseTest {
     @Test
@@ -268,14 +270,212 @@ public class SaleToPOIResponseTest {
                         .POIID("x")
                         .build())
                 .response(new InputResponse.Builder()
-                        .inputResult(new InputResult("device", "d", new Response.Builder()
+                        .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
                                 .additionalResponse("x")
                                 .result(ResponseResult.Success)
-                                .build()))
+                                .build()).input(new Input.Builder()
+                                .inputCommand(InputCommand.GetConfirmation)
+                                .confirmedFlag(true)
+                                .build()).build())
                         .build())
                 .build();
 
         System.out.println(response.toJson());
+    }
+
+    @Test
+    public void testResponseSuccessMissingInput() {
+        NullPointerException exceptionMissingInput =
+                assertThrows(NullPointerException.class,
+                        () -> new SaleToPOIResponse.Builder()
+                                .messageHeader(new MessageHeader.Builder()
+                                        .protocolVersion("3.1")
+                                        .messageClass(MessageClass.Service)
+                                        .messageCategory(MessageCategory.Login)
+                                        .messageType(MessageType.Request)
+                                        .serviceID("X")
+                                        .saleID("X")
+                                        .POIID("x")
+                                        .build())
+                                .response(new InputResponse.Builder()
+                                        .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
+                                                .additionalResponse("x")
+                                                .result(ResponseResult.Success)
+                                                .build()).build())
+                                        .build())
+                                .build());
+        System.out.println("SaleToPOIResponseTest - testResponseSuccessMissingInput");
+        assertEquals("The property \"input\" is null. "
+                + "Please set the value by \"input()\". "
+                + "The property \"input\" is required when result is not failure.", exceptionMissingInput.getMessage());
+    }
+
+    @Test
+    public void testResponseFaiureMissingInput() {
+        SaleToPOIResponse response =
+                new SaleToPOIResponse.Builder()
+                        .messageHeader(new MessageHeader.Builder()
+                                .protocolVersion("3.1")
+                                .messageClass(MessageClass.Service)
+                                .messageCategory(MessageCategory.Login)
+                                .messageType(MessageType.Request)
+                                .serviceID("X")
+                                .saleID("X")
+                                .POIID("x")
+                                .build())
+                        .response(new InputResponse.Builder()
+                                .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
+                                        .additionalResponse("x")
+                                        .result(ResponseResult.Failure)
+                                        .build()).build())
+                                .build())
+                        .build();
+        System.out.println(response.toJson());
+    }
+
+
+    @Test
+    public void testInvalidInput() {
+        NullPointerException exceptionInvalidInput =
+                assertThrows(NullPointerException.class,
+                        () -> new SaleToPOIResponse.Builder()
+                                .messageHeader(new MessageHeader.Builder()
+                                        .protocolVersion("3.1")
+                                        .messageClass(MessageClass.Service)
+                                        .messageCategory(MessageCategory.Login)
+                                        .messageType(MessageType.Request)
+                                        .serviceID("X")
+                                        .saleID("X")
+                                        .POIID("x")
+                                        .build())
+                                .response(new InputResponse.Builder()
+                                        .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
+                                                .additionalResponse("x")
+                                                .result(ResponseResult.Success)
+                                                .build()).input(new Input.Builder()
+                                                .build()).build())
+                                        .build())
+                                .build());
+        System.out.println("SaleToPOIResponseTest - testInvalidInput - Missing InputCommand");
+        assertEquals("The property \"inputCommand\" is null. "
+                + "Please set the value by \"inputCommand()\". "
+                + "The property \"inputCommand\" is required.", exceptionInvalidInput.getMessage());
+    }
+
+    @Test
+    public void testInvalidGetConfirmationInput() {
+        NullPointerException exceptionInvalidInput =
+                assertThrows(NullPointerException.class,
+                        () -> new SaleToPOIResponse.Builder()
+                                .messageHeader(new MessageHeader.Builder()
+                                        .protocolVersion("3.1")
+                                        .messageClass(MessageClass.Service)
+                                        .messageCategory(MessageCategory.Login)
+                                        .messageType(MessageType.Request)
+                                        .serviceID("X")
+                                        .saleID("X")
+                                        .POIID("x")
+                                        .build())
+                                .response(new InputResponse.Builder()
+                                        .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
+                                                .additionalResponse("x")
+                                                .result(ResponseResult.Success)
+                                                .build()).input(new Input.Builder()
+                                                .inputCommand(InputCommand.GetConfirmation)
+                                                .build()).build())
+                                        .build())
+                                .build());
+        System.out.println("SaleToPOIResponseTest - testInvalidGetConfirmationInput");
+        assertEquals("The property \"confirmedFlag\" is null. "
+                + "Please set the value by \"confirmedFlag()\". "
+                + "The property \"confirmedFlag\" is required for inputCommand=\"GetConfirmation\".", exceptionInvalidInput.getMessage());
+    }
+
+    @Test
+    public void testInvalidTextStringInput() {
+        NullPointerException exceptionInvalidInput =
+                assertThrows(NullPointerException.class,
+                        () -> new SaleToPOIResponse.Builder()
+                                .messageHeader(new MessageHeader.Builder()
+                                        .protocolVersion("3.1")
+                                        .messageClass(MessageClass.Service)
+                                        .messageCategory(MessageCategory.Login)
+                                        .messageType(MessageType.Request)
+                                        .serviceID("X")
+                                        .saleID("X")
+                                        .POIID("x")
+                                        .build())
+                                .response(new InputResponse.Builder()
+                                        .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
+                                                .additionalResponse("x")
+                                                .result(ResponseResult.Success)
+                                                .build()).input(new Input.Builder()
+                                                .inputCommand(InputCommand.TextString)
+                                                .build()).build())
+                                        .build())
+                                .build());
+        System.out.println("SaleToPOIResponseTest - testInvalidTextStringInput");
+        assertEquals("The property \"textInput\" is null. "
+                + "Please set the value by \"textInput()\". "
+                + "The property \"textInput\" is required for inputCommand=\"TextString\".", exceptionInvalidInput.getMessage());
+    }
+
+    @Test
+    public void testInvalidDigitStringInput() {
+        NullPointerException exceptionInvalidInput =
+                assertThrows(NullPointerException.class,
+                        () -> new SaleToPOIResponse.Builder()
+                                .messageHeader(new MessageHeader.Builder()
+                                        .protocolVersion("3.1")
+                                        .messageClass(MessageClass.Service)
+                                        .messageCategory(MessageCategory.Login)
+                                        .messageType(MessageType.Request)
+                                        .serviceID("X")
+                                        .saleID("X")
+                                        .POIID("x")
+                                        .build())
+                                .response(new InputResponse.Builder()
+                                        .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
+                                                .additionalResponse("x")
+                                                .result(ResponseResult.Success)
+                                                .build()).input(new Input.Builder()
+                                                .inputCommand(InputCommand.DigitString)
+                                                .build()).build())
+                                        .build())
+                                .build());
+        System.out.println("SaleToPOIResponseTest - testInvalidDigitStringInput");
+        assertEquals("The property \"digitInput\" is null. "
+                + "Please set the value by \"digitInput()\". "
+                + "The property \"digitInput\" is required for inputCommand=\"DigitString\".", exceptionInvalidInput.getMessage());
+    }
+
+    @Test
+    public void testInvalidGetMenuEntryInput() {
+        NullPointerException exceptionInvalidInput =
+                assertThrows(NullPointerException.class,
+                        () -> new SaleToPOIResponse.Builder()
+                                .messageHeader(new MessageHeader.Builder()
+                                        .protocolVersion("3.1")
+                                        .messageClass(MessageClass.Service)
+                                        .messageCategory(MessageCategory.Login)
+                                        .messageType(MessageType.Request)
+                                        .serviceID("X")
+                                        .saleID("X")
+                                        .POIID("x")
+                                        .build())
+                                .response(new InputResponse.Builder()
+                                        .inputResult(new InputResult.Builder().device("device").infoQualify("d").response(new Response.Builder()
+                                                .additionalResponse("x")
+                                                .result(ResponseResult.Success)
+                                                .build()).input(new Input.Builder()
+                                                .inputCommand(InputCommand.GetMenuEntry)
+                                                .build()).build())
+                                        .build())
+                                .build());
+        System.out.println("SaleToPOIResponseTest - testInvalidGetMenuEntryInput");
+        assertEquals("The property \"menuEntryNumber\" is null. "
+                + "Please set the value by \"menuEntryNumber()\". "
+                + "The property \"menuEntryNumber\" is required for inputCommand=\"GetMenuEntry\".", exceptionInvalidInput.getMessage());
     }
 
     @Test
