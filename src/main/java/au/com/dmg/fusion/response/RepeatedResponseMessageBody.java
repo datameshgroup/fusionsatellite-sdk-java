@@ -23,21 +23,42 @@
 
 package au.com.dmg.fusion.response;
 
+import au.com.dmg.fusion.response.balanceinquiryresponse.BalanceInquiryResponse;
 import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
+import au.com.dmg.fusion.response.storevalueresponse.StoredValueResponse;
 import com.squareup.moshi.Json;
 
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponse;
 
 public class RepeatedResponseMessageBody {
-
 	@Json(name = "PaymentResponse")
 	private final PaymentResponse paymentResponse;
 	@Json(name = "ReversalResponse")
 	private final ReversalResponse reversalResponse;
+	@Json(name = "StoredValueResponse")
+	private final StoredValueResponse storedValueResponse;
+	@Json(name = "BalanceInquiryResponse")
+	private final BalanceInquiryResponse balanceInquiryResponse;
 	
 	public RepeatedResponseMessageBody(PaymentResponse paymentResponse, ReversalResponse reversalResponse) {
 		this.paymentResponse = paymentResponse;
 		this.reversalResponse = reversalResponse;
+		this.storedValueResponse = null;
+		this.balanceInquiryResponse = null;
+	}
+
+	public RepeatedResponseMessageBody(StoredValueResponse storedValueResponse) {
+		this.storedValueResponse = storedValueResponse;
+		this.paymentResponse = null;
+		this.reversalResponse = null;
+		this.balanceInquiryResponse = null;
+	}
+
+	public RepeatedResponseMessageBody(BalanceInquiryResponse balanceInquiryResponse) {
+		this.balanceInquiryResponse = balanceInquiryResponse;
+		this.paymentResponse = null;
+		this.reversalResponse = null;
+		this.storedValueResponse = null;
 	}
 
 	public PaymentResponse getPaymentResponse() {
@@ -47,5 +68,8 @@ public class RepeatedResponseMessageBody {
 	public ReversalResponse getReversalResponse() {
 		return reversalResponse;
 	}
-	
+
+	public StoredValueResponse getStoredValueResponse() {return storedValueResponse; }
+
+	public BalanceInquiryResponse getBalanceInquiryResponse() {return balanceInquiryResponse; }
 }
