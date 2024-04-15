@@ -72,7 +72,7 @@ public class PaymentRequestTest {
                                 .build()
                         )
                         .transactionConditions(new TransactionConditions.Builder()
-                                .allowedPaymentBrands(new LinkedList<PaymentBrand>())
+                                .allowedPaymentBrand(new LinkedList<String>())
                                 .build()
                         )
                         .addSaleItem(
