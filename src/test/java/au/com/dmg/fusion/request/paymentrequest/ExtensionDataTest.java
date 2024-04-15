@@ -23,7 +23,6 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
-import au.com.dmg.fusion.data.CustomFieldType;
 import au.com.dmg.fusion.data.PaymentBrand;
 import au.com.dmg.fusion.data.PaymentType;
 import au.com.dmg.fusion.data.UnitOfMeasure;
@@ -42,7 +41,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -107,7 +105,7 @@ public class ExtensionDataTest {
                                 .build()
                         )
                         .transactionConditions(new TransactionConditions.Builder()
-                                .allowedPaymentBrands(new LinkedList<PaymentBrand>())
+                                .allowedPaymentBrand(new LinkedList<String>())
                                 .build()
                         )
                         .addSaleItem(
@@ -202,7 +200,7 @@ public class ExtensionDataTest {
                                             .build()
                                     )
                                     .transactionConditions(new TransactionConditions.Builder()
-                                            .allowedPaymentBrands(new LinkedList<PaymentBrand>())
+                                            .allowedPaymentBrand(new LinkedList<String>())
                                             .build()
                                     )
                                     .addSaleItem(
