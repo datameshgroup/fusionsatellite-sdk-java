@@ -3,6 +3,7 @@ package au.com.dmg.fusion.response.balanceinquiryresponse;
 import au.com.dmg.fusion.response.paymentresponse.PaymentAcquirerData;
 import au.com.dmg.fusion.response.paymentresponse.PaymentInstrumentData;
 import com.squareup.moshi.Json;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 
@@ -17,8 +18,13 @@ public class PaymentAccountStatus {
     private final PaymentAcquirerData paymentAcquirerData;
 
     public PaymentInstrumentData getPaymentInstrumentData() { return  paymentInstrumentData; }
+
+    @Nullable
     public String getCurrency(){ return currency; }
+
+    @Nullable
     public BigDecimal getCurrentBalance() { return currentBalance; }
+
     public PaymentAcquirerData getPaymentAcquirerData() { return paymentAcquirerData; }
 
     public static class Builder {
@@ -54,16 +60,6 @@ public class PaymentAccountStatus {
             return Builder.this;
         }
         public PaymentAccountStatus build() {
-            if(this.currentBalance==null){
-                throw new NullPointerException("The property \"currentBalance\" is null. "
-                        + "Please set the value by \"currentBalance()\". "
-                        + "The property \"currentBalance\" is required.");
-            }
-            if(this.currency==null || this.currency.isEmpty()){
-                throw new NullPointerException("The property \"currency\" is null or empty. "
-                        + "Please set the value by \"currency()\". "
-                        + "The property \"currency\" is required.");
-            }
             if(this.paymentInstrumentData != null){
                 if(this.paymentInstrumentData.getCardData().getEntryMode() == null){
                     throw new NullPointerException("The property \"entryMode\" is null. "

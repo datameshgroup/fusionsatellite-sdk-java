@@ -269,46 +269,5 @@ public class BalanceInquiryResponseTest extends TestCase {
         assertEquals("The property \"storedValueAccountType\" is null. "
                 + "Please set the value by \"storedValueAccountType()\" under StoredValueAccountID. "
                 + "The properties \"storedValueAccountType\", \"identificationType\", and \"storedValueID\" are required.", exceptionStoredValueAccountType.getMessage());
-
-        NullPointerException exceptionCurrency =
-                assertThrows(NullPointerException.class,
-                        () -> new BalanceInquiryResponse.Builder()
-                                .response(successResponse)
-                                .paymentAccountStatus(new PaymentAccountStatus.Builder()
-                                        .paymentInstrumentData(new PaymentInstrumentData.Builder()
-                                                .paymentInstrumentType(PaymentInstrumentType.Card)
-                                                .cardData(validCardData)
-                                                .storedValueAccountID(validStoredValueAccountID)
-                                                .build())
-                                        .currentBalance(new BigDecimal(100))
-                                        .paymentAcquirerData(validPaymentAcquirerData)
-                                        .build())
-                                .paymentReceipt(validPaymentReceipt)
-                                .build());
-        System.out.println("BalanceInquiryResponseTest - testBalanceInquiryResponseNulls - exceptionCurrency");
-        assertEquals("The property \"currency\" is null or empty. "
-                + "Please set the value by \"currency()\". "
-                + "The property \"currency\" is required.", exceptionCurrency.getMessage());
-
-        NullPointerException exceptionCurrentBalance =
-                assertThrows(NullPointerException.class,
-                        () -> new BalanceInquiryResponse.Builder()
-                                .response(successResponse)
-                                .paymentAccountStatus(new PaymentAccountStatus.Builder()
-                                        .paymentInstrumentData(new PaymentInstrumentData.Builder()
-                                                .paymentInstrumentType(PaymentInstrumentType.Card)
-                                                .cardData(validCardData)
-                                                .storedValueAccountID(validStoredValueAccountID)
-                                                .build())
-                                        .currency("AUD")
-                                        .paymentAcquirerData(validPaymentAcquirerData)
-                                        .build())
-                                .paymentReceipt(validPaymentReceipt)
-                                .build());
-        System.out.println("BalanceInquiryResponseTest - testBalanceInquiryResponseNulls - currentBalance");
-        assertEquals("The property \"currentBalance\" is null. "
-                + "Please set the value by \"currentBalance()\". "
-                + "The property \"currentBalance\" is required.", exceptionCurrentBalance.getMessage());
-
     }
 }
