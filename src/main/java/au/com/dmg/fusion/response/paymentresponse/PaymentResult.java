@@ -27,6 +27,8 @@ import au.com.dmg.fusion.data.PaymentType;
 import com.squareup.moshi.Json;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
+
 public class PaymentResult {
 
     @Json(name = "PaymentType")
@@ -41,6 +43,10 @@ public class PaymentResult {
     private final PaymentAcquirerData paymentAcquirerData;
     @Json(name = "SplitPaymentFlag")
     private final Boolean splitPaymentFlag;
+    @Json(name = "Currency")
+    private final String currency;
+    @Json(name = "CurrentBalance")
+    private final BigDecimal currentBalance;
 
     @Nullable
     public PaymentType getPaymentType() {
@@ -70,6 +76,12 @@ public class PaymentResult {
     @Nullable
     public Boolean getSplitPaymentFlag(){ return splitPaymentFlag; }
 
+    @Nullable
+    public String getCurrency(){ return currency; }
+
+    @Nullable
+    public BigDecimal getCurrentBalance() { return currentBalance; }
+
     public static class Builder {
 
         private PaymentType paymentType;
@@ -78,6 +90,8 @@ public class PaymentResult {
         private Boolean onlineFlag;
         private PaymentAcquirerData paymentAcquirerData;
         private Boolean splitPaymentFlag = false;
+        private String currency = null;
+        private BigDecimal currentBalance = null;
 
         public Builder() {
         }
@@ -97,6 +111,27 @@ public class PaymentResult {
             this.onlineFlag = onlineFlag;
             this.paymentAcquirerData = paymentAcquirerData;
             this.splitPaymentFlag = splitPaymentFlag;
+        }
+
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, String currency, BigDecimal currentBalance) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.amountsResp = amountsResp;
+            this.onlineFlag = onlineFlag;
+            this.paymentAcquirerData = paymentAcquirerData;
+            this.currency = currency;
+            this.currentBalance = currentBalance;
+        }
+
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, Boolean splitPaymentFlag, String currency, BigDecimal currentBalance) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.amountsResp = amountsResp;
+            this.onlineFlag = onlineFlag;
+            this.paymentAcquirerData = paymentAcquirerData;
+            this.splitPaymentFlag = splitPaymentFlag;
+            this.currency = currency;
+            this.currentBalance = currentBalance;
         }
 
         public Builder paymentType(PaymentType paymentType) {
@@ -129,6 +164,16 @@ public class PaymentResult {
             return Builder.this;
         }
 
+        public Builder currency(String currency){
+            this.currency = currency;
+            return Builder.this;
+        }
+
+        public Builder currentBalance(BigDecimal currentBalance){
+            this.currentBalance = currentBalance;
+            return Builder.this;
+        }
+
         public PaymentResult build() {
             if (this.onlineFlag == null) {
                 throw new NullPointerException("The property \"onlineFlag\" is null. "
@@ -147,6 +192,8 @@ public class PaymentResult {
         this.onlineFlag = builder.onlineFlag;
         this.paymentAcquirerData = builder.paymentAcquirerData;
         this.splitPaymentFlag = builder.splitPaymentFlag;
+        this.currency = builder.currency;
+        this.currentBalance = builder.currentBalance;
     }
 }
 
@@ -159,4 +206,6 @@ PaymentInstrumentData paymentInstrumentData
 AmountsResp amountsResp
 @Required Boolean onlineFlag
 PaymentAcquirerData paymentAcquirerData
+String currency
+BigDecimal currentBalance
 * */
