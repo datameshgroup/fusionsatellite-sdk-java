@@ -35,6 +35,8 @@ public class POISystemData {
     private final POITerminalData poiTerminalData;
     @Json(name = "POIStatus")
     private final POIStatus poiStatus;
+    @Json(name = "POISoftware")
+    private final POISoftware poiSoftware;
 
     public String getDateTime() {
         return dateTime;
@@ -52,12 +54,15 @@ public class POISystemData {
         return poiStatus;
     }
 
+    public POISoftware getPoiSoftware() { return poiSoftware; }
+
     public static class Builder {
 
         private String dateTime;
         private Boolean tokenRequestStatus;
         private POITerminalData poiTerminalData;
         private POIStatus poiStatus;
+        private POISoftware poiSoftware;
 
         public Builder() {
         }
@@ -67,6 +72,14 @@ public class POISystemData {
             this.tokenRequestStatus = tokenRequestStatus;
             this.poiTerminalData = poiTerminalData;
             this.poiStatus = poiStatus;
+        }
+
+        Builder(String dateTime, Boolean tokenRequestStatus, POITerminalData poiTerminalData, POIStatus poiStatus, POISoftware poiSoftware) {
+            this.dateTime = dateTime;
+            this.tokenRequestStatus = tokenRequestStatus;
+            this.poiTerminalData = poiTerminalData;
+            this.poiStatus = poiStatus;
+            this.poiSoftware = poiSoftware;
         }
 
         public Builder dateTime(String dateTime) {
@@ -86,6 +99,11 @@ public class POISystemData {
 
         public Builder poiStatus(POIStatus poiStatus) {
             this.poiStatus = poiStatus;
+            return Builder.this;
+        }
+
+        public Builder poiSoftware(POISoftware poiSoftware){
+            this.poiSoftware = poiSoftware;
             return Builder.this;
         }
 
@@ -120,6 +138,7 @@ public class POISystemData {
         this.tokenRequestStatus = builder.tokenRequestStatus;
         this.poiTerminalData = builder.poiTerminalData;
         this.poiStatus = builder.poiStatus;
+        this.poiSoftware = builder.poiSoftware;
     }
 }
 
@@ -131,5 +150,5 @@ class POISystemData
 @Required Boolean tokenRequestStatus
 @Required POITerminalData poiTerminalData
 @Required POIStatus poiStatus
-
+POISoftware poiSoftware
 * */
