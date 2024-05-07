@@ -24,6 +24,10 @@
 package au.com.dmg.fusion.response;
 
 import com.squareup.moshi.Json;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class POISystemData {
 
@@ -35,8 +39,9 @@ public class POISystemData {
     private final POITerminalData poiTerminalData;
     @Json(name = "POIStatus")
     private final POIStatus poiStatus;
+    @Nullable
     @Json(name = "POISoftware")
-    private final POISoftware poiSoftware;
+    private final List<POISoftware> poiSoftware;
 
     public String getDateTime() {
         return dateTime;
@@ -54,7 +59,8 @@ public class POISystemData {
         return poiStatus;
     }
 
-    public POISoftware getPoiSoftware() { return poiSoftware; }
+    @Nullable
+    public List<POISoftware> getPoiSoftware() { return poiSoftware; }
 
     public static class Builder {
 
@@ -62,7 +68,7 @@ public class POISystemData {
         private Boolean tokenRequestStatus;
         private POITerminalData poiTerminalData;
         private POIStatus poiStatus;
-        private POISoftware poiSoftware;
+        private List<POISoftware> poiSoftware;
 
         public Builder() {
         }
@@ -74,7 +80,7 @@ public class POISystemData {
             this.poiStatus = poiStatus;
         }
 
-        Builder(String dateTime, Boolean tokenRequestStatus, POITerminalData poiTerminalData, POIStatus poiStatus, POISoftware poiSoftware) {
+        Builder(String dateTime, Boolean tokenRequestStatus, POITerminalData poiTerminalData, POIStatus poiStatus, List<POISoftware> poiSoftware) {
             this.dateTime = dateTime;
             this.tokenRequestStatus = tokenRequestStatus;
             this.poiTerminalData = poiTerminalData;
@@ -102,8 +108,19 @@ public class POISystemData {
             return Builder.this;
         }
 
-        public Builder poiSoftware(POISoftware poiSoftware){
+        public Builder poiSoftware(List<POISoftware> poiSoftware){
             this.poiSoftware = poiSoftware;
+            return Builder.this;
+        }
+
+        public Builder addPOISoftware(POISoftware poiSoftware){
+            if(this.poiSoftware == null){
+                this.poiSoftware = new LinkedList<>();
+            }
+
+            if(poiSoftware != null){
+                this.poiSoftware.add(poiSoftware);
+            }
             return Builder.this;
         }
 
@@ -150,5 +167,5 @@ class POISystemData
 @Required Boolean tokenRequestStatus
 @Required POITerminalData poiTerminalData
 @Required POIStatus poiStatus
-POISoftware poiSoftware
+List<POISoftware> poiSoftware
 * */
