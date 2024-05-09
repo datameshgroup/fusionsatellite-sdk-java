@@ -33,7 +33,7 @@ import java.time.format.DateTimeFormatter;
 
 public class InstantAdapter extends JsonAdapter<Instant> {
     private DateTimeFormatter formatter = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd'T'hh:mm:ssxxx")
+            .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
             .withZone(ZoneId.systemDefault());
 
     @Override
