@@ -1250,5 +1250,56 @@ public class SaleToPOIResponseTest {
             throw new AssertionError();
 
     }
+
+    @Test
+    public void testPaymentPOITransactionID() {
+        List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
+        receipts.add(new PaymentReceipt.Builder()
+                .integratedPrintFlag(false)
+                .documentQualifier("Title")
+                .requiredSignatureFlag(true)
+                .build());
+
+        SaleToPOIResponse response = new SaleToPOIResponse.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .protocolVersion("3.1")
+                        .messageClass(MessageClass.Service)
+                        .messageCategory(MessageCategory.Login)
+                        .messageType(MessageType.Request)
+                        .serviceID("X")
+                        .saleID("X")
+                        .POIID("x")
+                        .build())
+                .response(new PaymentResponse.Builder()
+                        .response(new Response.Builder().result(ResponseResult.Success).build())
+                        .saleData(
+                                new PaymentResponseSaleData.Builder()
+                                        .operatorID("opID")
+                                        .operatorLanguage("en")
+                                        .shiftNumber("shift1")
+                                        .saleReferenceID("salesref1")
+                                        .saleTerminalData(new SaleTerminalData.Builder()
+                                                .deviceID("deviceId1")
+                                                .build())
+                                        .saleTransactionID(new SaleTransactionID.Builder()
+                                                .transactionID("x")
+                                                .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                .build()
+                                        ).build()
+                        )
+                        .POIData(
+                                new POIData.Builder()
+                                        .POITransactionID(new POITransactionID("id", Instant.parse("2024-05-08T04:52:21.125Z")))
+                                        .POIReconciliationID("x")
+                                        .build()
+                        )
+                        .paymentReceipt(receipts)
+                        .build())
+                .build();
+
+        String jsonString = response.toJson();
+        System.out.println(jsonString);
+        assert(jsonString.contains("\"POITransactionID\":{\"TimeStamp\":\"2024-05-08T14:52:21.125+10:00\""));
+    }
 }
 
