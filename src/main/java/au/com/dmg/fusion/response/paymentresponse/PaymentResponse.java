@@ -215,26 +215,6 @@ public class PaymentResponse implements ResponseType {
                         + "The properties \"response\", \"saleData\" and \"poiData\" are required.");
             }
 
-            if (this.response.getResult() == ResponseResult.Success
-            && !(this.paymentResult == null)
-            && !(this.paymentResult.getAmountsResp() == null)) {
-
-                AmountsResp amountsResp = this.paymentResult.getAmountsResp();
-                BigDecimal reqAmt = Optional.ofNullable(amountsResp.getRequestedAmount())
-                        .orElse(BigDecimal.ZERO);
-                BigDecimal authPartialAmt = Optional.ofNullable(amountsResp.getPartialAuthorizedAmount())
-                        .orElse(BigDecimal.ZERO);
-
-                if((reqAmt.compareTo(BigDecimal.ZERO) > 0)
-                    && (reqAmt.compareTo(authPartialAmt) > 0)){
-                    this.response = new Response.Builder()
-                            .result(ResponseResult.Partial)
-                            .additionalResponse(this.response.getAdditionalResponse())
-                            .errorCondition(this.response.getErrorCondition())
-                            .build();
-                }
-            }
-
             return new PaymentResponse(this);
         }
     }
