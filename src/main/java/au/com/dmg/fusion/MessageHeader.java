@@ -50,6 +50,10 @@ public class MessageHeader {
     @Json(name = "POIID")
     private final String POIID;
 
+    // Additional field to check library version. Satellite will check this for backwards compatibility
+    @Json(name = "LibVersion")
+    private final Integer libVersion;
+
 
     public MessageClass getMessageClass() {
         return messageClass;
@@ -79,6 +83,8 @@ public class MessageHeader {
         return POIID;
     }
 
+    public Integer getLibVersion(){ return libVersion; }
+
     public static class Builder {
 
         private MessageClass messageClass;
@@ -89,6 +95,7 @@ public class MessageHeader {
         private String saleID;
         private String POIID;
         private String deviceID;
+        private Integer libVersion;
 
         public Builder() {
         }
@@ -98,6 +105,7 @@ public class MessageHeader {
             this.messageCategory = messageCategory;
             this.messageType = messageType;
             this.serviceID = serviceID;
+            this.libVersion = 2;
         }
 
         Builder(String protocolVersion, MessageClass messageClass, MessageCategory messageCategory, MessageType messageType, String serviceID, String saleID, String POIID, String deviceID) {
@@ -109,6 +117,7 @@ public class MessageHeader {
             this.saleID = saleID;
             this.POIID = POIID;
             this.deviceID = deviceID;
+            this.libVersion = 2;
         }
 
         public Builder messageClass(MessageClass messageClass) {
@@ -188,6 +197,7 @@ public class MessageHeader {
         this.saleID = builder.saleID;
         this.POIID = builder.POIID;
         this.deviceID = builder.deviceID;
+        this.libVersion = 2;
     }
 }
 

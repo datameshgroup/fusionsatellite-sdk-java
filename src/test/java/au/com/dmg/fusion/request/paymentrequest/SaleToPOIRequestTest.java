@@ -334,4 +334,96 @@ public class SaleToPOIRequestTest extends TestCase {
         System.out.println(kek);
         assert(kek.length() == 48);
     }
+
+    @Test
+    public void testLibVersion(){
+        PaymentRequest paymentRequest = new PaymentRequest.Builder()
+                .saleData(new SaleData.Builder()
+                        .saleReferenceID("saleref")
+                        .operatorID("operatorID")
+                        .operatorLanguage("en")
+                        .shiftNumber("shiftno")
+                        .tokenRequestedType("todo")
+                        .saleTransactionID(new SaleTransactionID.Builder("x", Instant.ofEpochMilli(System.currentTimeMillis())).build())
+                        .build()
+                )
+                .paymentTransaction(new PaymentTransaction.Builder()
+                        .amountsReq(new AmountsReq.Builder()
+                                .currency("AUD")
+                                .requestedAmount(new BigDecimal("5.0"))
+                                .build()
+                        )
+                        .originalPOITransaction(new OriginalPOITransaction.Builder()
+                                .saleID("saleID")
+                                .POIID("POIID")
+                                .POITransactionID(
+                                        new POITransactionID("id", Instant.ofEpochMilli(System.currentTimeMillis()))
+                                )
+                                .build()
+                        )
+                        .transactionConditions(new TransactionConditions.Builder()
+                                .allowedPaymentBrand(new LinkedList<String>())
+                                .build()
+                        )
+                        .addSaleItem(
+                                new SaleItem.Builder()
+                                        .itemID(1)
+                                        .productCode("X")
+                                        .eanUpc("xxx")
+                                        .unitOfMeasure(UnitOfMeasure.Centilitre)
+                                        .quantity(new BigDecimal("1.0"))
+                                        .unitPrice(new BigDecimal(1.0))
+                                        .itemAmount(new BigDecimal("1.0"))
+                                        .productLabel("xx")
+                                        .addCustomField(new CustomField.Builder()
+                                                .key("testSaleItemCustomFieldBuild")
+                                                .type(CustomFieldType.String)
+                                                .value("1")
+                                                .build())
+                                        .build()
+                        )
+                        .build()
+                )
+                .extensionData(new ExtensionData.Builder().transitData(
+                                new TransitData.Builder()
+                                        .isWheelchairEnabled(false)
+                                        .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
+                                        .trip(new Trip.Builder()
+                                                .totalDistanceTravelled(new BigDecimal(222.22))
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(0)
+                                                        .stopName("test0")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .addStop(new Stop.Builder()
+                                                        .stopIndex(1)
+                                                        .stopName("test1")
+                                                        .latitude(new BigDecimal(3432423))
+                                                        .longitude(new BigDecimal(-3432423))
+                                                        .timestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
+                                                        .build())
+                                                .build())
+                                        .tags(Arrays.asList("TransitDataTag1", "TransitDataTag2"))
+                                        .build())
+                        .build())
+                .paymentData(new PaymentData.Builder().paymentType(PaymentType.Normal).build())
+                .build();
+
+        SaleToPOIRequest request = new SaleToPOIRequest.Builder()
+                .messageHeader(new MessageHeader.Builder()
+                        .messageCategory(MessageCategory.Display)
+                        .messageClass(MessageClass.Device)
+                        .messageType(MessageType.Notification)
+                        .serviceID("ServiceID")
+                        .build())
+                .request(paymentRequest)
+                .build();
+
+        String json = new Message(request).toJson();
+        System.out.println(json);
+        assert (json != null && json != "");
+        assert(request.getMessageHeader().getLibVersion() == 2);
+    }
 }
