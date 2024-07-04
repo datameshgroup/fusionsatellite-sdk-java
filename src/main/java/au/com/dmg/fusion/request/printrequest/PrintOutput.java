@@ -23,55 +23,109 @@
 
 package au.com.dmg.fusion.request.printrequest;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.squareup.moshi.Json;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Safelist;
+
+import java.nio.charset.StandardCharsets;
+
+import au.com.dmg.fusion.data.ResponseMode;
+import au.com.dmg.fusion.util.Base64;
 
 public class PrintOutput {
 
+    @Json(name = "DocumentQualifier")
     private final String documentQualifier;
+
+    @Json(name = "ResponseMode")
+    private final ResponseMode responseMode;
+
+    @Json(name = "IntegratedPrintFlag")
     private final Boolean integratedPrintFlag;
+
+    @Json(name = "RequiredSignatureFlag")
     private final Boolean requiredSignatureFlag;
-    private final List<OutputContent> outputContent;
+
+    @Json(name = "OutputContent")
+    private final OutputContent outputContent;
+
+    @NotNull
+    public String getDocumentQualifier() {
+        return documentQualifier;
+    }
+
+    @Nullable
+    public ResponseMode getResponseMode() {
+        return responseMode;
+    }
+
+    @Nullable
+    public Boolean getIntegratedPrintFlag() {
+        return integratedPrintFlag;
+    }
+
+    @NotNull
+    public Boolean getRequiredSignatureFlag() {
+        return requiredSignatureFlag;
+    }
+
+    @Nullable
+    public OutputContent getOutputContent() {
+        return outputContent;
+    }
 
     public static class Builder {
 
         private String documentQualifier;
+        private ResponseMode responseMode;
         private Boolean integratedPrintFlag;
         private Boolean requiredSignatureFlag;
-        private List<OutputContent> outputContent = new ArrayList<>();
+        private OutputContent outputContent;
 
         public Builder() {
         }
 
-        Builder(String documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, List<OutputContent> outputContent) {
+        Builder(String documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent) {
             this.documentQualifier = documentQualifier;
             this.integratedPrintFlag = integratedPrintFlag;
             this.requiredSignatureFlag = requiredSignatureFlag;
             this.outputContent = outputContent;
         }
 
-        public Builder documentQualifier(String documentQualifier) {
+        Builder(String documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent, ResponseMode responseMode) {
+            this.documentQualifier = documentQualifier;
+            this.integratedPrintFlag = integratedPrintFlag;
+            this.requiredSignatureFlag = requiredSignatureFlag;
+            this.outputContent = outputContent;
+            this.responseMode = responseMode;
+        }
+
+        public Builder documentQualifier(String documentQualifier){
             this.documentQualifier = documentQualifier;
             return Builder.this;
         }
 
-        public Builder integratedPrintFlag(Boolean integratedPrintFlag) {
+        public Builder responseMode(ResponseMode responseMode){
+            this.responseMode = responseMode;
+            return Builder.this;
+        }
+
+        public Builder integratedPrintFlag(Boolean integratedPrintFlag){
             this.integratedPrintFlag = integratedPrintFlag;
             return Builder.this;
         }
 
-        public Builder requiredSignatureFlag(Boolean requiredSignatureFlag) {
+        public Builder requiredSignatureFlag(Boolean requiredSignatureFlag){
             this.requiredSignatureFlag = requiredSignatureFlag;
             return Builder.this;
         }
 
-        public Builder outputContent(List<OutputContent> outputContent) {
+        public Builder outputContent(OutputContent outputContent){
             this.outputContent = outputContent;
-            return Builder.this;
-        }
-
-        public Builder addOutputContent(OutputContent outputContent) {
-            this.outputContent.add(outputContent);
             return Builder.this;
         }
 
@@ -91,11 +145,36 @@ public class PrintOutput {
         }
     }
 
+    private String base64Decode(String input){
+        byte[] decoded = Base64.decode(input);
+        return new String(decoded, StandardCharsets.UTF_8);
+    }
+
+    public String getReceiptContentAsString(){
+        if(this.outputContent == null || this.outputContent.getOutputXHTML() == null){
+            return null;
+        }
+        String content = base64Decode(this.outputContent.getOutputXHTML());
+
+        Document.OutputSettings outputSettings = new Document.OutputSettings();
+        outputSettings.prettyPrint(false);
+
+        return Jsoup.clean(content, "", Safelist.none(), outputSettings).trim();
+    }
+
+    public String getReceiptContentAsHtml(){
+        if(this.outputContent == null || this.outputContent.getOutputXHTML() == null){
+            return null;
+        }
+        return base64Decode(this.outputContent.getOutputXHTML());
+    }
+
     private PrintOutput(Builder builder) {
         this.documentQualifier = builder.documentQualifier;
         this.integratedPrintFlag = builder.integratedPrintFlag;
         this.requiredSignatureFlag = builder.requiredSignatureFlag;
         this.outputContent = builder.outputContent;
+        this.responseMode = builder.responseMode;
     }
 }
 
@@ -104,7 +183,8 @@ public class PrintOutput {
 package au.com.dmg.fusionsatellite.PaymentRequest
 class PrintOutput
 @Required String documentQualifier
+ResponseMode responseMode
 Boolean integratedPrintFlag
 @Required Boolean requiredSignatureFlag
-List<OutputContent> outputContent
+OutputContent outputContent
  */
