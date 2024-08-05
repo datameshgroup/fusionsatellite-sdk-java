@@ -6,6 +6,7 @@ import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class TransitData {
     private final Trip trip;
     @Json(name = "Tags")
     private final List<String> tags;
+    @Json(name = "ODBS")
+    private final String odbs;
 
     @NotNull
     public Boolean getIsWheelchairEnabled() { return isWheelchairEnabled; }
@@ -30,10 +33,14 @@ public class TransitData {
         return tags;
     }
 
+    @Nullable
+    public String getODBS(){ return odbs; }
+
     public static class Builder {
         Boolean isWheelchairEnabled;
         Trip trip;
         List<String> tags = new ArrayList<>();
+        String odbs;
 
         public Builder() {
         }
@@ -42,6 +49,13 @@ public class TransitData {
             this.isWheelchairEnabled = isWheelchairEnabled;
             this.trip = trip;
             this.tags = tags;
+        }
+
+        Builder(Boolean isWheelchairEnabled, Trip trip, List<String> tags, String odbs){
+            this.isWheelchairEnabled = isWheelchairEnabled;
+            this.trip = trip;
+            this.tags = tags;
+            this.odbs = odbs;
         }
 
         public Builder isWheelchairEnabled(Boolean isWheelchairEnabled){
@@ -70,6 +84,11 @@ public class TransitData {
             return Builder.this;
         }
 
+        public Builder odbs(String odbs){
+            this.odbs = odbs;
+            return Builder.this;
+        }
+
         public TransitData build(){
             if(this.isWheelchairEnabled==null){
                 throw new NullPointerException("The property \"isWheelchairEnabled\" is null. "
@@ -90,6 +109,7 @@ public class TransitData {
         this.isWheelchairEnabled = builder.isWheelchairEnabled;
         this.trip = builder.trip;
         this.tags = builder.tags;
+        this.odbs = builder.odbs;
     }
 
     public String toJsonString() {
