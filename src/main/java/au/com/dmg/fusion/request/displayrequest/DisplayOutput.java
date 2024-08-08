@@ -33,8 +33,8 @@ public class DisplayOutput {
 	private final Boolean responseRequiredFlag;
 	@Json(name = "Device")
 	private final String device;
-	@Json(name = "InfoQuality") // Request from server reads 'InfoQuality' instead of 'InfoQualify', probably a typo
-	private final InfoQualify infoQuality;
+	@Json(name = "InfoQualify")
+	private final InfoQualify infoQualify;
 	@Json(name = "OutputContent")
 	private final OutputContent outputContent;
 
@@ -47,16 +47,16 @@ public class DisplayOutput {
 
 		private Boolean responseRequiredFlag;
 		private String device;
-		private InfoQualify infoQuality;
+		private InfoQualify infoQualify;
 		private OutputContent outputContent;
 
 		public Builder() {
 		}
 
-		Builder(Boolean responseRequiredFlag, String device, InfoQualify infoQuality, OutputContent outputContent) {
+		Builder(Boolean responseRequiredFlag, String device, InfoQualify infoQualify, OutputContent outputContent) {
 			this.responseRequiredFlag = responseRequiredFlag;
 			this.device = device;
-			this.infoQuality = infoQuality;
+			this.infoQualify = infoQualify;
 			this.outputContent = outputContent;
 		}
 
@@ -70,8 +70,8 @@ public class DisplayOutput {
 			return Builder.this;
 		}
 
-		public Builder infoQuality(InfoQualify infoQuality) {
-			this.infoQuality = infoQuality;
+		public Builder infoQualify(InfoQualify infoQualify) {
+			this.infoQualify = infoQualify;
 			return Builder.this;
 		}
 
@@ -84,22 +84,22 @@ public class DisplayOutput {
 			if (this.responseRequiredFlag == null) {
 				throw new NullPointerException("The property \"responseRequiredFlag\" is null. "
 						+ "Please set the value by \"responseRequiredFlag()\". "
-						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQuality\" and \"outputContent\" are required.");
+						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQualify\" and \"outputContent\" are required.");
 			}
 			if (this.device == null) {
 				throw new NullPointerException("The property \"device\" is null. "
 						+ "Please set the value by \"device()\". "
-						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQuality\" and \"outputContent\" are required.");
+						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQualify\" and \"outputContent\" are required.");
 			}
-			if (this.infoQuality == null) {
-				throw new NullPointerException("The property \"infoQuality\" is null. "
-						+ "Please set the value by \"infoQuality()\". "
-						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQuality\" and \"outputContent\" are required.");
+			if (this.infoQualify == null) {
+				throw new NullPointerException("The property \"infoQualify\" is null. "
+						+ "Please set the value by \"infoQualify()\". "
+						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQualify\" and \"outputContent\" are required.");
 			}
 			if (this.outputContent == null) {
 				throw new NullPointerException("The property \"outputContent\" is null. "
 						+ "Please set the value by \"outputContent()\". "
-						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQuality\" and \"outputContent\" are required.");
+						+ "The properties \"responseRequiredFlag\", \"device\", \"infoQualify\" and \"outputContent\" are required.");
 			}
 
 			return new DisplayOutput(this);
@@ -109,7 +109,7 @@ public class DisplayOutput {
 	private DisplayOutput(Builder builder) {
 		this.responseRequiredFlag = builder.responseRequiredFlag;
 		this.device = builder.device;
-		this.infoQuality = builder.infoQuality;
+		this.infoQualify = builder.infoQualify;
 		this.outputContent = builder.outputContent;
 	}
 }
@@ -119,6 +119,6 @@ package au.com.dmg.fusionsatellite.request.loginrequest
 class DisplayOutput
 @Required Boolean responseRequiredFlag
 @Required String device
-@Required InfoQualify infoQuality
+@Required InfoQualify infoQualify
 @Required OutputContent outputFormat
 * */

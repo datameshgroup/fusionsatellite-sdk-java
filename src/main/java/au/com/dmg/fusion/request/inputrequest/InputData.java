@@ -31,8 +31,8 @@ public class InputData {
 
     @Json(name = "Device")
     private final String device;
-    @Json(name = "InfoQuality")
-    private final InfoQualify infoQuality;
+    @Json(name = "InfoQualify")
+    private final InfoQualify infoQualify;
     @Json(name = "InputCommand")
     private final InputCommand inputCommand;
     @Json(name = "MaxInputTime")
@@ -47,7 +47,7 @@ public class InputData {
     public static class Builder {
 
         private String device;
-        private InfoQualify infoQuality;
+        private InfoQualify infoQualify;
         private InputCommand inputCommand;
         private Integer maxInputTime;
         private Integer minLength;
@@ -57,9 +57,9 @@ public class InputData {
         public Builder() {
         }
 
-        Builder(String device, InfoQualify infoQuality, InputCommand inputCommand, Integer maxInputTime, Integer minLength, Integer maxLength, Boolean maskCharactersFlag) {
+        Builder(String device, InfoQualify infoQualify, InputCommand inputCommand, Integer maxInputTime, Integer minLength, Integer maxLength, Boolean maskCharactersFlag) {
             this.device = device;
-            this.infoQuality = infoQuality;
+            this.infoQualify = infoQualify;
             this.inputCommand = inputCommand;
             this.maxInputTime = maxInputTime;
             this.minLength = minLength;
@@ -72,8 +72,8 @@ public class InputData {
             return Builder.this;
         }
 
-        public Builder infoQuality(InfoQualify infoQuality) {
-            this.infoQuality = infoQuality;
+        public Builder infoQualify(InfoQualify infoQualify) {
+            this.infoQualify = infoQualify;
             return Builder.this;
         }
 
@@ -106,17 +106,17 @@ public class InputData {
             if (this.device == null) {
                 throw new NullPointerException("The property \"device\" is null. "
                         + "Please set the value by \"device()\". "
-                        + "The properties \"device\", \"infoQuality\" and \"inputCommand\" are required.");
+                        + "The properties \"device\", \"infoQualify\" and \"inputCommand\" are required.");
             }
-            if (this.infoQuality == null) {
-                throw new NullPointerException("The property \"infoQuality\" is null. "
-                        + "Please set the value by \"infoQuality()\". "
-                        + "The properties \"device\", \"infoQuality\" and \"inputCommand\" are required.");
+            if (this.infoQualify == null) {
+                throw new NullPointerException("The property \"infoQualify\" is null. "
+                        + "Please set the value by \"infoQualify()\". "
+                        + "The properties \"device\", \"infoQualify\" and \"inputCommand\" are required.");
             }
             if (this.inputCommand == null) {
                 throw new NullPointerException("The property \"inputCommand\" is null. "
                         + "Please set the value by \"inputCommand()\". "
-                        + "The properties \"device\", \"infoQuality\" and \"inputCommand\" are required.");
+                        + "The properties \"device\", \"infoQualify\" and \"inputCommand\" are required.");
             }
 
             return new InputData(this);
@@ -125,7 +125,7 @@ public class InputData {
 
     private InputData(Builder builder) {
         this.device = builder.device;
-        this.infoQuality = builder.infoQuality;
+        this.infoQualify = builder.infoQualify;
         this.inputCommand = builder.inputCommand;
         this.maxInputTime = builder.maxInputTime;
         this.minLength = builder.minLength;
@@ -139,7 +139,7 @@ public class InputData {
 package au.com.dmg.fusionsatellite.request.inputrequest
 class InputData
 @Required String device
-@Required InfoQualify infoQuality
+@Required InfoQualify infoQualify
 @Required InputCommand inputCommand
 Integer maxInputTime
 Integer minLength
