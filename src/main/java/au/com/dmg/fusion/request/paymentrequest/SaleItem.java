@@ -257,6 +257,36 @@ public class SaleItem {
             this.customFields = customFields;
         }
 
+        Builder(Integer itemID, String productCode, String eanUpc, UnitOfMeasure unitOfMeasure, BigDecimal quantity, BigDecimal unitPrice, BigDecimal itemAmount, String taxCode, String saleChannel, String productLabel, String additionalProductInfo, Integer parentItemID, BigDecimal costBase, BigDecimal discount, List<String> categories, String brand, BigDecimal quantityInStock, List<String> tags, Boolean restricted, String pageUrl, List<String> imageUrls, String style, String size, String colour, BigDecimal weight, int weightUnitOfMeasure, List<CustomField> customFields) {
+            this.itemID = itemID;
+            this.productCode = productCode;
+            this.eanUpc = eanUpc;
+            this.unitOfMeasure = unitOfMeasure;
+            this.quantity = quantity;
+            this.unitPrice = unitPrice;
+            this.itemAmount = itemAmount;
+            this.taxCode = taxCode;
+            this.saleChannel = saleChannel;
+            this.productLabel = productLabel;
+            this.additionalProductInfo = additionalProductInfo;
+            this.parentItemID = parentItemID;
+            this.costBase = costBase;
+            this.discount = discount;
+            this.categories = categories;
+            this.brand = brand;
+            this.quantityInStock = quantityInStock;
+            this.tags = tags;
+            this.restricted = restricted;
+            this.pageUrl = pageUrl;
+            this.imageUrls = imageUrls;
+            this.style = style;
+            this.size = size;
+            this.colour = colour;
+            this.weight = weight;
+            this.weightUnitOfMeasure = String.valueOf(weightUnitOfMeasure);
+            this.customFields = customFields;
+        }
+
         public Builder itemID(Integer itemID) {
             this.itemID = itemID;
             return Builder.this;
@@ -377,6 +407,11 @@ public class SaleItem {
 
         public Builder weightUnitOfMeasure(String weightUnitOfMeasure) {
             this.weightUnitOfMeasure = weightUnitOfMeasure;
+            return Builder.this;
+        }
+
+        public Builder weightUnitOfMeasure(int weightUnitOfMeasure) {
+            this.weightUnitOfMeasure = String.valueOf(weightUnitOfMeasure);
             return Builder.this;
         }
 
