@@ -86,6 +86,7 @@ public class PaymentRequestTest {
                                         .unitPrice(new BigDecimal(1.0))
                                         .itemAmount(new BigDecimal("1.0"))
                                         .productLabel("xx")
+                                        .weightUnitOfMeasure(100)
                                         .build()
                         )
                         .build()
@@ -130,5 +131,6 @@ public class PaymentRequestTest {
             e.printStackTrace();
         }
         assert (serializedRequest.getSaleData().getOperatorID().equals("operatorID"));
+        assert (serializedRequest.getPaymentTransaction().getSaleItems().get(0).getWeightUnitOfMeasure().equals("100"));
     }
 }
