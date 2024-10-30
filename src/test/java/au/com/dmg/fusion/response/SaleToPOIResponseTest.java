@@ -897,6 +897,7 @@ public class SaleToPOIResponseTest {
                                         .build())
                                 .amountsResp(amountsResp)
                                 .onlineFlag(true)
+                                .rrn("12345")
                                 .build())
                         .paymentReceipt(receipts)
                         .build())
@@ -907,6 +908,7 @@ public class SaleToPOIResponseTest {
         assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getPaymentBrand().equals(PaymentBrand.ACTTSS));
         assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getEntryMode().equals(EntryMode.MagStripe));
         assert (response.getPaymentResponse().getPaymentResult().getPaymentInstrumentData().getCardData().getAccount().equals("Cheque"));
+        assert (response.getPaymentResponse().getPaymentResult().getRrn().equals("12345"));
     }
 
     @Test

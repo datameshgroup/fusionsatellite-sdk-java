@@ -47,6 +47,8 @@ public class PaymentResult {
     private final String currency;
     @Json(name = "CurrentBalance")
     private final BigDecimal currentBalance;
+    @Json(name = "RRN")
+    private final String rrn;
 
     @Nullable
     public PaymentType getPaymentType() {
@@ -82,6 +84,9 @@ public class PaymentResult {
     @Nullable
     public BigDecimal getCurrentBalance() { return currentBalance; }
 
+    @Nullable
+    public String getRrn() { return rrn; }
+
     public static class Builder {
 
         private PaymentType paymentType;
@@ -92,6 +97,7 @@ public class PaymentResult {
         private Boolean splitPaymentFlag = false;
         private String currency = null;
         private BigDecimal currentBalance = null;
+        private String rrn = null;
 
         public Builder() {
         }
@@ -104,6 +110,15 @@ public class PaymentResult {
             this.paymentAcquirerData = paymentAcquirerData;
         }
 
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, String rrn) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.amountsResp = amountsResp;
+            this.onlineFlag = onlineFlag;
+            this.paymentAcquirerData = paymentAcquirerData;
+            this.rrn = rrn;
+        }
+
         Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, Boolean splitPaymentFlag) {
             this.paymentType = paymentType;
             this.paymentInstrumentData = paymentInstrumentData;
@@ -111,6 +126,16 @@ public class PaymentResult {
             this.onlineFlag = onlineFlag;
             this.paymentAcquirerData = paymentAcquirerData;
             this.splitPaymentFlag = splitPaymentFlag;
+        }
+
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, Boolean splitPaymentFlag, String rrn) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.amountsResp = amountsResp;
+            this.onlineFlag = onlineFlag;
+            this.paymentAcquirerData = paymentAcquirerData;
+            this.splitPaymentFlag = splitPaymentFlag;
+            this.rrn = rrn;
         }
 
         Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, String currency, BigDecimal currentBalance) {
@@ -123,6 +148,17 @@ public class PaymentResult {
             this.currentBalance = currentBalance;
         }
 
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, String currency, BigDecimal currentBalance, String rrn) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.amountsResp = amountsResp;
+            this.onlineFlag = onlineFlag;
+            this.paymentAcquirerData = paymentAcquirerData;
+            this.currency = currency;
+            this.currentBalance = currentBalance;
+            this.rrn = rrn;
+        }
+
         Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, Boolean splitPaymentFlag, String currency, BigDecimal currentBalance) {
             this.paymentType = paymentType;
             this.paymentInstrumentData = paymentInstrumentData;
@@ -132,6 +168,18 @@ public class PaymentResult {
             this.splitPaymentFlag = splitPaymentFlag;
             this.currency = currency;
             this.currentBalance = currentBalance;
+        }
+
+        Builder(PaymentType paymentType, PaymentInstrumentData paymentInstrumentData, AmountsResp amountsResp, Boolean onlineFlag, PaymentAcquirerData paymentAcquirerData, Boolean splitPaymentFlag, String currency, BigDecimal currentBalance, String rrn) {
+            this.paymentType = paymentType;
+            this.paymentInstrumentData = paymentInstrumentData;
+            this.amountsResp = amountsResp;
+            this.onlineFlag = onlineFlag;
+            this.paymentAcquirerData = paymentAcquirerData;
+            this.splitPaymentFlag = splitPaymentFlag;
+            this.currency = currency;
+            this.currentBalance = currentBalance;
+            this.rrn = rrn;
         }
 
         public Builder paymentType(PaymentType paymentType) {
@@ -174,6 +222,11 @@ public class PaymentResult {
             return Builder.this;
         }
 
+        public Builder rrn(String rrn){
+            this.rrn = rrn;
+            return Builder.this;
+        }
+
         public PaymentResult build() {
             if (this.onlineFlag == null) {
                 throw new NullPointerException("The property \"onlineFlag\" is null. "
@@ -194,6 +247,7 @@ public class PaymentResult {
         this.splitPaymentFlag = builder.splitPaymentFlag;
         this.currency = builder.currency;
         this.currentBalance = builder.currentBalance;
+        this.rrn = builder.rrn;
     }
 }
 
@@ -208,4 +262,5 @@ AmountsResp amountsResp
 PaymentAcquirerData paymentAcquirerData
 String currency
 BigDecimal currentBalance
+String rrn
 * */
