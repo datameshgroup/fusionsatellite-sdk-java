@@ -24,4 +24,5 @@
 package au.com.dmg.fusion.response;
 
 public interface ResponseType {
+    String toJson();
 }

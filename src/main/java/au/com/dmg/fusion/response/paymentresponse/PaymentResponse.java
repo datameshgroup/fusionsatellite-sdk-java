@@ -29,7 +29,14 @@ import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseResult;
 import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.TransactionStatusResponse;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -228,6 +235,16 @@ public class PaymentResponse implements ResponseType {
         this.paymentReceipt = builder.paymentReceipt;
         this.loyaltyResult = builder.loyaltyResult;
         this.extensionData = builder.extensionData;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<PaymentResponse> jsonAdapter = moshi.adapter(PaymentResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }
 

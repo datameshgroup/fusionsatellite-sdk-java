@@ -2,7 +2,14 @@ package au.com.dmg.fusion.response.adminresponse;
 
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.TransactionStatusResponse;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.NotNull;
 
 public class AdminResponse implements ResponseType {
@@ -41,4 +48,15 @@ public class AdminResponse implements ResponseType {
             return new AdminResponse(this);
         }
     }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<AdminResponse> jsonAdapter = moshi.adapter(AdminResponse.class);
+        return jsonAdapter.toJson(this);
+    }
+
 }

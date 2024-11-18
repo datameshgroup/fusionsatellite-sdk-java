@@ -26,7 +26,13 @@ package au.com.dmg.fusion.response;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.SaleData;
 import au.com.dmg.fusion.response.paymentresponse.PaymentInstrumentData;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -124,6 +130,16 @@ public class CardAcquisitionResponse implements ResponseType {
         this.saleData = builder.saleData;
         this.poiData = builder.poiData;
         this.paymentInstrumentData = builder.paymentInstrumentData;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<CardAcquisitionResponse> jsonAdapter = moshi.adapter(CardAcquisitionResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }
 

@@ -2,8 +2,14 @@ package au.com.dmg.fusion.response.balanceinquiryresponse;
 
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.TransactionStatusResponse;
 import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -118,5 +124,15 @@ public class BalanceInquiryResponse implements ResponseType {
         this.paymentAccountStatus = builder.paymentAccountStatus;
         this.loyaltyAccountStatus = builder.loyaltyAccountStatus;
         this.paymentReceipt = builder.paymentReceipt;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<BalanceInquiryResponse> jsonAdapter = moshi.adapter(BalanceInquiryResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }

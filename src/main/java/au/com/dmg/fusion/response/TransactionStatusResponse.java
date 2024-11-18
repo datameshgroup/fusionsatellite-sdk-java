@@ -24,7 +24,12 @@
 package au.com.dmg.fusion.response;
 
 import au.com.dmg.fusion.request.transactionstatusrequest.MessageReference;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 public class TransactionStatusResponse implements ResponseType {
     @Json(name = "Response")
@@ -91,6 +96,16 @@ public class TransactionStatusResponse implements ResponseType {
         this.response = builder.response;
         this.messageReference = builder.messageReference;
         this.repeatedMessageResponse = builder.repeatedMessageResponse;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<TransactionStatusResponse> jsonAdapter = moshi.adapter(TransactionStatusResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }
 
