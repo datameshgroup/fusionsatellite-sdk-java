@@ -24,8 +24,13 @@
 package au.com.dmg.fusion.response;
 
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.util.List;
+
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
 
 public class DisplayResponse implements ResponseType {
     @Json(name = "OutputResult")
@@ -37,5 +42,15 @@ public class DisplayResponse implements ResponseType {
 
     public List<OutputResult> getOutputResultList() {
         return outputResultList;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<DisplayResponse> jsonAdapter = moshi.adapter(DisplayResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }

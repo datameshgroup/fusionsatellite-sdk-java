@@ -24,8 +24,13 @@
 package au.com.dmg.fusion.response;
 
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.time.Instant;
+
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
 
 public class EventNotification implements ResponseType {
     @Json(name = "TimeStamp")
@@ -51,5 +56,15 @@ public class EventNotification implements ResponseType {
 
     public String getEventDetails() {
         return eventDetails;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<EventNotification> jsonAdapter = moshi.adapter(EventNotification.class);
+        return jsonAdapter.toJson(this);
     }
 }

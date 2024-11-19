@@ -28,6 +28,11 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
 
 public class ReconciliationResponse implements ResponseType {
 
@@ -64,6 +69,16 @@ public class ReconciliationResponse implements ResponseType {
 
 	public List<TransactionTotal> getTransactionTotals() {
 		return transactionTotals;
+	}
+
+	@Override
+	public String toJson() {
+		Moshi moshi = new Moshi.Builder()
+				.add(new BigDecimalAdapter())
+				.add(new InstantAdapter())
+				.build();
+		JsonAdapter<ReconciliationResponse> jsonAdapter = moshi.adapter(ReconciliationResponse.class);
+		return jsonAdapter.toJson(this);
 	}
 
 }

@@ -24,7 +24,13 @@
 package au.com.dmg.fusion.response;
 
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.NotNull;
+
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
 
 public class PrintResponse implements ResponseType {
     @Json(name = "DocumentQualifier")
@@ -37,5 +43,15 @@ public class PrintResponse implements ResponseType {
     @NotNull
     public DocumentQualifier getDocumentQualifier() {
         return documentQualifier;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<PrintResponse> jsonAdapter = moshi.adapter(PrintResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }

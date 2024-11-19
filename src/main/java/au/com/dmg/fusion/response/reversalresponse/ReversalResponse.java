@@ -27,8 +27,15 @@ import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.reversalrequest.ReversalRequest;
 import au.com.dmg.fusion.response.Response;
 import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.TransactionStatusResponse;
 import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -120,6 +127,16 @@ public class ReversalResponse implements ResponseType {
         this.response = builder.response;
         this.poiData = builder.poiData;
         this.paymentReceipt = builder.paymentReceipt;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<ReversalResponse> jsonAdapter = moshi.adapter(ReversalResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }
 

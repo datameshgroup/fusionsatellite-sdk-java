@@ -25,7 +25,13 @@ package au.com.dmg.fusion.response.inputresponse;
 
 import au.com.dmg.fusion.response.OutputResult;
 import au.com.dmg.fusion.response.ResponseType;
+import au.com.dmg.fusion.response.TransactionStatusResponse;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 public class InputResponse implements ResponseType {
 
@@ -79,6 +85,16 @@ public class InputResponse implements ResponseType {
     private InputResponse(Builder builder) {
         this.outputResult = builder.outputResult;
         this.inputResult = builder.inputResult;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<InputResponse> jsonAdapter = moshi.adapter(InputResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }
 

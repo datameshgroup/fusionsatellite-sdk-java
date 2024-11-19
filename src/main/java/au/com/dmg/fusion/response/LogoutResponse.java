@@ -24,7 +24,15 @@
 package au.com.dmg.fusion.response;
 
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.NotNull;
+
+import au.com.dmg.fusion.request.SaleToPOIRequest;
+import au.com.dmg.fusion.request.paymentrequest.PaymentRequest;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
 
 public class LogoutResponse implements ResponseType {
     @Json(name = "Response")
@@ -37,5 +45,15 @@ public class LogoutResponse implements ResponseType {
     @NotNull
     public Response getResponse() {
         return response;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<LogoutResponse> jsonAdapter = moshi.adapter(LogoutResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }

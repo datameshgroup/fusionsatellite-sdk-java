@@ -7,7 +7,14 @@ import au.com.dmg.fusion.response.ResponseResult;
 import au.com.dmg.fusion.response.ResponseType;
 import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
 import au.com.dmg.fusion.response.paymentresponse.PaymentResponseSaleData;
+import au.com.dmg.fusion.response.reversalresponse.ReversalResponse;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
+import au.com.dmg.fusion.util.InstantAdapter;
+
 import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -162,5 +169,15 @@ public class StoredValueResponse implements ResponseType {
         this.poiData = builder.poiData;
         this.storedValueResult = builder.storedValueResult;
         this.paymentReceipt = builder.paymentReceipt;
+    }
+
+    @Override
+    public String toJson() {
+        Moshi moshi = new Moshi.Builder()
+                .add(new BigDecimalAdapter())
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<StoredValueResponse> jsonAdapter = moshi.adapter(StoredValueResponse.class);
+        return jsonAdapter.toJson(this);
     }
 }
