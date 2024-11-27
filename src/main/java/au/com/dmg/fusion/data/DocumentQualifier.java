@@ -21,21 +21,16 @@
  *
  */
 
-package au.com.dmg.fusion.response;
+package au.com.dmg.fusion.data;
 
-import com.squareup.moshi.Json;
-import org.jetbrains.annotations.NotNull;
+import au.com.dmg.fusion.response.Response;
 
-public class DocumentQualifier {
-    @Json(name = "Response")
-    private final Response response;
-
-    public DocumentQualifier(Response response) {
-        this.response = response;
-    }
-
-    @NotNull
-    public Response getResponse() {
-        return response;
-    }
+public enum DocumentQualifier {
+    Unknown,
+    SaleReceipt,
+    CashierReceipt,
+    CustomerReceipt,
+    Document,
+    Voucher,
+    Journal
 }

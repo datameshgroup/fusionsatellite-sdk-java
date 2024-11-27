@@ -78,7 +78,7 @@ public class BalanceInquiryResponseTest extends TestCase {
     OutputContent validOutputContent = new OutputContent("xxx", "xxx");
 
     PaymentReceipt validPaymentReceipt = new PaymentReceipt.Builder()
-            .documentQualifier("Title")
+            .documentQualifier(DocumentQualifier.CashierReceipt)
             .requiredSignatureFlag(true)
             .outputContent(validOutputContent)
             .build();

@@ -23,6 +23,7 @@
 
 package au.com.dmg.fusion.response.paymentresponse;
 
+import au.com.dmg.fusion.data.DocumentQualifier;
 import au.com.dmg.fusion.request.printrequest.OutputContent;
 import au.com.dmg.fusion.util.Base64;
 import com.squareup.moshi.Json;
@@ -35,10 +36,11 @@ import org.jsoup.safety.Safelist;
 import java.nio.charset.StandardCharsets;
 
 
+
 public class PaymentReceipt {
 
     @Json(name = "DocumentQualifier")
-    private String documentQualifier;
+    private DocumentQualifier documentQualifier;
     @Json(name = "IntegratedPrintFlag")
     private Boolean integratedPrintFlag;
     @Json(name = "RequiredSignatureFlag")
@@ -47,7 +49,7 @@ public class PaymentReceipt {
     private OutputContent outputContent;
 
     @NotNull
-    public String getDocumentQualifier() {
+    public DocumentQualifier getDocumentQualifier() {
         return documentQualifier;
     }
 
@@ -68,7 +70,7 @@ public class PaymentReceipt {
 
     public static class Builder {
 
-        private String documentQualifier;
+        private DocumentQualifier documentQualifier;
         private Boolean integratedPrintFlag;
         private Boolean requiredSignatureFlag;
         private OutputContent outputContent;
@@ -76,14 +78,14 @@ public class PaymentReceipt {
         public Builder() {
         }
 
-        Builder(String documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent) {
+        Builder(DocumentQualifier documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent) {
             this.documentQualifier = documentQualifier;
             this.integratedPrintFlag = integratedPrintFlag;
             this.requiredSignatureFlag = requiredSignatureFlag;
             this.outputContent = outputContent;
         }
 
-        public Builder documentQualifier(String documentQualifier){
+        public Builder documentQualifier(DocumentQualifier documentQualifier){
             this.documentQualifier = documentQualifier;
             return Builder.this;
         }
@@ -166,7 +168,7 @@ public class PaymentReceipt {
 /*
 package au.com.dmg.fusionsatellite.response
 class PaymentReceipt
-@Required String documentQualifier
+@Required DocumentQualifier documentQualifier
 Boolean integratedPrintFlag
 @Required Boolean requiredSignatureFlag
 OutputContent outputContent
