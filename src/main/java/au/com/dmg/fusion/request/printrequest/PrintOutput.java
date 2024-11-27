@@ -33,13 +33,14 @@ import org.jsoup.safety.Safelist;
 
 import java.nio.charset.StandardCharsets;
 
+import au.com.dmg.fusion.data.DocumentQualifier;
 import au.com.dmg.fusion.data.ResponseMode;
 import au.com.dmg.fusion.util.Base64;
 
 public class PrintOutput {
 
     @Json(name = "DocumentQualifier")
-    private final String documentQualifier;
+    private final DocumentQualifier documentQualifier;
 
     @Json(name = "ResponseMode")
     private final ResponseMode responseMode;
@@ -54,7 +55,7 @@ public class PrintOutput {
     private final OutputContent outputContent;
 
     @NotNull
-    public String getDocumentQualifier() {
+    public DocumentQualifier getDocumentQualifier() {
         return documentQualifier;
     }
 
@@ -80,7 +81,7 @@ public class PrintOutput {
 
     public static class Builder {
 
-        private String documentQualifier;
+        private DocumentQualifier documentQualifier;
         private ResponseMode responseMode;
         private Boolean integratedPrintFlag;
         private Boolean requiredSignatureFlag;
@@ -89,14 +90,14 @@ public class PrintOutput {
         public Builder() {
         }
 
-        Builder(String documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent) {
+        Builder(DocumentQualifier documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent) {
             this.documentQualifier = documentQualifier;
             this.integratedPrintFlag = integratedPrintFlag;
             this.requiredSignatureFlag = requiredSignatureFlag;
             this.outputContent = outputContent;
         }
 
-        Builder(String documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent, ResponseMode responseMode) {
+        Builder(DocumentQualifier documentQualifier, Boolean integratedPrintFlag, Boolean requiredSignatureFlag, OutputContent outputContent, ResponseMode responseMode) {
             this.documentQualifier = documentQualifier;
             this.integratedPrintFlag = integratedPrintFlag;
             this.requiredSignatureFlag = requiredSignatureFlag;
@@ -104,7 +105,7 @@ public class PrintOutput {
             this.responseMode = responseMode;
         }
 
-        public Builder documentQualifier(String documentQualifier){
+        public Builder documentQualifier(DocumentQualifier documentQualifier){
             this.documentQualifier = documentQualifier;
             return Builder.this;
         }
@@ -182,7 +183,7 @@ public class PrintOutput {
 /*
 package au.com.dmg.fusionsatellite.PaymentRequest
 class PrintOutput
-@Required String documentQualifier
+@Required DocumentQualifier documentQualifier
 ResponseMode responseMode
 Boolean integratedPrintFlag
 @Required Boolean requiredSignatureFlag

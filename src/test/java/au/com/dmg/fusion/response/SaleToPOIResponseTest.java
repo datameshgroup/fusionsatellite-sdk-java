@@ -86,7 +86,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                         .integratedPrintFlag(false)
-                        .documentQualifier("Title")
+                        .documentQualifier(DocumentQualifier.CashierReceipt)
                         .requiredSignatureFlag(true)
                 .build());
 
@@ -135,7 +135,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                 .integratedPrintFlag(false)
-                .documentQualifier("Title")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(true)
                 .build());
 
@@ -484,16 +484,15 @@ public class SaleToPOIResponseTest {
                 .messageHeader(new MessageHeader.Builder()
                         .protocolVersion("3.1")
                         .messageClass(MessageClass.Service)
-                        .messageCategory(MessageCategory.Login)
+                        .messageCategory(MessageCategory.Print)
                         .messageType(MessageType.Request)
                         .serviceID("X")
                         .saleID("X")
                         .POIID("x")
                         .build())
-                .response(new PrintResponse(new DocumentQualifier(new Response.Builder()
+                .response(new PrintResponse.Builder().response(new Response.Builder()
                         .result(ResponseResult.Success)
-                        .additionalResponse("x")
-                        .build())))
+                        .build()).build())
                 .build();
 
         System.out.println(response.toJson());
@@ -572,7 +571,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                 .integratedPrintFlag(false)
-                .documentQualifier("Title")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(true)
                 .build());
 
@@ -635,7 +634,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                 .integratedPrintFlag(false)
-                .documentQualifier("Title")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(true)
                 .build());
 
@@ -699,7 +698,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                 .integratedPrintFlag(false)
-                .documentQualifier("Title")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(true)
                 .build());
 
@@ -763,7 +762,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                 .integratedPrintFlag(false)
-                .documentQualifier("Title")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(true)
                 .build());
 
@@ -840,7 +839,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                 .integratedPrintFlag(false)
-                .documentQualifier("Title")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(true)
                 .build());
 
@@ -970,7 +969,7 @@ public class SaleToPOIResponseTest {
         List<PaymentReceipt> receipts = new LinkedList<PaymentReceipt>();
         receipts.add(new PaymentReceipt.Builder()
                 .integratedPrintFlag(false)
-                .documentQualifier("Title")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(true)
                 .build());
 
