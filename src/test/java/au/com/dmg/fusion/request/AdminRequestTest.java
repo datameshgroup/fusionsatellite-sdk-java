@@ -68,7 +68,7 @@ public class AdminRequestTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assert (serializedRequest.getServiceIdentification().toString().equals("PrintLastCustomerReceipt"));
+        assert (serializedRequest.getServiceIdentification().toString().equals("MessageACK"));
     }
 
     @Test
