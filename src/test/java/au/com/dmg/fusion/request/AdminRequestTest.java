@@ -46,7 +46,7 @@ public class AdminRequestTest {
     @Test
     public void testValidWithMessageReference(){
         AdminRequest adminRequest = new AdminRequest.Builder()
-                .serviceIdentification(ServiceIdentification.PrintLastCustomerReceipt)
+                .serviceIdentification(ServiceIdentification.MessageACK)
                 .messageReference(new MessageReference.Builder()
                         .messageCategory(MessageCategory.Payment)
                         .serviceID("OriginalServiceId123")
