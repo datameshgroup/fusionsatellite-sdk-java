@@ -26,5 +26,6 @@ package au.com.dmg.fusion.data;
 public enum ServiceIdentification {
     PrintLastCustomerReceipt,
     PrintLastMerchantReceipt,
-    PrintShiftTotals
+    PrintShiftTotals,
+    MessageACK
 }
