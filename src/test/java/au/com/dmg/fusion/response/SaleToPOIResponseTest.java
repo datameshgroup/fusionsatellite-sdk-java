@@ -30,7 +30,6 @@ import au.com.dmg.fusion.request.SaleTerminalData;
 import au.com.dmg.fusion.request.paymentrequest.POIData;
 import au.com.dmg.fusion.request.paymentrequest.POITransactionID;
 import au.com.dmg.fusion.request.paymentrequest.SaleTransactionID;
-import au.com.dmg.fusion.request.transactionstatusrequest.MessageReference;
 import au.com.dmg.fusion.response.adminresponse.AdminResponse;
 import au.com.dmg.fusion.response.inputresponse.Input;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
@@ -564,6 +563,8 @@ public class SaleToPOIResponseTest {
 
         System.out.println(response.toJson());
     }
+
+
 
     @Test
     public void testPaymentResponseWithCardDataExpiry(){
