@@ -4,6 +4,7 @@ import static org.junit.Assert.assertThrows;
 
 import au.com.dmg.fusion.Message;
 import au.com.dmg.fusion.MessageHeader;
+import au.com.dmg.fusion.data.DocumentQualifier;
 import au.com.dmg.fusion.data.MessageCategory;
 import au.com.dmg.fusion.data.MessageClass;
 import au.com.dmg.fusion.data.MessageType;
@@ -22,7 +23,7 @@ public class PrintRequestTest extends TestCase{
         String receipt = "<html><head></head> <body>  <div>   <p>01/07/2024 08:29</p>   <p>URN: Unavailable</p>   <p>Dealer ID: Unavailable</p>       <p>Merchant Id: M00000025</p>   <p>Terminal Id: INGB7241</p> <b>Purchase Transaction</b>   <p>Total Amount (incl GST): $4.00</p>   <p>    </p>           <div>    <p>Eftpos</p>    <p>560254XXXXXX0226 (C)</p>    <p>AID: A00000038410</p>    <p>STAN: 001588</p>    <p>Account: Savings</p>    <p>ARQC A590300AD374B249</p>    <p>CVM: 020000</p>    <p>TVR: 0000000000</p>    <p>ATC: 008F</p>    <p>PSN: 01</p>    <p>AIP: 1900</p>    <p>CURR: 0036</p>    <p>TSI: E800</p>   </div>    <div>    <p>Approved</p>    <p>RC: 00</p>   </div>       <div>    <p>RRN: 000000180772</p>   </div>   <p></p>   <p>    </p>                  <p></p>  </div> </body></html>";
 
         PrintOutput po = new PrintOutput.Builder()
-                .documentQualifier("x")
+                .documentQualifier(DocumentQualifier.Unknown)
                 .responseMode(ResponseMode.PrintEnd)
                 .requiredSignatureFlag(false)
                 .integratedPrintFlag(false)
@@ -74,7 +75,7 @@ public class PrintRequestTest extends TestCase{
         NullPointerException exceptionResponse =
                 assertThrows(NullPointerException.class,
                         ()->  new PrintOutput.Builder()
-                                .documentQualifier("x")
+                                .documentQualifier(DocumentQualifier.Unknown)
                                 .integratedPrintFlag(false)
                                 .outputContent(new OutputContent("XHTML", Base64.encode(receipt.getBytes("UTF-8"))))
                                 .build());

@@ -29,20 +29,26 @@ import com.squareup.moshi.Moshi;
 
 import org.jetbrains.annotations.NotNull;
 
+
+import au.com.dmg.fusion.data.DocumentQualifier;
 import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.util.InstantAdapter;
 
 public class PrintResponse implements ResponseType {
+    @Json(name = "Response")
+    private final Response response;
+
     @Json(name = "DocumentQualifier")
     private final DocumentQualifier documentQualifier;
-
-    public PrintResponse(DocumentQualifier documentQualifier) {
-        this.documentQualifier = documentQualifier;
-    }
 
     @NotNull
     public DocumentQualifier getDocumentQualifier() {
         return documentQualifier;
+    }
+
+    @NotNull
+    public Response getResponse() {
+        return response;
     }
 
     @Override
@@ -53,5 +59,47 @@ public class PrintResponse implements ResponseType {
                 .build();
         JsonAdapter<PrintResponse> jsonAdapter = moshi.adapter(PrintResponse.class);
         return jsonAdapter.toJson(this);
+    }
+
+    public static class Builder {
+
+        private Response response;
+        private DocumentQualifier documentQualifier = DocumentQualifier.Unknown;
+
+        public Builder() {
+        }
+
+        Builder(Response response) {
+            this.response = response;
+        }
+
+        Builder(Response response, DocumentQualifier documentQualifier) {
+            this.response = response;
+            this.documentQualifier = documentQualifier;
+        }
+
+        public Builder response(Response response) {
+            this.response = response;
+            return Builder.this;
+        }
+
+        public Builder documentQualifier(DocumentQualifier documentQualifier) {
+            this.documentQualifier = documentQualifier;
+            return Builder.this;
+        }
+
+        public PrintResponse build() {
+            if (this.response == null) {
+                throw new NullPointerException("The property \"response\" is null. "
+                        + "Please set the value by \"response()\". ");
+            }
+
+            return new PrintResponse(this);
+        }
+    }
+
+    private PrintResponse(Builder builder) {
+        this.response = builder.response;
+        this.documentQualifier = builder.documentQualifier;
     }
 }

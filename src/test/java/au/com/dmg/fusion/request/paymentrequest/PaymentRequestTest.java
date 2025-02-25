@@ -30,6 +30,7 @@ import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 
+import au.com.dmg.fusion.data.DocumentQualifier;
 import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
 import au.com.dmg.fusion.request.paymentrequest.extenstiondata.Stop;
 import au.com.dmg.fusion.request.paymentrequest.extenstiondata.TransitData;
@@ -163,7 +164,7 @@ public class PaymentRequestTest {
                 "  ARQC: 62262DE32EFBBC91\n" +
                 "</p>";
         PaymentReceipt pr = new PaymentReceipt.Builder()
-                .documentQualifier("x")
+                .documentQualifier(DocumentQualifier.CustomFooter)
                 .requiredSignatureFlag(false)
                 .integratedPrintFlag(false)
                 .outputContent(new OutputContent("XHTML", Base64.encode(receipt.getBytes("UTF-8"))))
