@@ -23,16 +23,19 @@
 
 package au.com.dmg.fusion.request.paymentrequest;
 
-import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
-import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.request.Request;
+import au.com.dmg.fusion.request.paymentrequest.extenstiondata.ExtensionData;
+import au.com.dmg.fusion.response.paymentresponse.PaymentReceipt;
+import au.com.dmg.fusion.util.BigDecimalAdapter;
 import au.com.dmg.fusion.util.InstantAdapter;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PaymentRequest implements Request {
@@ -47,6 +50,9 @@ public class PaymentRequest implements Request {
     private final List<CustomField> customFields;
     @Json(name = "ExtensionData")
     private final ExtensionData extensionData;
+    @Json(name = "PaymentReceipt")
+    @Nullable
+    private final List<PaymentReceipt> paymentReceipt;
 
     @NotNull
     public PaymentTransaction getPaymentTransaction() {
@@ -68,6 +74,10 @@ public class PaymentRequest implements Request {
     }
 
     public ExtensionData getExtensionData() {return extensionData; }
+    @Nullable
+    public List<PaymentReceipt> getPaymentReceipt() {
+        return paymentReceipt;
+    }
 
     public static class Builder {
 
@@ -76,6 +86,7 @@ public class PaymentRequest implements Request {
         private PaymentData paymentData;
         private List<CustomField> customFields  = new ArrayList<>();
         private ExtensionData extensionData;
+        private List<PaymentReceipt> paymentReceipt;
 
         public Builder() {
         }
@@ -86,6 +97,7 @@ public class PaymentRequest implements Request {
             this.paymentData = paymentData;
             this.customFields = customFields;
             this.extensionData = extensionData;
+            this.paymentReceipt = paymentReceipt;
         }
 
         public Builder saleData(SaleData saleData) {
@@ -126,6 +138,21 @@ public class PaymentRequest implements Request {
             this.extensionData = extensionData;
             return Builder.this;
         }
+        public Builder paymentReceipt(List<PaymentReceipt> paymentReceipt) {
+            this.paymentReceipt = paymentReceipt;
+            return Builder.this;
+        }
+
+        public Builder addPaymentReceipt(PaymentReceipt paymentReceipt){
+            if (this.paymentReceipt == null){
+                this.paymentReceipt = new LinkedList<>();
+            }
+
+            if(paymentReceipt != null){
+                this.paymentReceipt.add(paymentReceipt);
+            }
+            return Builder.this;
+        }
 
         public PaymentRequest build() {
             if (this.saleData == null) {
@@ -153,6 +180,7 @@ public class PaymentRequest implements Request {
         this.paymentData = builder.paymentData;
         this.customFields = builder.customFields;
         this.extensionData = builder.extensionData;
+        this.paymentReceipt = builder.paymentReceipt;
     }
 
     @Override

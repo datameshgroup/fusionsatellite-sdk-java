@@ -23,6 +23,7 @@
 
 package au.com.dmg.fusion.response.paymentresponse;
 
+import au.com.dmg.fusion.data.DocumentQualifier;
 import au.com.dmg.fusion.request.printrequest.OutputContent;
 import au.com.dmg.fusion.util.Base64;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class PaymentReceiptTest {
                 "</p>";
 
         PaymentReceipt pr = new PaymentReceipt.Builder()
-                .documentQualifier("x")
+                .documentQualifier(DocumentQualifier.CashierReceipt)
                 .requiredSignatureFlag(false)
                 .integratedPrintFlag(false)
                 .outputContent(new OutputContent("XHTML", Base64.encode(receipt.getBytes("UTF-8"))))
