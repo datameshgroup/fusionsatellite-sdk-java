@@ -23,12 +23,11 @@
 
 package au.com.dmg.fusion.data;
 
-import au.com.dmg.fusion.response.Response;
-
 public enum DocumentQualifier {
     Unknown,
     SaleReceipt,
     CashierReceipt,
+    CustomFooter,
     CustomerReceipt,
     Document,
     Voucher,
