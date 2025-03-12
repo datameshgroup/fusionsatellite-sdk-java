@@ -6,5 +6,6 @@ public enum StoredValueTransactionType {
     Load,       // Load the account or the card with money.
     Unload,     // Unload the account.
     Reverse,    // Reverse an activation or loading.
-    Duplicate // Duplicate the code or number provided by the loading or activation.
+    Duplicate, // Duplicate the code or number provided by the loading or activation.
+    Verify // Checks if the card is valid
 }

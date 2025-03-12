@@ -5,7 +5,7 @@ This library is designed for both Java 8+ and Android.
 
 ## How to include
 ```
-    implementation "com.datameshgroup.fusion:fusion-sdk:3.0.2"
+    implementation "com.datameshgroup.fusion:fusion-sdk:3.0.3"
 ```
 If you are using Android you will need to add Java 8 syntax desugaring.
 In your app's build.gradle
