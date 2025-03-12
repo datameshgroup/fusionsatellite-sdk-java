@@ -9,6 +9,7 @@ import au.com.dmg.fusion.response.balanceinquiryresponse.BalanceInquiryResponse;
 import au.com.dmg.fusion.response.balanceinquiryresponse.PaymentAccountStatus;
 import au.com.dmg.fusion.response.paymentresponse.*;
 import junit.framework.TestCase;
+import au.com.dmg.fusion.data.DocumentQualifier;
 
 import java.io.IOException;
 import java.math.BigDecimal;

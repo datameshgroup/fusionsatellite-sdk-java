@@ -15,11 +15,9 @@ import com.squareup.moshi.Moshi;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-import java.util.Calendar;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -44,6 +42,30 @@ public class AdminRequestTest {
             e.printStackTrace();
         }
         assert (serializedRequest.getServiceIdentification().toString().equals("PrintLastCustomerReceipt"));
+    }
+    @Test
+    public void testValidWithMessageReference(){
+        AdminRequest adminRequest = new AdminRequest.Builder()
+                .serviceIdentification(ServiceIdentification.MessageACK)
+                .messageReference(new MessageReference.Builder()
+                        .messageCategory(MessageCategory.Payment)
+                        .serviceID("OriginalServiceId123")
+                        .build())
+                .build();
+        Moshi moshi = new Moshi.Builder()
+                .add(new InstantAdapter())
+                .build();
+        JsonAdapter<AdminRequest> jsonAdapter = moshi.adapter(AdminRequest.class);
+        String json = jsonAdapter.toJson(adminRequest);
+        System.out.println(json);
+
+        AdminRequest serializedRequest = null;
+        try {
+            serializedRequest = jsonAdapter.fromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert (serializedRequest.getServiceIdentification().toString().equals("MessageACK"));
     }
 
     @Test

@@ -35,6 +35,7 @@ import au.com.dmg.fusion.response.inputresponse.Input;
 import au.com.dmg.fusion.response.inputresponse.InputResponse;
 import au.com.dmg.fusion.response.inputresponse.InputResult;
 import au.com.dmg.fusion.response.paymentresponse.*;
+import au.com.dmg.fusion.data.DocumentQualifier;
 import org.junit.Test;
 
 import java.math.BigDecimal;
