@@ -36,6 +36,7 @@ import org.jsoup.safety.Safelist;
 import java.nio.charset.StandardCharsets;
 
 
+
 public class PaymentReceipt {
 
     @Json(name = "DocumentQualifier")
@@ -167,7 +168,7 @@ public class PaymentReceipt {
 /*
 package au.com.dmg.fusionsatellite.response
 class PaymentReceipt
-@Required String documentQualifier
+@Required DocumentQualifier documentQualifier
 Boolean integratedPrintFlag
 @Required Boolean requiredSignatureFlag
 OutputContent outputContent
