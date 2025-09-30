@@ -5,6 +5,7 @@ import au.com.dmg.fusion.data.PaymentBrand;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class PaymentMapping {
 
@@ -73,7 +74,8 @@ public class PaymentMapping {
             new PaymentMethodMapping("Scanned", EntryMode.Scanned),
             new PaymentMethodMapping("Online", EntryMode.Keyed),
             new PaymentMethodMapping("Cash", EntryMode.Unknown),
-            new PaymentMethodMapping("PayOnOtherTerminal", EntryMode.Unknown)
+            new PaymentMethodMapping("PayOnOtherTerminal", EntryMode.Unknown),
+            new PaymentMethodMapping("File",EntryMode.File)
     );
 
     private static final PaymentBrand unknownPaymentBrand = PaymentBrand.Other;

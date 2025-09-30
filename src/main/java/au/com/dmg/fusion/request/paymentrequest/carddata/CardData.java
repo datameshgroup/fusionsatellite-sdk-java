@@ -24,12 +24,15 @@
 package au.com.dmg.fusion.request.paymentrequest.carddata;
 
 import au.com.dmg.fusion.data.EntryMode;
+import au.com.dmg.fusion.request.paymentrequest.PaymentRequest;
+
 import com.squareup.moshi.Json;
 
 public class CardData {
 
     private final EntryMode entryMode;
     private final ProtectedCardData protectedCardData;
+    private final PaymentToken paymentToken;
 
     public static class Builder {
 
@@ -37,6 +40,8 @@ public class CardData {
         private EntryMode entryMode;
         @Json(name = "ProtectedCardData")
         private ProtectedCardData protectedCardData;
+        @Json(name = "PaymentToken")
+        private PaymentToken paymentToken;
 
         public EntryMode getEntryMode() {
             return entryMode;
@@ -46,7 +51,15 @@ public class CardData {
             return protectedCardData;
         }
 
+        public PaymentToken getPaymentToken() { return paymentToken; }
+
         public Builder() {
+        }
+
+        Builder(EntryMode entryMode, ProtectedCardData protectedCardData, PaymentToken paymentToken) {
+            this.entryMode = entryMode;
+            this.protectedCardData = protectedCardData;
+            this.paymentToken = paymentToken;
         }
 
         Builder(EntryMode entryMode, ProtectedCardData protectedCardData) {
@@ -64,6 +77,11 @@ public class CardData {
             return Builder.this;
         }
 
+        public Builder paymentToken(PaymentToken paymentToken) {
+            this.paymentToken = paymentToken;
+            return Builder.this;
+        }
+
         public CardData build() {
 
             return new CardData(this);
@@ -73,6 +91,7 @@ public class CardData {
     private CardData(Builder builder) {
         this.entryMode = builder.entryMode;
         this.protectedCardData = builder.protectedCardData;
+        this.paymentToken = builder.paymentToken;
     }
 }
 
@@ -81,4 +100,5 @@ package au.com.dmg.fusionsatellite.PaymentRequest
 class CardData
 EntryMode entryMode
 ProtectedCardData protectedCardData
+PaymentToken paymentToken
 * */
