@@ -29,5 +29,6 @@ public enum PaymentType {
     Refund,
     CashAdvance,
     FirstReservation,
-    Completion
+    Completion,
+    UpdateReservation
 }
