@@ -73,5 +73,12 @@ public enum PaymentBrand {
     @Json(name = "DRC") DRC,
     @Json(name = "Pay On Other Terminal") PayOnOtherTerminal,
 
+    // Gratifii Gift Cards
+    @Json(name = "MW Gift Card") MWGiftCard,
+    @Json(name = "HB Gift Card") HBGiftCard,
+    @Json(name = "SH Gift Card") SHGiftCard,
+    @Json(name = "Contra Card") ContraCard,
+    @Json(name = "Digital Experience") DigitalExperience,
+
     Other
 }

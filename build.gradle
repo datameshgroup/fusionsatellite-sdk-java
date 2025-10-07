@@ -6,7 +6,7 @@ plugins {
 
 group 'com.datameshgroup.fusion'
 // Update Message.FUSION_SATELLITE_VERSION when you update this
-version '2.0.15'
+version '2.0.16'
 
 repositories {
     mavenCentral()
@@ -45,7 +45,7 @@ publishing {
             pom {
                 name = 'Fusion SDK for Satellite'
                 description = 'Object models for interacting with Datameshgroup\'s interfaces.'
-                url = ''
+                url.set("https://github.com/datameshgroup/fusionsatellite-sdk-java")
                 licenses {
                     license {
                         name = 'MIT License'
@@ -69,11 +69,11 @@ publishing {
     }
     repositories {
         maven {
-            name = 'Sonatype'
-            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+            name = "OSSRH"
+            url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
             credentials {
-                username = findProperty('sonatype.username')
-                password = findProperty('sonatype.password')
+                username = findProperty("sonatype.username") as String
+                password = findProperty("sonatype.password") as String
             }
         }
     }
