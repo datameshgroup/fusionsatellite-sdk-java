@@ -53,6 +53,9 @@ public class PaymentRequest implements Request {
     @Json(name = "PaymentReceipt")
     @Nullable
     private final List<PaymentReceipt> paymentReceipt;
+    @Json(name = "LoyaltyData")
+    @Nullable
+    private final List<LoyaltyData> loyaltyData;
 
     @NotNull
     public PaymentTransaction getPaymentTransaction() {
@@ -79,6 +82,11 @@ public class PaymentRequest implements Request {
         return paymentReceipt;
     }
 
+    @Nullable
+    public List<LoyaltyData> getLoyaltyData() {
+        return loyaltyData;
+    }
+
     public static class Builder {
 
         private SaleData saleData;
@@ -87,6 +95,7 @@ public class PaymentRequest implements Request {
         private List<CustomField> customFields  = new ArrayList<>();
         private ExtensionData extensionData;
         private List<PaymentReceipt> paymentReceipt;
+        private List<LoyaltyData> loyaltyData;
 
         public Builder() {
         }
@@ -154,6 +163,21 @@ public class PaymentRequest implements Request {
             return Builder.this;
         }
 
+        public Builder loyaltyData(List<LoyaltyData> loyaltyData) {
+            this.loyaltyData = loyaltyData;
+            return Builder.this;
+        }
+
+        public Builder addLoyaltyData(LoyaltyData loyaltyData) {
+            if (this.loyaltyData == null) {
+                this.loyaltyData = new LinkedList<>();
+            }
+            if (loyaltyData != null) {
+                this.loyaltyData.add(loyaltyData);
+            }
+            return Builder.this;
+        }
+
         public PaymentRequest build() {
             if (this.saleData == null) {
                 throw new NullPointerException("The property \"saleData\" is null. "
@@ -181,6 +205,7 @@ public class PaymentRequest implements Request {
         this.customFields = builder.customFields;
         this.extensionData = builder.extensionData;
         this.paymentReceipt = builder.paymentReceipt;
+        this.loyaltyData = builder.loyaltyData;
     }
 
     @Override
