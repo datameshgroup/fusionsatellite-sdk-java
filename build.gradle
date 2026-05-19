@@ -6,7 +6,7 @@ plugins {
 
 group 'com.datameshgroup.fusion'
 // Update Message.FUSION_SATELLITE_VERSION when you update this
-version '3.0.5'
+version '3.0.6'
 
 repositories {
     mavenCentral()
@@ -17,7 +17,7 @@ java {
     withSourcesJar()
 }
 
-compileJava{
+compileJava {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
