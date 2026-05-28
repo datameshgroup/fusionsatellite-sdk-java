@@ -15,6 +15,14 @@ public class POIInformation {
     private final String fusionVersion;
     @Json(name = "AddressLocation")
     private final AddressLocation addressLocation;
+    @Json(name = "LocationID")
+    private final String locationID;
+    @Json(name = "ExtTerminalID")
+    private final String extTerminalID;
+    @Json(name = "ApplicationID")
+    private final String applicationID;
+    @Json(name = "TargetID")
+    private final String targetID;
 
     public POIInformation(Builder builder) {
         this.tid = builder.tid;
@@ -22,6 +30,10 @@ public class POIInformation {
         this.softwareVersion = builder.softwareVersion;
         this.fusionVersion = Message.FUSION_SATELLITE_VERSION;
         this.addressLocation = builder.addressLocation;
+        this.locationID = builder.locationID;
+        this.extTerminalID = builder.extTerminalID;
+        this.applicationID = builder.applicationID;
+        this.targetID = builder.targetID;
     }
 
     public String getTid(){
@@ -35,6 +47,18 @@ public class POIInformation {
     public AddressLocation getAddressLocation(){
         return addressLocation;
     }
+    public String getLocationID(){
+        return locationID;
+    }
+    public String getExtTerminalID(){
+        return extTerminalID;
+    }
+    public String getApplicationID(){
+        return applicationID;
+    }
+    public String getTargetID(){
+        return targetID;
+    }
 
     public static class Builder{
         private String tid;
@@ -42,6 +66,10 @@ public class POIInformation {
         private String softwareVersion;
         private String fusionVersion;
         private AddressLocation addressLocation;
+        private String locationID;
+        private String extTerminalID;
+        private String applicationID;
+        private String targetID;
 
         public Builder(){
         }
@@ -51,6 +79,17 @@ public class POIInformation {
             this.mid = mid;
             this.softwareVersion = softwareVersion;
             this.addressLocation = addressLocation;
+        }
+
+        Builder(String tid, String mid, String softwareVersion, AddressLocation addressLocation, String locationID, String extTerminalID, String applicationID, String targetID){
+            this.tid = tid;
+            this.mid = mid;
+            this.softwareVersion = softwareVersion;
+            this.addressLocation = addressLocation;
+            this.locationID = locationID;
+            this.extTerminalID = extTerminalID;
+            this.applicationID = applicationID;
+            this.targetID = targetID;
         }
 
         public Builder tid(String tid){
@@ -68,6 +107,26 @@ public class POIInformation {
 
         public Builder addressLocation(AddressLocation addressLocation){
             this.addressLocation = addressLocation;
+            return Builder.this;
+        }
+
+        public Builder locationID(String locationID){
+            this.locationID = locationID;
+            return Builder.this;
+        }
+
+        public Builder extTerminalID(String extTerminalID){
+            this.extTerminalID = extTerminalID;
+            return Builder.this;
+        }
+
+        public Builder applicationID(String applicationID){
+            this.applicationID = applicationID;
+            return Builder.this;
+        }
+
+        public Builder targetID(String targetID){
+            this.targetID = targetID;
             return Builder.this;
         }
 
