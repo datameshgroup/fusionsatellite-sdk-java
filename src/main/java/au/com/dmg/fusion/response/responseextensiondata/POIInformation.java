@@ -31,6 +31,8 @@ public class POIInformation {
     private final String clientID2;
     @Json(name = "ClientSecret2")
     private final String clientSecret2;
+    @Json(name = "ClientUsername")
+    private final String clientUsername;
 
     public POIInformation(Builder builder) {
         this.tid = builder.tid;
@@ -46,6 +48,7 @@ public class POIInformation {
         this.clientSecret = builder.clientSecret;
         this.clientID2 = builder.clientID2;
         this.clientSecret2 = builder.clientSecret2;
+        this.clientUsername = builder.clientUsername;
     }
 
     public String getTid(){
@@ -88,6 +91,10 @@ public class POIInformation {
         return clientSecret2;
     }
 
+    public String getClientUsername() {
+        return clientUsername;
+    }
+
     public static class Builder{
         private String tid;
         private String mid;
@@ -102,6 +109,7 @@ public class POIInformation {
         private String clientSecret;
         private String clientID2;
         private String clientSecret2;
+        private String clientUsername;
 
         public Builder(){
         }
@@ -179,6 +187,11 @@ public class POIInformation {
 
         public Builder clientSecret2(String clientSecret2) {
             this.clientSecret2 = clientSecret2;
+            return Builder.this;
+        }
+
+        public Builder clientUsername(String clientUsername) {
+            this.clientUsername = clientUsername;
             return Builder.this;
         }
 
