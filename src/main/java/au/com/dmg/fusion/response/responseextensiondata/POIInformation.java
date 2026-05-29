@@ -23,6 +23,14 @@ public class POIInformation {
     private final String applicationID;
     @Json(name = "TargetID")
     private final String targetID;
+    @Json(name = "ClientID")
+    private final String clientID;
+    @Json(name = "ClientSecret")
+    private final String clientSecret;
+    @Json(name = "ClientID2")
+    private final String clientID2;
+    @Json(name = "ClientSecret2")
+    private final String clientSecret2;
 
     public POIInformation(Builder builder) {
         this.tid = builder.tid;
@@ -34,6 +42,10 @@ public class POIInformation {
         this.extTerminalID = builder.extTerminalID;
         this.applicationID = builder.applicationID;
         this.targetID = builder.targetID;
+        this.clientID = builder.clientID;
+        this.clientSecret = builder.clientSecret;
+        this.clientID2 = builder.clientID2;
+        this.clientSecret2 = builder.clientSecret2;
     }
 
     public String getTid(){
@@ -60,6 +72,22 @@ public class POIInformation {
         return targetID;
     }
 
+    public String getClientID() {
+        return clientID;
+    }
+
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public String getClientID2() {
+        return clientID2;
+    }
+
+    public String getClientSecret2() {
+        return clientSecret2;
+    }
+
     public static class Builder{
         private String tid;
         private String mid;
@@ -70,6 +98,10 @@ public class POIInformation {
         private String extTerminalID;
         private String applicationID;
         private String targetID;
+        private String clientID;
+        private String clientSecret;
+        private String clientID2;
+        private String clientSecret2;
 
         public Builder(){
         }
@@ -127,6 +159,26 @@ public class POIInformation {
 
         public Builder targetID(String targetID){
             this.targetID = targetID;
+            return Builder.this;
+        }
+
+        public Builder clientID(String clientID) {
+            this.clientID = clientID;
+            return Builder.this;
+        }
+
+        public Builder clientSecret(String clientSecret) {
+            this.clientSecret = clientSecret;
+            return Builder.this;
+        }
+
+        public Builder clientID2(String clientID2) {
+            this.clientID2 = clientID2;
+            return Builder.this;
+        }
+
+        public Builder clientSecret2(String clientSecret2) {
+            this.clientSecret2 = clientSecret2;
             return Builder.this;
         }
 
