@@ -33,6 +33,10 @@ public class POIInformation {
     private final String clientSecret2;
     @Json(name = "ClientUsername")
     private final String clientUsername;
+    @Json(name = "URL")
+    private final String url;
+    @Json(name = "URL2")
+    private final String url2;
 
     public POIInformation(Builder builder) {
         this.tid = builder.tid;
@@ -49,6 +53,8 @@ public class POIInformation {
         this.clientID2 = builder.clientID2;
         this.clientSecret2 = builder.clientSecret2;
         this.clientUsername = builder.clientUsername;
+        this.url = builder.url;
+        this.url2 = builder.url2;
     }
 
     public String getTid(){
@@ -95,6 +101,14 @@ public class POIInformation {
         return clientUsername;
     }
 
+    public String getURL() {
+        return url;
+    }
+
+    public String getURL2() {
+        return url2;
+    }
+
     public static class Builder{
         private String tid;
         private String mid;
@@ -110,6 +124,8 @@ public class POIInformation {
         private String clientID2;
         private String clientSecret2;
         private String clientUsername;
+        private String url;
+        private String url2;
 
         public Builder(){
         }
@@ -192,6 +208,16 @@ public class POIInformation {
 
         public Builder clientUsername(String clientUsername) {
             this.clientUsername = clientUsername;
+            return Builder.this;
+        }
+
+        public Builder url(String url) {
+            this.url = url;
+            return Builder.this;
+        }
+
+        public Builder url2(String url2) {
+            this.url2 = url2;
             return Builder.this;
         }
 
