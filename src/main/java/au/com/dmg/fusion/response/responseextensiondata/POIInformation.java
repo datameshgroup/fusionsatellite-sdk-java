@@ -27,6 +27,8 @@ public class POIInformation {
     private final boolean isOpt;
     @Json(name = "PumpIDs")
     private final String pumpIDs;
+    @Json(name = "DiscountCardAccepted")
+    private final boolean discountCardAccepted;
     @Json(name = "ClientID")
     private final String clientID;
     @Json(name = "ClientSecret")
@@ -54,6 +56,7 @@ public class POIInformation {
         this.targetID = builder.targetID;
         this.isOpt = builder.isOpt;
         this.pumpIDs = builder.pumpIDs;
+        this.discountCardAccepted = builder.discountCardAccepted;
         this.clientID = builder.clientID;
         this.clientSecret = builder.clientSecret;
         this.clientID2 = builder.clientID2;
@@ -91,6 +94,9 @@ public class POIInformation {
     }
     public String getPumpIDs(){
         return pumpIDs;
+    }
+    public boolean isDiscountCardAccepted(){
+        return discountCardAccepted;
     }
 
     public String getClientID() {
@@ -133,6 +139,7 @@ public class POIInformation {
         private String targetID;
         private boolean isOpt;
         private String pumpIDs;
+        private boolean discountCardAccepted;
         private String clientID;
         private String clientSecret;
         private String clientID2;
@@ -207,6 +214,11 @@ public class POIInformation {
 
         public Builder pumpIDs(String pumpIDs){
             this.pumpIDs = pumpIDs;
+            return Builder.this;
+        }
+
+        public Builder discountCardAccepted(boolean discountCardAccepted){
+            this.discountCardAccepted = discountCardAccepted;
             return Builder.this;
         }
 
