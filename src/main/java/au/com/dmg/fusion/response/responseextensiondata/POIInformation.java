@@ -23,6 +23,10 @@ public class POIInformation {
     private final String applicationID;
     @Json(name = "TargetID")
     private final String targetID;
+    @Json(name = "IsOpt")
+    private final boolean isOpt;
+    @Json(name = "PumpIDs")
+    private final String pumpIDs;
     @Json(name = "ClientID")
     private final String clientID;
     @Json(name = "ClientSecret")
@@ -48,6 +52,8 @@ public class POIInformation {
         this.extTerminalID = builder.extTerminalID;
         this.applicationID = builder.applicationID;
         this.targetID = builder.targetID;
+        this.isOpt = builder.isOpt;
+        this.pumpIDs = builder.pumpIDs;
         this.clientID = builder.clientID;
         this.clientSecret = builder.clientSecret;
         this.clientID2 = builder.clientID2;
@@ -79,6 +85,12 @@ public class POIInformation {
     }
     public String getTargetID(){
         return targetID;
+    }
+    public boolean isOpt(){
+        return isOpt;
+    }
+    public String getPumpIDs(){
+        return pumpIDs;
     }
 
     public String getClientID() {
@@ -119,6 +131,8 @@ public class POIInformation {
         private String extTerminalID;
         private String applicationID;
         private String targetID;
+        private boolean isOpt;
+        private String pumpIDs;
         private String clientID;
         private String clientSecret;
         private String clientID2;
@@ -183,6 +197,16 @@ public class POIInformation {
 
         public Builder targetID(String targetID){
             this.targetID = targetID;
+            return Builder.this;
+        }
+
+        public Builder isOpt(boolean isOpt){
+            this.isOpt = isOpt;
+            return Builder.this;
+        }
+
+        public Builder pumpIDs(String pumpIDs){
+            this.pumpIDs = pumpIDs;
             return Builder.this;
         }
 
