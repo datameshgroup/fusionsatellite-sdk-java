@@ -49,6 +49,8 @@ public class PaymentResult {
     private final BigDecimal currentBalance;
     @Json(name = "RRN")
     private final String rrn;
+    @Json(name = "Discount")
+    private final Discount discount;
 
     @Nullable
     public PaymentType getPaymentType() {
@@ -87,6 +89,9 @@ public class PaymentResult {
     @Nullable
     public String getRrn() { return rrn; }
 
+    @Nullable
+    public Discount getDiscount() { return discount; }
+
     public static class Builder {
 
         private PaymentType paymentType;
@@ -98,6 +103,7 @@ public class PaymentResult {
         private String currency = null;
         private BigDecimal currentBalance = null;
         private String rrn = null;
+        private Discount discount = null;
 
         public Builder() {
         }
@@ -227,6 +233,11 @@ public class PaymentResult {
             return Builder.this;
         }
 
+        public Builder discount(Discount discount){
+            this.discount = discount;
+            return Builder.this;
+        }
+
         public PaymentResult build() {
             if (this.onlineFlag == null) {
                 throw new NullPointerException("The property \"onlineFlag\" is null. "
@@ -248,6 +259,7 @@ public class PaymentResult {
         this.currency = builder.currency;
         this.currentBalance = builder.currentBalance;
         this.rrn = builder.rrn;
+        this.discount = builder.discount;
     }
 }
 
@@ -263,4 +275,5 @@ PaymentAcquirerData paymentAcquirerData
 String currency
 BigDecimal currentBalance
 String rrn
+Discount discount
 * */
