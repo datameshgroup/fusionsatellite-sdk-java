@@ -44,6 +44,7 @@ public class PaymentMapping {
             new PaymentTypeMapping("Fuel card", "Caltex StarCard", "0110", PaymentBrand.CaltexStarCard),
             new PaymentTypeMapping("Fuel card", "United Fuel Card", "0111", PaymentBrand.UnitedFuelCard),
             new PaymentTypeMapping("Fuel card", "OTR Card", "0112", PaymentBrand.OTRCard),
+            new PaymentTypeMapping("Fuel card", "Mobil Fuel Card", "0113", PaymentBrand.MobilFuelCard),            
 
             new PaymentTypeMapping("Transit card", "Fastcard", "0201", PaymentBrand.Fastcard),
             new PaymentTypeMapping("Transit card", "eTicket", "0202", PaymentBrand.eTicket),

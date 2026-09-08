@@ -52,6 +52,8 @@ public class SaleToPOIResponse implements SaleToPOI {
     private LoginResponse loginResponse;
     @Json(name = "CardAcquisitionResponse")
     private CardAcquisitionResponse cardAcquisitionResponse;
+    @Json(name = "RetrieveTokenResponse")
+    private RetrieveTokenResponse retrieveTokenResponse;
     @Json(name = "DisplayResponse")
     private DisplayResponse displayResponse;
     @Json(name = "InputResponse")
@@ -105,6 +107,11 @@ public class SaleToPOIResponse implements SaleToPOI {
     @Nullable
     public CardAcquisitionResponse getCardAcquisitionResponse() {
         return cardAcquisitionResponse;
+    }
+
+    @Nullable
+    public RetrieveTokenResponse getRetrieveTokenResponse() {
+        return retrieveTokenResponse;
     }
 
     @Nullable
@@ -178,6 +185,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         private LogoutResponse logoutResponse;
         private AbortTransactionResponse abortTransactionResponse;
         private CardAcquisitionResponse cardAcquisitionResponse;
+        private RetrieveTokenResponse retrieveTokenResponse;
         private DisplayResponse displayResponse;
         private InputResponse inputResponse;
         private PrintResponse printResponse;
@@ -251,6 +259,8 @@ public class SaleToPOIResponse implements SaleToPOI {
                 this.abortTransactionResponse = (AbortTransactionResponse) response;
             } else if (response instanceof CardAcquisitionResponse) {
                 this.cardAcquisitionResponse = (CardAcquisitionResponse) response;
+            } else if (response instanceof RetrieveTokenResponse) {
+                this.retrieveTokenResponse = (RetrieveTokenResponse) response;
             } else if (response instanceof DisplayResponse) {
                 this.displayResponse = (DisplayResponse) response;
             } else if (response instanceof InputResponse) {
@@ -307,6 +317,7 @@ public class SaleToPOIResponse implements SaleToPOI {
         this.abortTransactionResponse = builder.abortTransactionResponse;
         this.paymentResponse = builder.paymentResponse;
         this.cardAcquisitionResponse = builder.cardAcquisitionResponse;
+        this.retrieveTokenResponse = builder.retrieveTokenResponse;
         this.displayResponse = builder.displayResponse;
         this.inputResponse = builder.inputResponse;
         this.loginResponse = builder.loginResponse;
