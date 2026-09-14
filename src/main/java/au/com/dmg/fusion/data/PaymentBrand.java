@@ -69,6 +69,7 @@ public enum PaymentBrand {
     @Json(name = "United Fuel Card") UnitedFuelCard,
     @Json(name = "OTR Card") OTRCard,
     @Json(name = "Mobil Fuel Card") MobilFuelCard,            
+    @Json(name = "TT Fuel Whitecard") TTFuelWhitecard,            
     @Json(name = "CPVV MPTP") CPVVMPTP,
     @Json(name = "Qantas") Qantas,
     @Json(name = "DRC") DRC,
