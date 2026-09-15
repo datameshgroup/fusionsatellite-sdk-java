@@ -21,38 +21,15 @@
  *
  */
 
-package au.com.dmg.fusion.data;
+package au.com.dmg.fusion.request.retrievetokenrequest;
 
-public enum MessageCategory {
-    Abort, 
-    Admin, 
-    BalanceInquiry, 
-    //*Batch,
-    CardAcquisition, 
-    //*CardReaderAPDU, 
-    //*CardReaderInit, 
-    //*CardReaderPowerOff, 
-    Diagnosis,
-    Display, 
-    //*EnableService, 
-    Event, 
-    GetTotals,
-    Input, 
-    //*InputUpdate, 
-    Login, 
-    Logout, 
-    //*Loyalty, 
-    Payment, 
-    //*PIN, 
-    Print, 
-    Reconciliation,
-    RetrieveToken,
-    Reversal,
-    //*Sound,
-    StoredValue,
-    //*TransactionReport, 
-    TransactionStatus, 
-    //*Transmit,
-    Other
+/**
+ * Deliberately empty for now: pure token retrieval doesn't need payment-brand/entry-mode
+ * constraints the way CardAcquisitionTransaction does. Kept as a nullable object (rather than
+ * dropping the field entirely) so the wire shape can grow fields later without a breaking change.
+ */
+public class RetrieveTokenTransaction {
+
+    public RetrieveTokenTransaction() {
+    }
 }
-//* These fields are part of the Nexo specification but not currently implemented into the DataMesh host.

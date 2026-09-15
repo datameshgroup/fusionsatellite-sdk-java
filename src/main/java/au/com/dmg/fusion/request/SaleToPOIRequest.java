@@ -37,6 +37,7 @@ import au.com.dmg.fusion.request.logoutrequest.LogoutRequest;
 import au.com.dmg.fusion.request.paymentrequest.PaymentRequest;
 import au.com.dmg.fusion.request.printrequest.PrintRequest;
 import au.com.dmg.fusion.request.reconciliationrequest.ReconciliationRequest;
+import au.com.dmg.fusion.request.retrievetokenrequest.RetrieveTokenRequest;
 import au.com.dmg.fusion.request.reversalrequest.ReversalRequest;
 import au.com.dmg.fusion.request.diagnosisrequest.DiagnosisRequest;
 import au.com.dmg.fusion.request.storedvaluerequest.StoredValueRequest;
@@ -64,6 +65,8 @@ public class SaleToPOIRequest implements SaleToPOI {
     private LoginRequest loginRequest;
     @Json(name = "CardAcquisitionRequest")
     private CardAcquisitionRequest cardAcquisitionRequest;
+    @Json(name = "RetrieveTokenRequest")
+    private RetrieveTokenRequest retrieveTokenRequest;
     @Json(name = "DisplayRequest")
     private DisplayRequest displayRequest;
     @Json(name = "InputRequest")
@@ -102,6 +105,10 @@ public class SaleToPOIRequest implements SaleToPOI {
 
     public CardAcquisitionRequest getCardAcquisitionRequest() {
         return cardAcquisitionRequest;
+    }
+
+    public RetrieveTokenRequest getRetrieveTokenRequest() {
+        return retrieveTokenRequest;
     }
 
     public DisplayRequest getDisplayRequest() {
@@ -162,6 +169,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         private AbortTransactionRequest abortTransactionRequest;
         private ReversalRequest reversalRequest;
         private CardAcquisitionRequest cardAcquisitionRequest;
+        private RetrieveTokenRequest retrieveTokenRequest;
         private DisplayRequest displayRequest;
         private InputRequest inputRequest;
         private PrintRequest printRequest;
@@ -228,6 +236,8 @@ public class SaleToPOIRequest implements SaleToPOI {
                 this.abortTransactionRequest = (AbortTransactionRequest) request;
             } else if (request instanceof CardAcquisitionRequest) {
                 this.cardAcquisitionRequest = (CardAcquisitionRequest) request;
+            } else if (request instanceof RetrieveTokenRequest) {
+                this.retrieveTokenRequest = (RetrieveTokenRequest) request;
             } else if (request instanceof DisplayRequest) {
                 this.displayRequest = (DisplayRequest) request;
             } else if (request instanceof InputRequest) {
@@ -309,6 +319,7 @@ public class SaleToPOIRequest implements SaleToPOI {
         this.reversalRequest = builder.reversalRequest;
         this.paymentRequest = builder.paymentRequest;
         this.cardAcquisitionRequest = builder.cardAcquisitionRequest;
+        this.retrieveTokenRequest = builder.retrieveTokenRequest;
         this.displayRequest = builder.displayRequest;
         this.inputRequest = builder.inputRequest;
         this.loginRequest = builder.loginRequest;
