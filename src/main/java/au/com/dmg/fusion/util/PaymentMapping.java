@@ -45,7 +45,9 @@ public class PaymentMapping {
             new PaymentTypeMapping("Fuel card", "United Fuel Card", "0111", PaymentBrand.UnitedFuelCard),
             new PaymentTypeMapping("Fuel card", "OTR Card", "0112", PaymentBrand.OTRCard),
             new PaymentTypeMapping("Fuel card", "Mobil Fuel Card", "0113", PaymentBrand.MobilFuelCard),            
-            new PaymentTypeMapping("Fuel card", "Perrys Fuel Card", "0114", PaymentBrand.PerrysFuelCard), 
+            new PaymentTypeMapping("Fuel card", "Perrys Fuel Card", "0114", PaymentBrand.PerrysFuelCard),
+            new PaymentTypeMapping("Fuel card", "Dunnings Fuel Card", "0115", PaymentBrand.DunningsFuelCard),
+            new PaymentTypeMapping("Fuel card", "Northcoast Petroleum", "0116", PaymentBrand.NorthcoastPetroleum),
 
             new PaymentTypeMapping("Transit card", "Fastcard", "0201", PaymentBrand.Fastcard),
             new PaymentTypeMapping("Transit card", "eTicket", "0202", PaymentBrand.eTicket),
