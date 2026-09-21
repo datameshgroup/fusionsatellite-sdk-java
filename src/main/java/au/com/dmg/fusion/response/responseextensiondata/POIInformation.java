@@ -46,6 +46,8 @@ public class POIInformation {
     private final String url2;
     @Json(name = "DiscountRequiresSecurityCode")
     private final boolean discountRequiresSecurityCode;
+    @Json(name = "ReceiptPlatformConfig")
+    private final ReceiptPlatformConfig receiptPlatformConfig;
 
     public POIInformation(Builder builder) {
         this.tid = builder.tid;
@@ -68,6 +70,7 @@ public class POIInformation {
         this.url = builder.url;
         this.url2 = builder.url2;
         this.discountRequiresSecurityCode = builder.discountRequiresSecurityCode;
+        this.receiptPlatformConfig = builder.receiptPlatformConfig;
     }
 
     public String getTid() {
@@ -150,6 +153,10 @@ public class POIInformation {
         return discountRequiresSecurityCode;
     }
 
+    public ReceiptPlatformConfig getReceiptPlatformConfig() {
+        return receiptPlatformConfig;
+    }
+
     public static class Builder {
         private String tid;
         private String mid;
@@ -171,6 +178,7 @@ public class POIInformation {
         private String url;
         private String url2;
         private boolean discountRequiresSecurityCode;
+        private ReceiptPlatformConfig receiptPlatformConfig;
 
         public Builder() {
         }
@@ -274,6 +282,11 @@ public class POIInformation {
 
         public Builder discountRequiresSecurityCode(boolean discountRequiresSecurityCode) {
             this.discountRequiresSecurityCode = discountRequiresSecurityCode;
+            return this;
+        }
+
+        public Builder receiptPlatformConfig(ReceiptPlatformConfig receiptPlatformConfig) {
+            this.receiptPlatformConfig = receiptPlatformConfig;
             return this;
         }
 
