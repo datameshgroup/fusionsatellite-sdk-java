@@ -9,11 +9,14 @@ public class ReceiptPlatformConfig {
     private final String clientId;
     @Json(name = "EncryptedSecret")
     private final EncryptedSecret encryptedSecret;
+    @Json(name = "Secret")
+    private final String secret;
 
     public ReceiptPlatformConfig(Builder builder) {
         this.url = builder.url;
         this.clientId = builder.clientId;
         this.encryptedSecret = builder.encryptedSecret;
+        this.secret = builder.secret;
     }
 
     public String getUrl() {
@@ -28,10 +31,15 @@ public class ReceiptPlatformConfig {
         return encryptedSecret;
     }
 
+    public String getSecret() {
+        return secret;
+    }
+
     public static class Builder {
         private String url;
         private String clientId;
         private EncryptedSecret encryptedSecret;
+        private String secret;
 
         public Builder() {
         }
@@ -48,6 +56,11 @@ public class ReceiptPlatformConfig {
 
         public Builder encryptedSecret(EncryptedSecret encryptedSecret) {
             this.encryptedSecret = encryptedSecret;
+            return this;
+        }
+
+        public Builder secret(String secret) {
+            this.secret = secret;
             return this;
         }
 

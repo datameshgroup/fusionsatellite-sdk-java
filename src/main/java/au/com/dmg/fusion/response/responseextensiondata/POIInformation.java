@@ -2,6 +2,8 @@ package au.com.dmg.fusion.response.responseextensiondata;
 
 import com.squareup.moshi.Json;
 
+import java.util.List;
+
 import au.com.dmg.fusion.Message;
 import au.com.dmg.fusion.response.diagnosisresponse.AddressLocation;
 
@@ -46,6 +48,10 @@ public class POIInformation {
     private final String url2;
     @Json(name = "DiscountRequiresSecurityCode")
     private final boolean discountRequiresSecurityCode;
+    @Json(name = "ComplianceRequiresSecurityCode")
+    private final boolean complianceRequiresSecurityCode;
+    @Json(name = "PresetValues")
+    private final List<Double> presetValues;
     @Json(name = "ReceiptPlatformConfig")
     private final ReceiptPlatformConfig receiptPlatformConfig;
 
@@ -70,6 +76,8 @@ public class POIInformation {
         this.url = builder.url;
         this.url2 = builder.url2;
         this.discountRequiresSecurityCode = builder.discountRequiresSecurityCode;
+        this.complianceRequiresSecurityCode = builder.complianceRequiresSecurityCode;
+        this.presetValues = builder.presetValues;
         this.receiptPlatformConfig = builder.receiptPlatformConfig;
     }
 
@@ -153,6 +161,14 @@ public class POIInformation {
         return discountRequiresSecurityCode;
     }
 
+    public boolean isComplianceRequiresSecurityCode() {
+        return complianceRequiresSecurityCode;
+    }
+
+    public List<Double> getPresetValues() {
+        return presetValues;
+    }
+
     public ReceiptPlatformConfig getReceiptPlatformConfig() {
         return receiptPlatformConfig;
     }
@@ -178,6 +194,8 @@ public class POIInformation {
         private String url;
         private String url2;
         private boolean discountRequiresSecurityCode;
+        private boolean complianceRequiresSecurityCode;
+        private List<Double> presetValues;
         private ReceiptPlatformConfig receiptPlatformConfig;
 
         public Builder() {
@@ -282,6 +300,16 @@ public class POIInformation {
 
         public Builder discountRequiresSecurityCode(boolean discountRequiresSecurityCode) {
             this.discountRequiresSecurityCode = discountRequiresSecurityCode;
+            return this;
+        }
+
+        public Builder complianceRequiresSecurityCode(boolean complianceRequiresSecurityCode) {
+            this.complianceRequiresSecurityCode = complianceRequiresSecurityCode;
+            return this;
+        }
+
+        public Builder presetValues(List<Double> presetValues) {
+            this.presetValues = presetValues;
             return this;
         }
 
