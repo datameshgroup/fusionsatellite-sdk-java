@@ -52,6 +52,16 @@ public class POIInformation {
     private final boolean complianceRequiresSecurityCode;
     @Json(name = "PresetValues")
     private final List<Double> presetValues;
+    @Json(name = "SseHeartbeatTimeoutSeconds")
+    private final Integer sseHeartbeatTimeoutSeconds;
+    @Json(name = "SseMaintenanceAfterSeconds")
+    private final Integer sseMaintenanceAfterSeconds;
+    @Json(name = "SseReconnectIntervalSeconds")
+    private final Integer sseReconnectIntervalSeconds;
+    @Json(name = "SseMaintenanceProbeSeconds")
+    private final Integer sseMaintenanceProbeSeconds;
+    @Json(name = "SseFallbackDeadlineMinutes")
+    private final Integer sseFallbackDeadlineMinutes;
     @Json(name = "ReceiptPlatformConfig")
     private final ReceiptPlatformConfig receiptPlatformConfig;
 
@@ -78,6 +88,11 @@ public class POIInformation {
         this.discountRequiresSecurityCode = builder.discountRequiresSecurityCode;
         this.complianceRequiresSecurityCode = builder.complianceRequiresSecurityCode;
         this.presetValues = builder.presetValues;
+        this.sseHeartbeatTimeoutSeconds = builder.sseHeartbeatTimeoutSeconds;
+        this.sseMaintenanceAfterSeconds = builder.sseMaintenanceAfterSeconds;
+        this.sseReconnectIntervalSeconds = builder.sseReconnectIntervalSeconds;
+        this.sseMaintenanceProbeSeconds = builder.sseMaintenanceProbeSeconds;
+        this.sseFallbackDeadlineMinutes = builder.sseFallbackDeadlineMinutes;
         this.receiptPlatformConfig = builder.receiptPlatformConfig;
     }
 
@@ -165,6 +180,31 @@ public class POIInformation {
         return complianceRequiresSecurityCode;
     }
 
+    /** Host TTFuelConfig.SseHeartbeatTimeoutSeconds; null when the host does not set it (the app then uses its default). */
+    public Integer getSseHeartbeatTimeoutSeconds() {
+        return sseHeartbeatTimeoutSeconds;
+    }
+
+    /** Host TTFuelConfig.SseMaintenanceAfterSeconds; null when the host does not set it (the app then uses its default). */
+    public Integer getSseMaintenanceAfterSeconds() {
+        return sseMaintenanceAfterSeconds;
+    }
+
+    /** Host TTFuelConfig.SseReconnectIntervalSeconds; null when the host does not set it (the app then uses its default). */
+    public Integer getSseReconnectIntervalSeconds() {
+        return sseReconnectIntervalSeconds;
+    }
+
+    /** Host TTFuelConfig.SseMaintenanceProbeSeconds; null when the host does not set it (the app then uses its default). */
+    public Integer getSseMaintenanceProbeSeconds() {
+        return sseMaintenanceProbeSeconds;
+    }
+
+    /** Host TTFuelConfig.SseFallbackDeadlineMinutes; null when the host does not set it (the app then uses its default). */
+    public Integer getSseFallbackDeadlineMinutes() {
+        return sseFallbackDeadlineMinutes;
+    }
+
     public List<Double> getPresetValues() {
         return presetValues;
     }
@@ -196,6 +236,11 @@ public class POIInformation {
         private boolean discountRequiresSecurityCode;
         private boolean complianceRequiresSecurityCode;
         private List<Double> presetValues;
+        private Integer sseHeartbeatTimeoutSeconds;
+        private Integer sseMaintenanceAfterSeconds;
+        private Integer sseReconnectIntervalSeconds;
+        private Integer sseMaintenanceProbeSeconds;
+        private Integer sseFallbackDeadlineMinutes;
         private ReceiptPlatformConfig receiptPlatformConfig;
 
         public Builder() {
@@ -310,6 +355,31 @@ public class POIInformation {
 
         public Builder presetValues(List<Double> presetValues) {
             this.presetValues = presetValues;
+            return this;
+        }
+
+        public Builder sseHeartbeatTimeoutSeconds(Integer sseHeartbeatTimeoutSeconds) {
+            this.sseHeartbeatTimeoutSeconds = sseHeartbeatTimeoutSeconds;
+            return this;
+        }
+
+        public Builder sseMaintenanceAfterSeconds(Integer sseMaintenanceAfterSeconds) {
+            this.sseMaintenanceAfterSeconds = sseMaintenanceAfterSeconds;
+            return this;
+        }
+
+        public Builder sseReconnectIntervalSeconds(Integer sseReconnectIntervalSeconds) {
+            this.sseReconnectIntervalSeconds = sseReconnectIntervalSeconds;
+            return this;
+        }
+
+        public Builder sseMaintenanceProbeSeconds(Integer sseMaintenanceProbeSeconds) {
+            this.sseMaintenanceProbeSeconds = sseMaintenanceProbeSeconds;
+            return this;
+        }
+
+        public Builder sseFallbackDeadlineMinutes(Integer sseFallbackDeadlineMinutes) {
+            this.sseFallbackDeadlineMinutes = sseFallbackDeadlineMinutes;
             return this;
         }
 
